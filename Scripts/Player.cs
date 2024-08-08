@@ -15,6 +15,8 @@ public partial class Player : CharacterBody3D
     float pitch;
     Vector3 mouseRotation;
     [Export]
+    float mouseSensitivity = 0.35f;
+    [Export]
     float tiltLowerLimit = Mathf.DegToRad(-90);
     [Export]
     float tiltUpperLimit = Mathf.DegToRad(90);
@@ -60,15 +62,12 @@ public partial class Player : CharacterBody3D
         if (@event is InputEventMouseMotion mouseEvent && Input.MouseMode == Input.MouseModeEnum.Captured)
         {
             mouseInput = true;
-            rotationInput = -mouseEvent.Relative.X;
-            tiltInput = -mouseEvent.Relative.Y;
+            rotationInput = -mouseEvent.Relative.X * mouseSensitivity;
+            tiltInput = -mouseEvent.Relative.Y * mouseSensitivity;
         }
     }
     public void UpdateCamera(double delta)
     {
-        mouseRotation.X += tiltInput * (float)delta;
-        mouseRotation.X = Mathf.Clamp(mouseRotation.X, tiltLowerLimit, tiltUpperLimit);
-        mouseRotation.Y += rotationInput * (float)delta;
         pitch += tiltInput * (float)delta;
         pitch = Mathf.Clamp(pitch, tiltLowerLimit, tiltUpperLimit);
 
