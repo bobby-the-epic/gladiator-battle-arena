@@ -9,7 +9,6 @@ public partial class Player : CharacterBody3D
     // Get the gravity from the project settings to be synced with RigidBody nodes.
     public float gravity = ProjectSettings.GetSetting("physics/3d/default_gravity").AsSingle();
 
-    bool mouseInput = false;
     float rotationInput;
     float tiltInput;
     float pitch;
@@ -61,7 +60,6 @@ public partial class Player : CharacterBody3D
     {
         if (@event is InputEventMouseMotion mouseEvent && Input.MouseMode == Input.MouseModeEnum.Captured)
         {
-            mouseInput = true;
             rotationInput = -mouseEvent.Relative.X * mouseSensitivity;
             tiltInput = -mouseEvent.Relative.Y * mouseSensitivity;
         }
