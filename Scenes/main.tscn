@@ -30,21 +30,21 @@ script = ExtResource("1_fbycc")
 [node name="World" type="Node" parent="."]
 
 [node name="Level1" parent="World" instance=ExtResource("2_lvr4g")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00237465, -2.38419e-07, 0.0105675)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="World"]
 environment = SubResource("Environment_hj1xv")
-
-[node name="Player" parent="." instance=ExtResource("2_2ydgf")]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.827874, 2.45183e-08, -0.560914, 0.560914, -3.61875e-08, 0.827874, 5.29396e-23, -1, -4.37114e-08, 0, 64, 0)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0502222, 2.62631, -4.034)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -3)
 mesh = SubResource("BoxMesh_ipdd0")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
 shape = SubResource("BoxShape3D_k7uk8")
+
+[node name="Player" parent="." instance=ExtResource("2_2ydgf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
