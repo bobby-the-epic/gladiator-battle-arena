@@ -12,6 +12,7 @@ material = SubResource("StandardMaterial3D_ivu7d")
 
 [node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("cameraController")]
 script = ExtResource("1_r7wak")
+mouseSensitivity = 0.2
 cameraController = NodePath("CameraController")
 
 [node name="CameraController" type="Node3D" parent="."]
