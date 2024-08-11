@@ -17,6 +17,7 @@ size = Vector3(60, 1, 60)
 [node name="Level1" type="Node3D"]
 
 [node name="Ground" type="StaticBody3D" parent="."]
+collision_mask = 0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
@@ -24,4 +25,5 @@ mesh = SubResource("PlaneMesh_hptpb")
 skeleton = NodePath("../..")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.5, 0)
 shape = SubResource("BoxShape3D_mxnai")

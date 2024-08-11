@@ -11,6 +11,8 @@ material = SubResource("StandardMaterial3D_ivu7d")
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ii3hn"]
 
 [node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("cameraController")]
+collision_layer = 2
+collision_mask = 5
 script = ExtResource("1_r7wak")
 mouseSensitivity = 0.2
 cameraController = NodePath("CameraController")
