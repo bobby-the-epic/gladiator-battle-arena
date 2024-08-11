@@ -3,8 +3,9 @@ using System;
 
 public partial class Player : CharacterBody3D
 {
-    public const float Speed = 8.0f;
-    public const float JumpVelocity = 4.5f;
+    public const float speed = 8.0f;
+    public const float sprintSpeed = 12.0f;
+    public const float jumpVelocity = 4.5f;
 
     // Get the gravity from the project settings to be synced with RigidBody nodes.
     public float gravity = ProjectSettings.GetSetting("physics/3d/default_gravity").AsSingle();
@@ -63,19 +64,27 @@ public partial class Player : CharacterBody3D
 
         // Handle Jump.
         if (Input.IsActionJustPressed("jump") && IsOnFloor())
-            velocity.Y = JumpVelocity;
+            velocity.Y = jumpVelocity;
 
         Vector2 inputDir = Input.GetVector("moveLeft", "moveRight", "moveForward", "moveBackward");
         Vector3 direction = (Transform.Basis * new Vector3(inputDir.X, 0, inputDir.Y)).Normalized();
         if (direction != Vector3.Zero)
         {
-            velocity.X = direction.X * Speed;
-            velocity.Z = direction.Z * Speed;
+            if (Input.IsPhysicalKeyPressed(Key.Shift))
+            {
+                velocity.X = direction.X * sprintSpeed;
+                velocity.Z = direction.Z * sprintSpeed;
+            }
+            else
+            {
+                velocity.X = direction.X * speed;
+                velocity.Z = direction.Z * speed;
+            }
         }
         else
         {
-            velocity.X = Mathf.MoveToward(Velocity.X, 0, Speed);
-            velocity.Z = Mathf.MoveToward(Velocity.Z, 0, Speed);
+            velocity.X = Mathf.MoveToward(Velocity.X, 0, speed);
+            velocity.Z = Mathf.MoveToward(Velocity.Z, 0, speed);
         }
 
         Velocity = velocity;
