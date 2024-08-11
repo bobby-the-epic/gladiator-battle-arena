@@ -3,7 +3,7 @@ using System;
 
 public partial class Player : CharacterBody3D
 {
-    public const float Speed = 5.0f;
+    public const float Speed = 8.0f;
     public const float JumpVelocity = 4.5f;
 
     // Get the gravity from the project settings to be synced with RigidBody nodes.
@@ -14,7 +14,7 @@ public partial class Player : CharacterBody3D
     float pitch;
     Vector3 mouseRotation;
     [Export]
-    float mouseSensitivity = 0.35f;
+    float mouseSensitivity = 0.5f;
     [Export]
     float tiltLowerLimit = Mathf.DegToRad(-90);
     [Export]
@@ -28,13 +28,38 @@ public partial class Player : CharacterBody3D
     }
     public override void _PhysicsProcess(double delta)
     {
+        SetMovement(delta);
+        UpdateCamera(delta);
+    }
+    public override void _UnhandledInput(InputEvent @event)
+    {
+        if (@event is InputEventMouseMotion mouseEvent && Input.MouseMode == Input.MouseModeEnum.Captured)
+        {
+            rotationInput = -mouseEvent.Relative.X * mouseSensitivity;
+            tiltInput = -mouseEvent.Relative.Y * mouseSensitivity;
+        }
+    }
+    private void UpdateCamera(double delta)
+    {
+        pitch += tiltInput * (float)delta;
+        pitch = Mathf.Clamp(pitch, tiltLowerLimit, tiltUpperLimit);
+
+        // Rotate the player node around the Y-axis for horizontal camera movement
+        Rotate(Vector3.Up, rotationInput * (float)delta);
+
+        // Rotate the camera controller node around the X-axis for vertical camera movement
+        cameraController.Rotation = new Vector3(pitch, cameraController.Rotation.Y, cameraController.Rotation.Z);
+
+        rotationInput = 0.0f;
+        tiltInput = 0.0f;
+    }
+    private void SetMovement(double delta)
+    {
         Vector3 velocity = Velocity;
 
         // Add the gravity.
         if (!IsOnFloor())
             velocity.Y -= gravity * (float)delta;
-
-        UpdateCamera(delta);
 
         // Handle Jump.
         if (Input.IsActionJustPressed("jump") && IsOnFloor())
@@ -55,27 +80,5 @@ public partial class Player : CharacterBody3D
 
         Velocity = velocity;
         MoveAndSlide();
-    }
-    public override void _UnhandledInput(InputEvent @event)
-    {
-        if (@event is InputEventMouseMotion mouseEvent && Input.MouseMode == Input.MouseModeEnum.Captured)
-        {
-            rotationInput = -mouseEvent.Relative.X * mouseSensitivity;
-            tiltInput = -mouseEvent.Relative.Y * mouseSensitivity;
-        }
-    }
-    public void UpdateCamera(double delta)
-    {
-        pitch += tiltInput * (float)delta;
-        pitch = Mathf.Clamp(pitch, tiltLowerLimit, tiltUpperLimit);
-
-        // Rotate the player node around the Y-axis for horizontal camera movement
-        Rotate(Vector3.Up, rotationInput * (float)delta);
-
-        // Rotate the camera controller node around the X-axis for vertical camera movement
-        cameraController.Rotation = new Vector3(pitch, cameraController.Rotation.Y, cameraController.Rotation.Z);
-
-        rotationInput = 0.0f;
-        tiltInput = 0.0f;
     }
 }
