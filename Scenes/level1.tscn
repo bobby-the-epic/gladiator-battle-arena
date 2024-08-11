@@ -1,7 +1,15 @@
-[gd_scene load_steps=3 format=3 uid="uid://38a4olg5usri"]
+[gd_scene load_steps=5 format=3 uid="uid://38a4olg5usri"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_olt5a"]
-size = Vector3(60, 1, 60)
+[ext_resource type="Texture2D" uid="uid://5tf2jl5gb1wp" path="res://Assets/Textures/checkerboard.png" id="1_5hbp8"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_n8kp7"]
+albedo_texture = ExtResource("1_5hbp8")
+albedo_texture_force_srgb = true
+uv1_scale = Vector3(20, 20, 20)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_hptpb"]
+material = SubResource("StandardMaterial3D_n8kp7")
+size = Vector2(60, 60)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_mxnai"]
 size = Vector3(60, 1, 60)
@@ -11,8 +19,8 @@ size = Vector3(60, 1, 60)
 [node name="Ground" type="StaticBody3D" parent="."]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
-mesh = SubResource("BoxMesh_olt5a")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+mesh = SubResource("PlaneMesh_hptpb")
 skeleton = NodePath("../..")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
