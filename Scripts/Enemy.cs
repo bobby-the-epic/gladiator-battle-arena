@@ -3,7 +3,7 @@ using System;
 
 public partial class Enemy : CharacterBody3D
 {
-    public const float Speed = 5.0f;
+    public const float Speed = 3.0f;
     float angle;
     CharacterBody3D player;
 
@@ -23,13 +23,9 @@ public partial class Enemy : CharacterBody3D
         lookDirection = lookDirection.Normalized();
         angle = Mathf.Atan2(lookDirection.X, lookDirection.Z);
         Rotate(Vector3.Up, angle - Rotation.Y);
-
-        // Add the gravity.
-        if (!IsOnFloor())
-        {
-            velocity += GetGravity() * (float)delta;
-        }
-
+        GD.Print(player.Position);
+        if (Position.DistanceTo(player.Position) > 1.5f)
+            Translate(Vector3.Forward * Speed * (float)delta);
         MoveAndSlide();
     }
 }
