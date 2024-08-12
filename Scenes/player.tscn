@@ -1,6 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://clore8amm5ikg"]
+[gd_scene load_steps=9 format=3 uid="uid://clore8amm5ikg"]
 
 [ext_resource type="Script" path="res://Scripts/Player.cs" id="1_r7wak"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_vsis3"]
+size = Vector3(0.25, 1, 0.25)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ivu7d"]
 albedo_color = Color(0.273111, 0.631413, 5.77569e-07, 1)
@@ -10,17 +13,59 @@ material = SubResource("StandardMaterial3D_ivu7d")
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ii3hn"]
 
-[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("cameraController")]
+[sub_resource type="Animation" id="Animation_xmnod"]
+resource_name = "swordSwing"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CameraController/Sword:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(-1.309, 0, 0), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_6f1gs"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CameraController/Sword:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_tlcjw"]
+_data = {
+"RESET": SubResource("Animation_6f1gs"),
+"swordSwing": SubResource("Animation_xmnod")
+}
+
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("cameraController", "playerAnimations")]
 collision_layer = 2
 collision_mask = 5
 script = ExtResource("1_r7wak")
 mouseSensitivity = 0.2
 cameraController = NodePath("CameraController")
+playerAnimations = NodePath("AnimationPlayer")
 
 [node name="CameraController" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 
 [node name="Camera3D" type="Camera3D" parent="CameraController"]
+
+[node name="Sword" type="MeshInstance3D" parent="CameraController"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.57566, -0.80067, -0.753907)
+mesh = SubResource("BoxMesh_vsis3")
+skeleton = NodePath("../..")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -30,3 +75,8 @@ skeleton = NodePath("../CameraController")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_ii3hn")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_tlcjw")
+}
