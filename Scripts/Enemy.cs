@@ -23,7 +23,6 @@ public partial class Enemy : CharacterBody3D
         lookDirection = lookDirection.Normalized();
         angle = Mathf.Atan2(lookDirection.X, lookDirection.Z);
         Rotate(Vector3.Up, angle - Rotation.Y);
-        GD.Print(player.Position);
         if (Position.DistanceTo(player.Position) > 1.5f)
             Translate(Vector3.Forward * Speed * (float)delta);
         MoveAndSlide();
