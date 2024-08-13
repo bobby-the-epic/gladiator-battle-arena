@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class Enemy : CharacterBody3D
+public partial class Enemy : Humanoid
 {
     public const float Speed = 3.0f;
     float angle;

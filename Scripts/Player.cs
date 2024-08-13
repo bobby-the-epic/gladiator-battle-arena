@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class Player : CharacterBody3D
+public partial class Player : Humanoid
 {
     public const float speed = 8.0f;
     public const float sprintSpeed = 12.0f;
@@ -13,7 +13,6 @@ public partial class Player : CharacterBody3D
     float rotationInput;
     float tiltInput;
     float pitch;
-    bool attacking = false;
     Vector3 mouseRotation;
     [Export]
     float mouseSensitivity = 0.5f;
@@ -23,13 +22,11 @@ public partial class Player : CharacterBody3D
     float tiltUpperLimit = Mathf.DegToRad(90);
     [Export]
     Node3D cameraController;
-    [Export]
-    AnimationPlayer playerAnimations;
 
     public override void _Ready()
     {
+        base._Ready();
         Input.MouseMode = Input.MouseModeEnum.Captured;
-        playerAnimations.AnimationFinished += OnAnimationFinished;
     }
     public override void _PhysicsProcess(double delta)
     {
@@ -98,17 +95,5 @@ public partial class Player : CharacterBody3D
 
         Velocity = velocity;
         MoveAndSlide();
-    }
-    private async void Attack()
-    {
-        GD.Print("attacking");
-        attacking = true;
-        playerAnimations.Play("swordSwing");
-        await ToSignal(playerAnimations, AnimationPlayer.SignalName.AnimationFinished);
-    }
-    private void OnAnimationFinished(StringName animName)
-    {
-        if (animName == "swordSwing")
-            attacking = false;
     }
 }
