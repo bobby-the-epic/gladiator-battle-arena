@@ -1,9 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://wwfx231mesb"]
+[gd_scene load_steps=12 format=3 uid="uid://wwfx231mesb"]
 
-[ext_resource type="Script" path="res://Scripts/Main.cs" id="1_fbycc"]
-[ext_resource type="PackedScene" uid="uid://clore8amm5ikg" path="res://Scenes/player.tscn" id="2_2ydgf"]
-[ext_resource type="PackedScene" uid="uid://38a4olg5usri" path="res://Scenes/level1.tscn" id="2_lvr4g"]
-[ext_resource type="PackedScene" uid="uid://bxx2b4a62aayi" path="res://Scenes/enemy.tscn" id="4_ueeip"]
+[ext_resource type="Script" path="res://Scripts/Main.cs" id="1_bchyn"]
+[ext_resource type="PackedScene" uid="uid://38a4olg5usri" path="res://Scenes/Test Level.tscn" id="2_qx8tq"]
+[ext_resource type="PackedScene" uid="uid://clore8amm5ikg" path="res://Scenes/Player.tscn" id="3_kq7my"]
+[ext_resource type="PackedScene" uid="uid://bxx2b4a62aayi" path="res://Scenes/Enemy.tscn" id="4_grr4l"]
+[ext_resource type="PackedScene" uid="uid://s8frao1jmpyi" path="res://Scenes/Gladiator.tscn" id="5_kcoa1"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_i8m2w"]
 
@@ -26,11 +27,11 @@ size = Vector3(1, 5, 1)
 size = Vector3(1, 5, 1)
 
 [node name="Main" type="Node"]
-script = ExtResource("1_fbycc")
+script = ExtResource("1_bchyn")
 
 [node name="World" type="Node" parent="."]
 
-[node name="Level1" parent="World" instance=ExtResource("2_lvr4g")]
+[node name="Level1" parent="World" instance=ExtResource("2_qx8tq")]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="World"]
 environment = SubResource("Environment_hj1xv")
@@ -47,8 +48,11 @@ mesh = SubResource("BoxMesh_ipdd0")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
 shape = SubResource("BoxShape3D_k7uk8")
 
-[node name="Player" parent="." instance=ExtResource("2_2ydgf")]
+[node name="Player" parent="." instance=ExtResource("3_kq7my")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
 
-[node name="Enemy" parent="." instance=ExtResource("4_ueeip")]
+[node name="Enemy" parent="." instance=ExtResource("4_grr4l")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, -1, 0)
+
+[node name="character-soldier2" parent="." instance=ExtResource("5_kcoa1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.31971, -1, -2)

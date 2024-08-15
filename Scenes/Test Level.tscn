@@ -14,7 +14,7 @@ size = Vector2(60, 60)
 [sub_resource type="BoxShape3D" id="BoxShape3D_mxnai"]
 size = Vector3(60, 1, 60)
 
-[node name="Level1" type="Node3D"]
+[node name="Test Level" type="Node3D"]
 
 [node name="Ground" type="StaticBody3D" parent="."]
 collision_mask = 0
