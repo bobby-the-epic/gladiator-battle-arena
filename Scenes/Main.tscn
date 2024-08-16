@@ -1,9 +1,8 @@
-[gd_scene load_steps=12 format=3 uid="uid://wwfx231mesb"]
+[gd_scene load_steps=11 format=3 uid="uid://wwfx231mesb"]
 
 [ext_resource type="Script" path="res://Scripts/Main.cs" id="1_bchyn"]
 [ext_resource type="PackedScene" uid="uid://38a4olg5usri" path="res://Scenes/Test Level.tscn" id="2_qx8tq"]
-[ext_resource type="PackedScene" uid="uid://clore8amm5ikg" path="res://Scenes/Player.tscn" id="3_kq7my"]
-[ext_resource type="PackedScene" uid="uid://bxx2b4a62aayi" path="res://Scenes/Enemy.tscn" id="4_grr4l"]
+[ext_resource type="PackedScene" uid="uid://cycmto2oewk3v" path="res://Scenes/Player.tscn" id="3_kq7my"]
 [ext_resource type="PackedScene" uid="uid://s8frao1jmpyi" path="res://Scenes/Gladiator.tscn" id="5_kcoa1"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_i8m2w"]
@@ -37,7 +36,8 @@ script = ExtResource("1_bchyn")
 environment = SubResource("Environment_hj1xv")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.827874, 2.45183e-08, -0.560914, 0.560914, -3.61875e-08, 0.827874, 5.29396e-23, -1, -4.37114e-08, 0, 64, 0)
+transform = Transform3D(-4.37114e-08, -1, 0, -0.642788, 2.80971e-08, 0.766044, -0.766044, 3.34849e-08, -0.642788, 0, 64, 0)
+shadow_enabled = true
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -3)
@@ -48,11 +48,9 @@ mesh = SubResource("BoxMesh_ipdd0")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
 shape = SubResource("BoxShape3D_k7uk8")
 
+[node name="Gladiator" parent="." instance=ExtResource("5_kcoa1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, -1, 0)
+
 [node name="Player" parent="." instance=ExtResource("3_kq7my")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
-
-[node name="Enemy" parent="." instance=ExtResource("4_grr4l")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, -1, 0)
-
-[node name="character-soldier2" parent="." instance=ExtResource("5_kcoa1")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.31971, -1, -2)
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, -1, 4)
+mouseSensitivity = 0.2
