@@ -60,7 +60,7 @@ public partial class Gladiator : CharacterBody3D
     {
         attacking = true;
         animTree.Set("parameters/OneShot/request", (int)AnimationNodeOneShot.OneShotRequest.Fire);
-        await ToSignal(animTree, AnimationPlayer.SignalName.AnimationFinished);
+        await ToSignal(animTree, AnimationTree.SignalName.AnimationFinished);
     }
     private void OnAnimationFinished(StringName animName)
     {
