@@ -1,4 +1,4 @@
-[gd_scene load_steps=81 format=4 uid="uid://cycmto2oewk3v"]
+[gd_scene load_steps=82 format=4 uid="uid://cycmto2oewk3v"]
 
 [ext_resource type="PackedScene" uid="uid://btg8x3sln11g2" path="res://Assets/Mini Arena/character-soldier.glb" id="1_b1a85"]
 [ext_resource type="Script" path="res://Scripts/Player.cs" id="1_r7wak"]
@@ -2205,7 +2205,7 @@ animation = &"attack-melee-right"
 animation = &"walk"
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_87y11"]
-graph_offset = Vector2(-354.378, -26.4149)
+graph_offset = Vector2(-288.938, -90.9721)
 nodes/Animation/node = SubResource("AnimationNodeAnimation_7x7pe")
 nodes/Animation/position = Vector2(-20, 140)
 "nodes/Animation 2/node" = SubResource("AnimationNodeAnimation_34ggb")
@@ -4297,6 +4297,9 @@ _data = {
 "idle": SubResource("Animation_ct31w")
 }
 
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_fq2n0"]
+animation = &"attack-melee-right"
+
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_tjbo3"]
 animation = &"static"
 
@@ -4308,7 +4311,9 @@ animation = &"static"
 animation = &"walk"
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_orj1r"]
-graph_offset = Vector2(-313.657, 78.9353)
+graph_offset = Vector2(-289.933, 185.489)
+nodes/Animation/node = SubResource("AnimationNodeAnimation_fq2n0")
+nodes/Animation/position = Vector2(260, 420)
 nodes/Idle/node = SubResource("AnimationNodeAnimation_tjbo3")
 nodes/Idle/position = Vector2(0, 300)
 nodes/OneShot/node = SubResource("AnimationNodeOneShot_xs0a1")
@@ -4318,7 +4323,7 @@ nodes/Walk/position = Vector2(0, 140)
 "nodes/Walk-Idle Blend/node" = SubResource("AnimationNodeBlend2_0ecjx")
 "nodes/Walk-Idle Blend/position" = Vector2(280, 180)
 nodes/output/position = Vector2(640, 140)
-node_connections = [&"OneShot", 0, &"Walk-Idle Blend", &"Walk-Idle Blend", 0, &"Walk", &"Walk-Idle Blend", 1, &"Idle", &"output", 0, &"OneShot"]
+node_connections = [&"OneShot", 0, &"Walk-Idle Blend", &"OneShot", 1, &"Animation", &"Walk-Idle Blend", 0, &"Walk", &"Walk-Idle Blend", 1, &"Idle", &"output", 0, &"OneShot"]
 
 [node name="Player" node_paths=PackedStringArray("cameraController") instance=ExtResource("1_b1a85")]
 transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)

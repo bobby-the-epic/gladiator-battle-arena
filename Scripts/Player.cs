@@ -30,6 +30,7 @@ public partial class Player : CharacterBody3D
         Input.MouseMode = Input.MouseModeEnum.Captured;
         animTree = GetNode<AnimationTree>("AnimationTree");
         dupeBodyAnimTree = GetNode<AnimationTree>("DupeBody/AnimationTree");
+        animTree.AnimationFinished += OnAnimationFinished;
     }
     public override void _PhysicsProcess(double delta)
     {
@@ -105,6 +106,13 @@ public partial class Player : CharacterBody3D
     }
     private async void Attack()
     {
-
+        attacking = true;
+        animTree.Set("parameters/OneShot/request", (int)AnimationNodeOneShot.OneShotRequest.Fire);
+        await ToSignal(animTree, AnimationTree.SignalName.AnimationFinished);
+    }
+    private void OnAnimationFinished(StringName name)
+    {
+        if (name == "attack-melee-right")
+            attacking = false;
     }
 }
