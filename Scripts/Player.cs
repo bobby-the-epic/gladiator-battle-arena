@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class Player : Humanoid
+public partial class Player : CharacterBody3D
 {
     public const float speed = 8.0f;
     public const float sprintSpeed = 12.0f;
@@ -13,20 +13,23 @@ public partial class Player : Humanoid
     float rotationInput;
     float tiltInput;
     float pitch;
+    bool attacking = false;
+    bool moving = false;
+    float tiltLowerLimit = Mathf.DegToRad(-85);
+    float tiltUpperLimit = Mathf.DegToRad(85);
     Vector3 mouseRotation;
+    AnimationTree animTree, dupeBodyAnimTree;
+
     [Export]
     float mouseSensitivity = 0.5f;
-    [Export]
-    float tiltLowerLimit = Mathf.DegToRad(-90);
-    [Export]
-    float tiltUpperLimit = Mathf.DegToRad(90);
     [Export]
     Node3D cameraController;
 
     public override void _Ready()
     {
-        base._Ready();
         Input.MouseMode = Input.MouseModeEnum.Captured;
+        animTree = GetNode<AnimationTree>("AnimationTree");
+        dupeBodyAnimTree = GetNode<AnimationTree>("DupeBody/AnimationTree");
     }
     public override void _PhysicsProcess(double delta)
     {
@@ -86,14 +89,22 @@ public partial class Player : Humanoid
                 velocity.X = direction.X * speed;
                 velocity.Z = direction.Z * speed;
             }
+            dupeBodyAnimTree.Set("parameters/Walk-Idle Blend/blend_amount", 0);
+            animTree.Set("parameters/Walk-Idle Blend/blend_amount", 0);
         }
         else
         {
             velocity.X = Mathf.MoveToward(Velocity.X, 0, speed);
             velocity.Z = Mathf.MoveToward(Velocity.Z, 0, speed);
+            dupeBodyAnimTree.Set("parameters/Walk-Idle Blend/blend_amount", 1);
+            animTree.Set("parameters/Walk-Idle Blend/blend_amount", 1);
         }
 
         Velocity = velocity;
         MoveAndSlide();
+    }
+    private async void Attack()
+    {
+
     }
 }
