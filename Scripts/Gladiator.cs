@@ -5,6 +5,7 @@ public partial class Gladiator : CharacterBody3D
 {
     bool attacking = false;
     float angle;
+    public float gravity = ProjectSettings.GetSetting("physics/3d/default_gravity").AsSingle();
     const float speed = 3.0f;
     AnimationTree animTree;
     AnimationPlayer animPlayer;
@@ -37,7 +38,7 @@ public partial class Gladiator : CharacterBody3D
         //Rotates the gladiator to look at the player
         Rotate(Vector3.Up, angle - Rotation.Y);
 
-        if (Position.DistanceTo(player.Position) > 2)
+        if (Position.DistanceTo(player.Position) > 3)
         {
             animTree.Set("parameters/WalkIdleBlend/blend_amount", 0.5f);
             velocity = -lookDirection * speed;
@@ -48,6 +49,9 @@ public partial class Gladiator : CharacterBody3D
             animTree.Set("parameters/WalkIdleBlend/blend_amount", 0);
             Attack();
         }
+
+        if (!IsOnFloor())
+            velocity.Y -= gravity * (float)delta;
 
         Velocity = velocity;
         MoveAndSlide();
