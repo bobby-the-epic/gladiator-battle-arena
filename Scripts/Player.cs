@@ -19,6 +19,11 @@ public partial class Player : CharacterBody3D
     float tiltUpperLimit = Mathf.DegToRad(85);
     Vector3 mouseRotation;
     AnimationTree animTree, dupeBodyAnimTree;
+    /*
+     * I used a duplicate body mesh for the shadows. I wanted the camera to be able
+     * to see the player's body, but I also had to do first person animations. I separated
+     * the hands from the mesh with a BoneAttachment3D node and animated that.
+     */
 
     [Export]
     float mouseSensitivity = 0.5f;
@@ -109,8 +114,9 @@ public partial class Player : CharacterBody3D
     }
     private async void Attack()
     {
+        // Plays the attack animation and waits for the AnimationFinished signal to fire.
         attacking = true;
-        animTree.Set("parameters/OneShot/request", (int)AnimationNodeOneShot.OneShotRequest.Fire);
+        animTree.Set("parameters/Attack/request", (int)AnimationNodeOneShot.OneShotRequest.Fire);
         dupeBodyAnimTree.Set("parameters/Attack/request", (int)AnimationNodeOneShot.OneShotRequest.Fire);
         await ToSignal(animTree, AnimationTree.SignalName.AnimationFinished);
     }
