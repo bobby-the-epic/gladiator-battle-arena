@@ -2142,6 +2142,7 @@ _data = {
 }
 
 [sub_resource type="Animation" id="Animation_cx286"]
+resource_name = "attack"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -2194,7 +2195,7 @@ animation = &"walk"
 [sub_resource type="AnimationNodeBlend2" id="AnimationNodeBlend2_ogrg7"]
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_icfrc"]
-graph_offset = Vector2(-523.975, 58.0305)
+graph_offset = Vector2(-497.217, 231.899)
 "nodes/Attack 2/node" = SubResource("AnimationNodeAnimation_drqt1")
 "nodes/Attack 2/position" = Vector2(-120, 400)
 nodes/AttackSpeed/node = SubResource("AnimationNodeTimeScale_wrmgp")
