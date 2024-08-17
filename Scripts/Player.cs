@@ -31,6 +31,9 @@ public partial class Player : CharacterBody3D
         animTree = GetNode<AnimationTree>("AnimationTree");
         dupeBodyAnimTree = GetNode<AnimationTree>("DupeBody/AnimationTree");
         animTree.AnimationFinished += OnAnimationFinished;
+        //Recording the left hand position here, just in case I need it.
+        //Could be useful for a shield or bow animation.
+        // Vector3 leftHandPos = new Vector3(-0.786f, -0.787f, -0.387f);
     }
     public override void _PhysicsProcess(double delta)
     {
@@ -108,11 +111,12 @@ public partial class Player : CharacterBody3D
     {
         attacking = true;
         animTree.Set("parameters/OneShot/request", (int)AnimationNodeOneShot.OneShotRequest.Fire);
+        dupeBodyAnimTree.Set("parameters/Attack/request", (int)AnimationNodeOneShot.OneShotRequest.Fire);
         await ToSignal(animTree, AnimationTree.SignalName.AnimationFinished);
     }
     private void OnAnimationFinished(StringName name)
     {
-        if (name == "attack-melee-right")
+        if (name == "custom/attack")
             attacking = false;
     }
 }
