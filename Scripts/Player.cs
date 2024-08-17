@@ -79,10 +79,18 @@ public partial class Player : CharacterBody3D
         // Add the gravity.
         if (!IsOnFloor())
             velocity.Y -= gravity * (float)delta;
-
+        else
+        {
+            animTree.Set("parameters/Jump/request", (int)AnimationNodeOneShot.OneShotRequest.Abort);
+            dupeBodyAnimTree.Set("parameters/Jump/request", (int)AnimationNodeOneShot.OneShotRequest.Abort);
+        }
         // Handle Jump.
         if (Input.IsActionJustPressed("jump") && IsOnFloor())
+        {
             velocity.Y = jumpVelocity;
+            animTree.Set("parameters/Jump/request", (int)AnimationNodeOneShot.OneShotRequest.Fire);
+            dupeBodyAnimTree.Set("parameters/Jump/request", (int)AnimationNodeOneShot.OneShotRequest.Fire);
+        }
 
         Vector2 inputDir = Input.GetVector("moveLeft", "moveRight", "moveForward", "moveBackward");
         Vector3 direction = (Transform.Basis * new Vector3(inputDir.X, 0, inputDir.Y)).Normalized();
@@ -98,8 +106,13 @@ public partial class Player : CharacterBody3D
                 velocity.X = direction.X * speed;
                 velocity.Z = direction.Z * speed;
             }
-            dupeBodyAnimTree.Set("parameters/Walk-Idle Blend/blend_amount", 0);
-            animTree.Set("parameters/Walk-Idle Blend/blend_amount", 0);
+            if (IsOnFloor())
+            {
+                dupeBodyAnimTree.Set("parameters/Walk-Idle Blend/blend_amount", 0);
+                animTree.Set("parameters/Walk-Idle Blend/blend_amount", 0);
+            }
+            else
+                dupeBodyAnimTree.Set("parameters/Walk-Idle Blend/blend_amount", 1);
         }
         else
         {
