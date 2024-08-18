@@ -2277,7 +2277,6 @@ animation = &"attack"
 animation = &"walk"
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_87y11"]
-graph_offset = Vector2(-27.1156, 36.2877)
 nodes/Attack/node = SubResource("AnimationNodeOneShot_2jp3m")
 nodes/Attack/position = Vector2(700, 40)
 nodes/Jump/node = SubResource("AnimationNodeOneShot_f82sd")
@@ -4423,7 +4422,7 @@ animation = &"walk"
 animation = &"jump"
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_orj1r"]
-graph_offset = Vector2(-242.052, 144.61)
+graph_offset = Vector2(-88.6933, 115.943)
 nodes/Animation/node = SubResource("AnimationNodeAnimation_fq2n0")
 nodes/Animation/position = Vector2(140, 440)
 nodes/Attack/node = SubResource("AnimationNodeOneShot_xs0a1")
@@ -4449,17 +4448,16 @@ script = ExtResource("1_r7wak")
 cameraController = NodePath("Camera3D")
 
 [node name="character-soldier" parent="." index="0"]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 0, 0, 0)
 
 [node name="Skeleton3D" parent="character-soldier" index="0"]
 bones/1/position = Vector3(0.083571, 0.17625, -0.02375)
 bones/2/position = Vector3(-0.083571, 0.17625, -0.02375)
 bones/3/position = Vector3(-1.44382e-15, 0.17625, -0.02375)
-bones/4/position = Vector3(0.262, 0.111417, 0.186551)
+bones/4/position = Vector3(-0.262, 0.111417, -0.139051)
 bones/4/scale = Vector3(0.999999, 1, 0.999999)
 bones/5/position = Vector3(-0.262106, 0.11175, 0.40275)
 bones/5/rotation = Quaternion(0, 0.577143, 0, 0.816643)
-bones/5/scale = Vector3(0.999999, 1, 0.999999)
 
 [node name="body-mesh" parent="character-soldier/Skeleton3D" index="0"]
 cast_shadow = 0
@@ -4471,7 +4469,7 @@ transparency = 1.0
 skin = SubResource("Skin_t06o8")
 
 [node name="DupeBody" type="Node3D" parent="." index="1"]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 0, 0, 0)
 
 [node name="character-soldier" type="Node3D" parent="DupeBody" index="0"]
 
