@@ -2259,3 +2259,6 @@ parameters/OneShot/active = false
 parameters/OneShot/internal_active = false
 parameters/OneShot/request = 0
 parameters/WalkIdleBlend/blend_amount = 0.0
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="." index="4"]
+debug_enabled = true

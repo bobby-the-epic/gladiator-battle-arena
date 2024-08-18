@@ -3,6 +3,7 @@ using System;
 
 public partial class Gladiator : CharacterBody3D
 {
+    bool navServerReady = false;
     bool attacking = false;
     float angle;
     public float gravity = ProjectSettings.GetSetting("physics/3d/default_gravity").AsSingle();
@@ -10,16 +11,22 @@ public partial class Gladiator : CharacterBody3D
     AnimationTree animTree;
     AnimationPlayer animPlayer;
     CharacterBody3D player;
+    NavigationAgent3D navAgent;
 
     public override void _Ready()
     {
         player = GetNode<CharacterBody3D>("../Player");
+        navAgent = GetNode<NavigationAgent3D>("NavigationAgent3D");
+        navAgent.TargetDesiredDistance = 3.0f;
         animTree = GetNode<AnimationTree>("AnimationTree");
         animPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
         animTree.AnimationFinished += OnAnimationFinished;
+        CallDeferred(MethodName.ActorSetup);
     }
     public override void _PhysicsProcess(double delta)
     {
+        if (!navServerReady)
+            return;
         SetMovement(delta);
     }
     private void SetMovement(double delta)
@@ -30,15 +37,16 @@ public partial class Gladiator : CharacterBody3D
          * the velocity formula use -lookDirection.
          */
 
+        navAgent.TargetPosition = player.Position;
         Vector3 velocity = Velocity;
-        Vector3 lookDirection = Transform.Origin - player.Transform.Origin;
+        Vector3 lookDirection = Transform.Origin - navAgent.GetNextPathPosition();
         lookDirection.Y = 0;
         lookDirection = lookDirection.Normalized();
         angle = Mathf.Atan2(lookDirection.X, lookDirection.Z);
         //Rotates the gladiator to look at the player
         Rotate(Vector3.Up, angle - Rotation.Y);
 
-        if (Position.DistanceTo(player.Position) > 3)
+        if (!navAgent.IsNavigationFinished())
         {
             animTree.Set("parameters/WalkIdleBlend/blend_amount", 0.5f);
             velocity = -lookDirection * speed;
@@ -62,10 +70,15 @@ public partial class Gladiator : CharacterBody3D
         animTree.Set("parameters/OneShot/request", (int)AnimationNodeOneShot.OneShotRequest.Fire);
         await ToSignal(animTree, AnimationTree.SignalName.AnimationFinished);
     }
+    private async void ActorSetup()
+    {
+        // Wait for the first physics frame so the NavigationServer can sync.
+        await ToSignal(GetTree(), SceneTree.SignalName.PhysicsFrame);
+        navServerReady = true;
+    }
     private void OnAnimationFinished(StringName animName)
     {
         if (animName == "custom/attack")
             attacking = false;
-
     }
 }
