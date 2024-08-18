@@ -31,15 +31,9 @@ public partial class Gladiator : CharacterBody3D
     }
     private void SetMovement(double delta)
     {
-        /*
-         * Something with the movement logic makes the model face away from
-         * the player, so I just flipped the model by 180 degrees and made 
-         * the velocity formula use -lookDirection.
-         */
-
         navAgent.TargetPosition = player.Position;
         Vector3 velocity = Velocity;
-        Vector3 lookDirection = Transform.Origin - navAgent.GetNextPathPosition();
+        Vector3 lookDirection = navAgent.GetNextPathPosition() - Transform.Origin;
         lookDirection.Y = 0;
         lookDirection = lookDirection.Normalized();
         angle = Mathf.Atan2(lookDirection.X, lookDirection.Z);
@@ -49,7 +43,7 @@ public partial class Gladiator : CharacterBody3D
         if (!navAgent.IsNavigationFinished())
         {
             animTree.Set("parameters/WalkIdleBlend/blend_amount", 0.5f);
-            velocity = -lookDirection * speed;
+            velocity = lookDirection * speed;
         }
         else if (!attacking)
         {
