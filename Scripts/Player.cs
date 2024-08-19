@@ -13,8 +13,10 @@ public partial class Player : CharacterBody3D
     float rotationInput;
     float tiltInput;
     float pitch;
+    [Export]
     bool attacking = false;
-    bool moving = false;
+    [Export]
+    bool blocking = false;
     float tiltLowerLimit = Mathf.DegToRad(-85);
     float tiltUpperLimit = Mathf.DegToRad(85);
     Vector3 mouseRotation;
@@ -47,8 +49,13 @@ public partial class Player : CharacterBody3D
     }
     public override void _Process(double delta)
     {
-        if (Input.IsActionJustPressed("attack") && !attacking)
+        if (Input.IsActionJustPressed("attack") && !attacking && !blocking)
             Attack();
+        //The animTree detects the blocking bool and plays the animations in its state machine.
+        if (Input.IsActionJustPressed("block"))
+            blocking = true;
+        if (Input.IsActionJustReleased("block"))
+            blocking = false;
     }
     public override void _UnhandledInput(InputEvent @event)
     {
@@ -108,18 +115,22 @@ public partial class Player : CharacterBody3D
             }
             if (IsOnFloor())
             {
+                //If the player is moving and on the floor, play the walk animation.
                 dupeBodyAnimTree.Set("parameters/Walk-Idle Blend/blend_amount", 0);
-                animTree.Set("parameters/Walk-Idle Blend/blend_amount", 0);
+                animTree.Set("parameters/Walk-State Blend/blend_amount", 1);
             }
             else
+            {
+                //If the player is midair, stop playing the walk animation.
                 dupeBodyAnimTree.Set("parameters/Walk-Idle Blend/blend_amount", 1);
+                animTree.Set("parameters/Walk-State Blend/blend_amount", 0);
+            }
         }
         else
         {
             velocity.X = Mathf.MoveToward(Velocity.X, 0, speed);
             velocity.Z = Mathf.MoveToward(Velocity.Z, 0, speed);
             dupeBodyAnimTree.Set("parameters/Walk-Idle Blend/blend_amount", 1);
-            animTree.Set("parameters/Walk-Idle Blend/blend_amount", 1);
         }
 
         Velocity = velocity;
@@ -128,8 +139,8 @@ public partial class Player : CharacterBody3D
     private async void Attack()
     {
         // Plays the attack animation and waits for the AnimationFinished signal to fire.
+        // The animation state machine detects the attacking bool and plays the animation in the state machine.
         attacking = true;
-        animTree.Set("parameters/Attack/request", (int)AnimationNodeOneShot.OneShotRequest.Fire);
         dupeBodyAnimTree.Set("parameters/Attack/request", (int)AnimationNodeOneShot.OneShotRequest.Fire);
         await ToSignal(animTree, AnimationTree.SignalName.AnimationFinished);
     }
