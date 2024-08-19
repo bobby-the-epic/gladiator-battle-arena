@@ -2261,5 +2261,7 @@ parameters/OneShot/request = 0
 parameters/WalkIdleBlend/blend_amount = 0.0
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="." index="4"]
+target_desired_distance = 3.0
 avoidance_enabled = true
+radius = 1.0
 debug_enabled = true

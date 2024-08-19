@@ -15,9 +15,9 @@ public partial class Gladiator : CharacterBody3D
 
     public override void _Ready()
     {
-        player = GetNode<CharacterBody3D>("../Player");
+        player = GetNode<CharacterBody3D>("/root/Main/Player");
         navAgent = GetNode<NavigationAgent3D>("NavigationAgent3D");
-        navAgent.TargetDesiredDistance = 3.0f;
+        navAgent.VelocityComputed += OnVelocityComputed;
         animTree = GetNode<AnimationTree>("AnimationTree");
         animPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
         animTree.AnimationFinished += OnAnimationFinished;
@@ -31,11 +31,10 @@ public partial class Gladiator : CharacterBody3D
     }
     private void SetMovement(double delta)
     {
-        navAgent.TargetPosition = player.Position;
+        navAgent.TargetPosition = player.GlobalPosition;
         Vector3 velocity = Velocity;
-        Vector3 lookDirection = navAgent.GetNextPathPosition() - Transform.Origin;
+        Vector3 lookDirection = GlobalPosition.DirectionTo(navAgent.GetNextPathPosition());
         lookDirection.Y = 0;
-        lookDirection = lookDirection.Normalized();
         angle = Mathf.Atan2(lookDirection.X, lookDirection.Z);
         //Rotates the gladiator to look at the player
         Rotate(Vector3.Up, angle - Rotation.Y);
@@ -55,8 +54,7 @@ public partial class Gladiator : CharacterBody3D
         if (!IsOnFloor())
             velocity.Y -= gravity * (float)delta;
 
-        Velocity = velocity;
-        MoveAndSlide();
+        navAgent.Velocity = velocity;
     }
     private async void Attack()
     {
@@ -74,5 +72,10 @@ public partial class Gladiator : CharacterBody3D
     {
         if (animName == "custom/attack")
             attacking = false;
+    }
+    private void OnVelocityComputed(Vector3 safeVelocity)
+    {
+        Velocity = safeVelocity;
+        MoveAndSlide();
     }
 }
