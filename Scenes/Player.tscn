@@ -1,4 +1,4 @@
-[gd_scene load_steps=100 format=4 uid="uid://cycmto2oewk3v"]
+[gd_scene load_steps=101 format=4 uid="uid://cycmto2oewk3v"]
 
 [ext_resource type="PackedScene" uid="uid://btg8x3sln11g2" path="res://Assets/Mini Arena/character-soldier.glb" id="1_b1a85"]
 [ext_resource type="Script" path="res://Scripts/Player.cs" id="1_r7wak"]
@@ -4544,8 +4544,9 @@ nodes/jump/position = Vector2(920, 500)
 nodes/output/position = Vector2(1240, 280)
 node_connections = [&"Jump", 0, &"Walk Blend", &"Jump", 1, &"jump", &"Walk Blend", 0, &"StateMachine", &"Walk Blend", 1, &"Animation", &"output", 0, &"Jump"]
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_0f5aw"]
+
 [node name="Player" node_paths=PackedStringArray("cameraController") instance=ExtResource("1_b1a85")]
-transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
 collision_layer = 2
 collision_mask = 5
 script = ExtResource("1_r7wak")
@@ -4555,11 +4556,11 @@ cameraController = NodePath("Camera3D")
 transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 0, 0, 0)
 
 [node name="Skeleton3D" parent="character-soldier" index="0"]
-bones/4/position = Vector3(0.262, 0.111417, 0.186551)
-bones/4/scale = Vector3(0.999999, 1, 0.999999)
-bones/5/position = Vector3(-0.262106, 0.11175, 0.40275)
+bones/4/position = Vector3(0.786, -0.41325, 0.0121531)
+bones/4/scale = Vector3(3, 3, 3)
+bones/5/position = Vector3(-0.432581, -0.41225, 0.696373)
 bones/5/rotation = Quaternion(0, 0.577143, 0, 0.816643)
-bones/5/scale = Vector3(1, 1, 1)
+bones/5/scale = Vector3(3, 3, 3)
 
 [node name="body-mesh" parent="character-soldier/Skeleton3D" index="0"]
 cast_shadow = 0
@@ -4691,7 +4692,7 @@ parameters/Jump/request = 0
 "parameters/Walk Blend/blend_amount" = 0.0
 
 [node name="Camera3D" type="Camera3D" parent="." index="5"]
-transform = Transform3D(0.333333, 0, 0, 0, 0.333333, 0, 0, 0, 0.333333, 2.36848e-15, 0.55, -0.25)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.36848e-15, 0.55, -0.25)
 
 [node name="LeftArm" type="BoneAttachment3D" parent="Camera3D" index="0"]
 transform = Transform3D(-1.00142, 0, 2.82792, 0, 3, 0, -2.82792, 0, -1.00142, -0.786, -0.787, 0.261597)
@@ -4702,7 +4703,7 @@ use_external_skeleton = true
 external_skeleton = NodePath("../../character-soldier/Skeleton3D")
 
 [node name="RightArm" type="BoneAttachment3D" parent="Camera3D" index="1"]
-transform = Transform3D(-1.00143, 0, -2.82792, 0, 3, 0, 2.82792, 0, -1.00143, 0.786317, -0.786, -0.387)
+transform = Transform3D(-1.00143, 0, -2.82792, 0, 3, 0, 2.82792, 0, -1.00143, 0.432581, -0.786, -0.422623)
 bone_name = "arm-right"
 bone_idx = 5
 override_pose = true
@@ -4716,3 +4717,9 @@ transform = Transform3D(0.911211, -3.60132e-08, -0.411944, 0, -1, 8.74229e-08, -
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_31863")
 skeleton = NodePath("")
+
+[node name="Area3D" type="Area3D" parent="." index="6"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.666667)
+shape = SubResource("BoxShape3D_0f5aw")
