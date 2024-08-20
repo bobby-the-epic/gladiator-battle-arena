@@ -111,7 +111,7 @@ public partial class Player : CharacterBody3D
 
         if (direction != Vector3.Zero)
         {
-            if (Input.IsPhysicalKeyPressed(Key.Shift))
+            if (Input.IsPhysicalKeyPressed(Key.Shift) && inputDir.Y < 0)
             {
                 velocity.X = direction.X * sprintSpeed;
                 velocity.Z = direction.Z * sprintSpeed;
