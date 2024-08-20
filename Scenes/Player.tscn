@@ -166,6 +166,33 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_ud38b")
 
+[sub_resource type="Animation" id="Animation_w0cfn"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("character-soldier/Skeleton3D/BoneAttachment3D:override_pose")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("character-soldier/Skeleton3D/BoneAttachment3D:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 1.0472, 0)]
+}
+
 [sub_resource type="Animation" id="Animation_fuu5l"]
 resource_name = "attack"
 tracks/0/type = "value"
@@ -2222,33 +2249,6 @@ tracks/10/interp = 1
 tracks/10/loop_wrap = true
 tracks/10/keys = PackedFloat32Array(0, 1, 0, 0, 0, -1, 0.0333333, 1, -0.0817211, 0, 0, -0.996655, 0.1, 1, -0.427555, 0, 0, -0.903989, 0.133333, 1, -0.5, 0, 0, -0.866025, 0.166667, 1, -0.467004, 0, 0, -0.884255, 0.2, 1, -0.379779, 0, 0, -0.925077, 0.233333, 1, -0.256796, 0, 0, -0.966466, 0.266667, 1, -0.121176, 0, 0, -0.992631, 0.3, 1, -3.72529e-09, 0, 0, -1, 0.333333, 1, 0.121176, 0, 0, -0.992631, 0.366667, 1, 0.256795, 0, 0, -0.966466, 0.4, 1, 0.379779, 0, 0, -0.925077, 0.433333, 1, 0.467004, 0, 0, -0.884255, 0.466667, 1, 0.5, 0, 0, -0.866025, 0.5, 1, 0.452123, 0, 0, -0.891955, 0.533333, 1, 0.332819, 0, 0, -0.942991, 0.566667, 1, 0.183265, 0, 0, -0.983064, 0.6, 1, 0.0544273, 0, 0, -0.998518, 0.633333, 1, 0.0272237, 0, 0, -0.999629, 0.666667, 1, 0, 0, 0, -1)
 
-[sub_resource type="Animation" id="Animation_w0cfn"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("character-soldier/Skeleton3D/BoneAttachment3D:override_pose")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("character-soldier/Skeleton3D/BoneAttachment3D:rotation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(0, 1.0472, 0)]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ygdnq"]
 _data = {
 "RESET": SubResource("Animation_w0cfn"),
@@ -2305,25 +2305,25 @@ animation = &"attack"
 animation = &"walk"
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_87y11"]
-graph_offset = Vector2(-146.732, 33.8148)
+graph_offset = Vector2(-508.512, -38.4487)
 nodes/Attack/node = SubResource("AnimationNodeOneShot_2jp3m")
 nodes/Attack/position = Vector2(700, 40)
 nodes/Jump/node = SubResource("AnimationNodeOneShot_f82sd")
 nodes/Jump/position = Vector2(900, 200)
 nodes/TimeScale/node = SubResource("AnimationNodeTimeScale_r71m5")
 nodes/TimeScale/position = Vector2(540, 300)
-"nodes/Walk-Idle Blend/node" = SubResource("AnimationNodeBlend2_3rr27")
-"nodes/Walk-Idle Blend/position" = Vector2(360, 20)
+"nodes/Walk Blend/node" = SubResource("AnimationNodeBlend2_3rr27")
+"nodes/Walk Blend/position" = Vector2(360, 20)
 nodes/idle/node = SubResource("AnimationNodeAnimation_34ggb")
-nodes/idle/position = Vector2(-60, 160)
+nodes/idle/position = Vector2(100, -20)
 nodes/jump/node = SubResource("AnimationNodeAnimation_0ac0n")
 nodes/jump/position = Vector2(700, 360)
 nodes/melee/node = SubResource("AnimationNodeAnimation_vb0do")
 nodes/melee/position = Vector2(340, 300)
 nodes/output/position = Vector2(1120, 200)
 nodes/walk/node = SubResource("AnimationNodeAnimation_q0son")
-nodes/walk/position = Vector2(-20, -20)
-node_connections = [&"Attack", 0, &"Walk-Idle Blend", &"Attack", 1, &"TimeScale", &"Jump", 0, &"Attack", &"Jump", 1, &"jump", &"TimeScale", 0, &"melee", &"Walk-Idle Blend", 0, &"walk", &"Walk-Idle Blend", 1, &"idle", &"output", 0, &"Jump"]
+nodes/walk/position = Vector2(-20, 100)
+node_connections = [&"Attack", 0, &"Walk Blend", &"Attack", 1, &"TimeScale", &"Jump", 0, &"Attack", &"Jump", 1, &"jump", &"TimeScale", 0, &"melee", &"Walk Blend", 0, &"idle", &"Walk Blend", 1, &"walk", &"output", 0, &"Jump"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_46q8h"]
 radius = 0.4
@@ -4417,8 +4417,17 @@ tracks/0/keys = {
 "update": 0,
 "values": [Vector3(0, -1.91114, 0), Vector3(-0.250382, -1.80378, -0.806997), Vector3(-0.109817, -1.89359, -0.31663), Vector3(-0.0928139, -1.62969, 0.28233), Vector3(-0.0265717, -1.67742, 1.04325), Vector3(0, -1.91114, 0)]
 }
-
-[sub_resource type="Animation" id="Animation_ct31w"]
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Camera3D/RightArm")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(),
+"transitions": PackedFloat32Array(),
+"values": []
+}
 
 [sub_resource type="Animation" id="Animation_v7j2u"]
 resource_name = "block"
@@ -4451,6 +4460,8 @@ tracks/0/keys = {
 "update": 0,
 "values": [Vector3(0.731674, -2.03604, -0.323598), Vector3(0, -1.91114, 0)]
 }
+
+[sub_resource type="Animation" id="Animation_ct31w"]
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_eknmv"]
 _data = {
@@ -4514,13 +4525,13 @@ states/Start/position = Vector2(129, 107)
 states/custom_attack/node = SubResource("AnimationNodeAnimation_rrk0m")
 states/custom_attack/position = Vector2(278, 2)
 states/custom_block/node = SubResource("AnimationNodeAnimation_ne712")
-states/custom_block/position = Vector2(492, 61)
+states/custom_block/position = Vector2(493, 62)
 states/custom_blockEnd/node = SubResource("AnimationNodeAnimation_fwr25")
 states/custom_blockEnd/position = Vector2(785.184, 134)
 states/custom_idle/node = SubResource("AnimationNodeAnimation_v66tu")
 states/custom_idle/position = Vector2(278, 134)
 transitions = ["custom_idle", "custom_attack", SubResource("AnimationNodeStateMachineTransition_8sak4"), "custom_idle", "custom_block", SubResource("AnimationNodeStateMachineTransition_rank5"), "custom_attack", "custom_idle", SubResource("AnimationNodeStateMachineTransition_75gpc"), "custom_block", "custom_blockEnd", SubResource("AnimationNodeStateMachineTransition_cgk06"), "custom_blockEnd", "custom_idle", SubResource("AnimationNodeStateMachineTransition_8h2ev"), "Start", "custom_idle", SubResource("AnimationNodeStateMachineTransition_d5sw7")]
-graph_offset = Vector2(-164.943, -36.9336)
+graph_offset = Vector2(-118.81, -73.7696)
 
 [sub_resource type="AnimationNodeBlend2" id="AnimationNodeBlend2_k6nr0"]
 filter_enabled = true
@@ -4530,22 +4541,24 @@ filters = ["character-soldier/Skeleton3D:leg-left", "character-soldier/Skeleton3
 animation = &"jump"
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_orj1r"]
-graph_offset = Vector2(32.1953, 48.6912)
+graph_offset = Vector2(194.366, 224.233)
 nodes/Animation/node = SubResource("AnimationNodeAnimation_d5cr1")
 nodes/Animation/position = Vector2(720, 280)
 nodes/Jump/node = SubResource("AnimationNodeOneShot_m62s1")
 nodes/Jump/position = Vector2(1160, 440)
 nodes/StateMachine/node = SubResource("AnimationNodeStateMachine_ppbbr")
 nodes/StateMachine/position = Vector2(760, 120)
-"nodes/Walk-State Blend/node" = SubResource("AnimationNodeBlend2_k6nr0")
-"nodes/Walk-State Blend/position" = Vector2(940, 200)
+"nodes/Walk Blend/node" = SubResource("AnimationNodeBlend2_k6nr0")
+"nodes/Walk Blend/position" = Vector2(940, 200)
 nodes/jump/node = SubResource("AnimationNodeAnimation_gm1tc")
 nodes/jump/position = Vector2(920, 500)
 nodes/output/position = Vector2(1240, 280)
-node_connections = [&"Jump", 0, &"Walk-State Blend", &"Jump", 1, &"jump", &"Walk-State Blend", 0, &"StateMachine", &"Walk-State Blend", 1, &"Animation", &"output", 0, &"Jump"]
+node_connections = [&"Jump", 0, &"Walk Blend", &"Jump", 1, &"jump", &"Walk Blend", 0, &"StateMachine", &"Walk Blend", 1, &"Animation", &"output", 0, &"Jump"]
 
 [node name="Player" node_paths=PackedStringArray("cameraController") instance=ExtResource("1_b1a85")]
 transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
+collision_layer = 2
+collision_mask = 5
 script = ExtResource("1_r7wak")
 cameraController = NodePath("Camera3D")
 
@@ -4665,7 +4678,7 @@ parameters/Jump/active = false
 parameters/Jump/internal_active = false
 parameters/Jump/request = 0
 parameters/TimeScale/scale = 1.5
-"parameters/Walk-Idle Blend/blend_amount" = 1.0
+"parameters/Walk Blend/blend_amount" = 0.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." index="2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
@@ -4686,7 +4699,7 @@ anim_player = NodePath("../AnimationPlayer")
 parameters/Jump/active = false
 parameters/Jump/internal_active = false
 parameters/Jump/request = 0
-"parameters/Walk-State Blend/blend_amount" = 0.0
+"parameters/Walk Blend/blend_amount" = 0.0
 
 [node name="Camera3D" type="Camera3D" parent="." index="5"]
 transform = Transform3D(0.333333, 0, 0, 0, 0.333333, 0, 0, 0, 0.333333, 2.36848e-15, 0.55, -0.25)

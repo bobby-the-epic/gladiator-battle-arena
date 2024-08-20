@@ -21,6 +21,21 @@ public partial class Player : CharacterBody3D
     float tiltUpperLimit = Mathf.DegToRad(85);
     Vector3 mouseRotation;
     AnimationTree animTree, dupeBodyAnimTree;
+    //Animation parameter StringNames for more readable code
+    StringName walkBlend = new StringName("parameters/Walk Blend/blend_amount");
+    StringName jumpRequest = new StringName("parameters/Jump/request");
+    StringName attackRequest = new StringName("parameters/Attack/request");
+
+    enum ANIM
+    {
+        IDLE,
+        MOVING,
+        JUMPING,
+        MOVINGANDJUMPING
+    }
+    ANIM previousAnim = ANIM.IDLE;
+    ANIM newAnim = ANIM.IDLE;
+
     /*
      * I used a duplicate body mesh for the shadows. I wanted the camera to be able
      * to see the player's body, but I also had to do first person animations. I separated
@@ -45,6 +60,7 @@ public partial class Player : CharacterBody3D
     public override void _PhysicsProcess(double delta)
     {
         SetMovement(delta);
+        Animate();
         UpdateCamera(delta);
     }
     public override void _Process(double delta)
@@ -82,25 +98,17 @@ public partial class Player : CharacterBody3D
     private void SetMovement(double delta)
     {
         Vector3 velocity = Velocity;
+        Vector2 inputDir = Input.GetVector("moveLeft", "moveRight", "moveForward", "moveBackward");
+        Vector3 direction = (Transform.Basis * new Vector3(inputDir.X, 0, inputDir.Y)).Normalized();
 
         // Add the gravity.
         if (!IsOnFloor())
             velocity.Y -= gravity * (float)delta;
-        else
-        {
-            animTree.Set("parameters/Jump/request", (int)AnimationNodeOneShot.OneShotRequest.Abort);
-            dupeBodyAnimTree.Set("parameters/Jump/request", (int)AnimationNodeOneShot.OneShotRequest.Abort);
-        }
+
         // Handle Jump.
         if (Input.IsActionJustPressed("jump") && IsOnFloor())
-        {
             velocity.Y = jumpVelocity;
-            animTree.Set("parameters/Jump/request", (int)AnimationNodeOneShot.OneShotRequest.Fire);
-            dupeBodyAnimTree.Set("parameters/Jump/request", (int)AnimationNodeOneShot.OneShotRequest.Fire);
-        }
 
-        Vector2 inputDir = Input.GetVector("moveLeft", "moveRight", "moveForward", "moveBackward");
-        Vector3 direction = (Transform.Basis * new Vector3(inputDir.X, 0, inputDir.Y)).Normalized();
         if (direction != Vector3.Zero)
         {
             if (Input.IsPhysicalKeyPressed(Key.Shift))
@@ -113,28 +121,59 @@ public partial class Player : CharacterBody3D
                 velocity.X = direction.X * speed;
                 velocity.Z = direction.Z * speed;
             }
-            if (IsOnFloor())
-            {
-                //If the player is moving and on the floor, play the walk animation.
-                dupeBodyAnimTree.Set("parameters/Walk-Idle Blend/blend_amount", 0);
-                animTree.Set("parameters/Walk-State Blend/blend_amount", 1);
-            }
-            else
-            {
-                //If the player is midair, stop playing the walk animation.
-                dupeBodyAnimTree.Set("parameters/Walk-Idle Blend/blend_amount", 1);
-                animTree.Set("parameters/Walk-State Blend/blend_amount", 0);
-            }
         }
         else
         {
             velocity.X = Mathf.MoveToward(Velocity.X, 0, speed);
             velocity.Z = Mathf.MoveToward(Velocity.Z, 0, speed);
-            dupeBodyAnimTree.Set("parameters/Walk-Idle Blend/blend_amount", 1);
         }
 
         Velocity = velocity;
         MoveAndSlide();
+    }
+    private void Animate()
+    {
+        /*
+         * Sets the player's animation based on whether the player is
+         * moving and if they are on the floor.
+         */
+
+        if (Velocity != Vector3.Zero && IsOnFloor())
+            newAnim = ANIM.MOVING;
+        else if (Velocity != Vector3.Zero && !IsOnFloor())
+            newAnim = ANIM.MOVINGANDJUMPING;
+        else if (Velocity == Vector3.Zero && !IsOnFloor())
+            newAnim = ANIM.JUMPING;
+        else
+            newAnim = ANIM.IDLE;
+
+        if (newAnim != previousAnim)
+        {
+            switch (newAnim)
+            {
+                case ANIM.MOVING:
+                    animTree.Set(walkBlend, 1);
+                    dupeBodyAnimTree.Set(walkBlend, 1);
+                    animTree.Set(jumpRequest, (int)AnimationNodeOneShot.OneShotRequest.Abort);
+                    dupeBodyAnimTree.Set(jumpRequest, (int)AnimationNodeOneShot.OneShotRequest.Abort);
+                    break;
+                case ANIM.JUMPING:
+                    animTree.Set(jumpRequest, (int)AnimationNodeOneShot.OneShotRequest.Fire);
+                    dupeBodyAnimTree.Set(jumpRequest, (int)AnimationNodeOneShot.OneShotRequest.Fire);
+                    break;
+                case ANIM.MOVINGANDJUMPING:
+                    animTree.Set(walkBlend, 1);
+                    dupeBodyAnimTree.Set(walkBlend, 1);
+                    goto case ANIM.JUMPING;
+                case ANIM.IDLE:
+                    animTree.Set(walkBlend, 0);
+                    dupeBodyAnimTree.Set(walkBlend, 0);
+                    animTree.Set(jumpRequest, (int)AnimationNodeOneShot.OneShotRequest.Abort);
+                    dupeBodyAnimTree.Set(jumpRequest, (int)AnimationNodeOneShot.OneShotRequest.Abort);
+                    break;
+            }
+        }
+        previousAnim = newAnim;
     }
     private async void Attack()
     {
