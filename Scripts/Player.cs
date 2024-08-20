@@ -9,14 +9,12 @@ public partial class Player : CharacterBody3D
 
     // Get the gravity from the project settings to be synced with RigidBody nodes.
     public float gravity = ProjectSettings.GetSetting("physics/3d/default_gravity").AsSingle();
+    public int health = 100;
+    public bool dead = false;
 
     float rotationInput;
     float tiltInput;
     float pitch;
-    [Export]
-    bool attacking = false;
-    [Export]
-    bool blocking = false;
     float tiltLowerLimit = Mathf.DegToRad(-85);
     float tiltUpperLimit = Mathf.DegToRad(85);
     Vector3 mouseRotation;
@@ -43,9 +41,16 @@ public partial class Player : CharacterBody3D
      */
 
     [Export]
+    bool attacking = false;
+    [Export]
+    bool blocking = false;
+    [Export]
     float mouseSensitivity = 0.5f;
     [Export]
     Node3D cameraController;
+
+    [Signal]
+    public delegate void HitEventHandler(int damage);
 
     public override void _Ready()
     {
@@ -53,6 +58,8 @@ public partial class Player : CharacterBody3D
         animTree = GetNode<AnimationTree>("AnimationTree");
         dupeBodyAnimTree = GetNode<AnimationTree>("DupeBody/AnimationTree");
         animTree.AnimationFinished += OnAnimationFinished;
+        Hit += OnHit;
+
         //Recording the left hand position here, just in case I need it.
         //Could be useful for a shield or bow animation.
         // Vector3 leftHandPos = new Vector3(-0.786f, -0.787f, -0.387f);
@@ -187,5 +194,17 @@ public partial class Player : CharacterBody3D
     {
         if (name == "custom/attack")
             attacking = false;
+    }
+    private void OnHit(int damage)
+    {
+        if (!dead)
+        {
+            health -= damage;
+            GD.Print("Player took " + damage + " damage");
+            if (health <= 0)
+            {
+                dead = true;
+            }
+        }
     }
 }

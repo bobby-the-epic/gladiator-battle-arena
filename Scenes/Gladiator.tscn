@@ -2211,7 +2211,7 @@ nodes/WalkIdleBlend/position = Vector2(120, 140)
 nodes/output/position = Vector2(620, 160)
 node_connections = [&"AttackSpeed", 0, &"Attack 2", &"OneShot", 0, &"WalkIdleBlend", &"OneShot", 1, &"AttackSpeed", &"WalkIdleBlend", 0, &"Idle", &"WalkIdleBlend", 1, &"Walk", &"output", 0, &"OneShot"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_mwivy"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_btwkv"]
 size = Vector3(2, 2, 2)
 
 [node name="Gladiator" instance=ExtResource("1_c1yec")]
@@ -2271,8 +2271,11 @@ avoidance_enabled = true
 radius = 1.0
 debug_enabled = true
 
-[node name="ShapeCast3D" type="ShapeCast3D" parent="." index="5"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 1.5)
-shape = SubResource("BoxShape3D_mwivy")
+[node name="Area3D" type="Area3D" parent="." index="5"]
+collision_layer = 4
 collision_mask = 2
-debug_shape_custom_color = Color(0, 1, 0, 1)
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 1)
+shape = SubResource("BoxShape3D_btwkv")

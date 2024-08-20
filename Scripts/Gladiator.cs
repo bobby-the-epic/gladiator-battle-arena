@@ -12,6 +12,7 @@ public partial class Gladiator : CharacterBody3D
     AnimationPlayer animPlayer;
     CharacterBody3D player;
     NavigationAgent3D navAgent;
+    Area3D attackRange;
 
     public override void _Ready()
     {
@@ -21,6 +22,7 @@ public partial class Gladiator : CharacterBody3D
         animTree = GetNode<AnimationTree>("AnimationTree");
         animPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
         animTree.AnimationFinished += OnAnimationFinished;
+        attackRange = GetNode<Area3D>("Area3D");
         CallDeferred(MethodName.ActorSetup);
     }
     public override void _PhysicsProcess(double delta)
@@ -71,7 +73,12 @@ public partial class Gladiator : CharacterBody3D
     private void OnAnimationFinished(StringName animName)
     {
         if (animName == "custom/attack")
+        {
             attacking = false;
+            //If the player is in the range of attack, then damage the player
+            if (attackRange.HasOverlappingBodies())
+                player.EmitSignal(Player.SignalName.Hit, 5);
+        }
     }
     private void OnVelocityComputed(Vector3 safeVelocity)
     {
