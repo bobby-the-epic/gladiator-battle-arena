@@ -2305,7 +2305,7 @@ animation = &"attack"
 animation = &"walk"
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_87y11"]
-graph_offset = Vector2(-508.512, -38.4487)
+graph_offset = Vector2(-153.545, 176.26)
 nodes/Attack/node = SubResource("AnimationNodeOneShot_2jp3m")
 nodes/Attack/position = Vector2(700, 40)
 nodes/Jump/node = SubResource("AnimationNodeOneShot_f82sd")
@@ -4431,7 +4431,7 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id="Animation_v7j2u"]
 resource_name = "block"
-length = 0.25
+length = 0.2
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -4439,7 +4439,7 @@ tracks/0/path = NodePath("Camera3D/RightArm:rotation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.233333),
+"times": PackedFloat32Array(0, 0.2),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Vector3(0, -1.91114, 0), Vector3(0.731674, -2.03604, -0.323598)]
@@ -4447,7 +4447,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_lttqf"]
 resource_name = "blockEnd"
-length = 0.25
+length = 0.2
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -4455,7 +4455,7 @@ tracks/0/path = NodePath("Camera3D/RightArm:rotation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.25),
+"times": PackedFloat32Array(0, 0.2),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Vector3(0.731674, -2.03604, -0.323598), Vector3(0, -1.91114, 0)]
@@ -4481,7 +4481,7 @@ filters = ["character-soldier/Skeleton3D:leg-left", "character-soldier/Skeleton3
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_rrk0m"]
 animation = &"custom/attack"
 use_custom_timeline = true
-timeline_length = 0.7
+timeline_length = 0.5
 stretch_time_scale = true
 start_offset = 0.0
 loop_mode = 0
@@ -4531,7 +4531,7 @@ states/custom_blockEnd/position = Vector2(785.184, 134)
 states/custom_idle/node = SubResource("AnimationNodeAnimation_v66tu")
 states/custom_idle/position = Vector2(278, 134)
 transitions = ["custom_idle", "custom_attack", SubResource("AnimationNodeStateMachineTransition_8sak4"), "custom_idle", "custom_block", SubResource("AnimationNodeStateMachineTransition_rank5"), "custom_attack", "custom_idle", SubResource("AnimationNodeStateMachineTransition_75gpc"), "custom_block", "custom_blockEnd", SubResource("AnimationNodeStateMachineTransition_cgk06"), "custom_blockEnd", "custom_idle", SubResource("AnimationNodeStateMachineTransition_8h2ev"), "Start", "custom_idle", SubResource("AnimationNodeStateMachineTransition_d5sw7")]
-graph_offset = Vector2(-118.81, -73.7696)
+graph_offset = Vector2(-176.713, -86.9219)
 
 [sub_resource type="AnimationNodeBlend2" id="AnimationNodeBlend2_k6nr0"]
 filter_enabled = true
@@ -4541,7 +4541,7 @@ filters = ["character-soldier/Skeleton3D:leg-left", "character-soldier/Skeleton3
 animation = &"jump"
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_orj1r"]
-graph_offset = Vector2(194.366, 224.233)
+graph_offset = Vector2(286.638, 102.289)
 nodes/Animation/node = SubResource("AnimationNodeAnimation_d5cr1")
 nodes/Animation/position = Vector2(720, 280)
 nodes/Jump/node = SubResource("AnimationNodeOneShot_m62s1")
