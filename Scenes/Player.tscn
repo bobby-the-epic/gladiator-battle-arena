@@ -4417,17 +4417,6 @@ tracks/0/keys = {
 "update": 0,
 "values": [Vector3(0, -1.91114, 0), Vector3(-0.250382, -1.80378, -0.806997), Vector3(-0.109817, -1.89359, -0.31663), Vector3(-0.0928139, -1.62969, 0.28233), Vector3(-0.0265717, -1.67742, 1.04325), Vector3(0, -1.91114, 0)]
 }
-tracks/1/type = "method"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Camera3D/RightArm")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(),
-"transitions": PackedFloat32Array(),
-"values": []
-}
 
 [sub_resource type="Animation" id="Animation_v7j2u"]
 resource_name = "block"
