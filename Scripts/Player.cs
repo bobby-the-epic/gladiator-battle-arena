@@ -19,6 +19,7 @@ public partial class Player : CharacterBody3D
     float tiltUpperLimit = Mathf.DegToRad(85);
     Vector3 mouseRotation;
     AnimationTree animTree, dupeBodyAnimTree;
+    Area3D attackRange;
     //Animation parameter StringNames for more readable code
     StringName walkBlend = new StringName("parameters/Walk Blend/blend_amount");
     StringName jumpRequest = new StringName("parameters/Jump/request");
@@ -57,6 +58,7 @@ public partial class Player : CharacterBody3D
         Input.MouseMode = Input.MouseModeEnum.Captured;
         animTree = GetNode<AnimationTree>("AnimationTree");
         dupeBodyAnimTree = GetNode<AnimationTree>("DupeBody/AnimationTree");
+        attackRange = GetNode<Area3D>("Area3D");
         animTree.AnimationFinished += OnAnimationFinished;
         Hit += OnHit;
 
@@ -193,14 +195,24 @@ public partial class Player : CharacterBody3D
     private void OnAnimationFinished(StringName name)
     {
         if (name == "custom/attack")
+        {
             attacking = false;
+
+            if (attackRange.HasOverlappingBodies())
+            {
+                Godot.Collections.Array<Node3D> gladiatorsHit = attackRange.GetOverlappingBodies();
+                for (int counter = 0; counter < gladiatorsHit.Count; counter++)
+                {
+                    gladiatorsHit[counter].EmitSignal(Gladiator.SignalName.Hit, 5);
+                }
+            }
+        }
     }
     private void OnHit(int damage)
     {
         if (!dead)
         {
             health -= damage;
-            GD.Print("Player took " + damage + " damage");
             if (health <= 0)
             {
                 dead = true;

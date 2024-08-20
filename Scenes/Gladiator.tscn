@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=4 uid="uid://s8frao1jmpyi"]
+[gd_scene load_steps=48 format=4 uid="uid://s8frao1jmpyi"]
 
 [ext_resource type="PackedScene" uid="uid://btg8x3sln11g2" path="res://Assets/Mini Arena/character-soldier.glb" id="1_c1yec"]
 [ext_resource type="Script" path="res://Scripts/Gladiator.cs" id="2_hmlhj"]
@@ -2189,27 +2189,41 @@ animation = &"holding-right"
 filter_enabled = true
 filters = ["character-soldier/Skeleton3D/BoneAttachment3D:override_pose", "character-soldier/Skeleton3D/BoneAttachment3D:rotation"]
 
+[sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_ky1wm"]
+
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_r4t6g"]
 animation = &"walk"
 
 [sub_resource type="AnimationNodeBlend2" id="AnimationNodeBlend2_ogrg7"]
 
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_8tkhr"]
+animation = &"idle"
+use_custom_timeline = true
+timeline_length = 1.0
+stretch_time_scale = true
+start_offset = 0.0
+loop_mode = 0
+
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_icfrc"]
-graph_offset = Vector2(-497.217, 231.899)
-"nodes/Attack 2/node" = SubResource("AnimationNodeAnimation_drqt1")
-"nodes/Attack 2/position" = Vector2(-120, 400)
+graph_offset = Vector2(181.261, 79.6657)
+nodes/Attack/node = SubResource("AnimationNodeAnimation_drqt1")
+nodes/Attack/position = Vector2(40, 380)
 nodes/AttackSpeed/node = SubResource("AnimationNodeTimeScale_wrmgp")
-nodes/AttackSpeed/position = Vector2(100, 380)
+nodes/AttackSpeed/position = Vector2(260, 360)
 nodes/Idle/node = SubResource("AnimationNodeAnimation_y2ycj")
 nodes/Idle/position = Vector2(-60, 80)
 nodes/OneShot/node = SubResource("AnimationNodeOneShot_t1fky")
-nodes/OneShot/position = Vector2(300, 340)
+nodes/OneShot/position = Vector2(460, 160)
+nodes/Stagger/node = SubResource("AnimationNodeOneShot_ky1wm")
+nodes/Stagger/position = Vector2(840, 140)
 nodes/Walk/node = SubResource("AnimationNodeAnimation_r4t6g")
 nodes/Walk/position = Vector2(-360, 140)
 nodes/WalkIdleBlend/node = SubResource("AnimationNodeBlend2_ogrg7")
 nodes/WalkIdleBlend/position = Vector2(120, 140)
-nodes/output/position = Vector2(620, 160)
-node_connections = [&"AttackSpeed", 0, &"Attack 2", &"OneShot", 0, &"WalkIdleBlend", &"OneShot", 1, &"AttackSpeed", &"WalkIdleBlend", 0, &"Idle", &"WalkIdleBlend", 1, &"Walk", &"output", 0, &"OneShot"]
+nodes/output/position = Vector2(1080, 140)
+nodes/stagger/node = SubResource("AnimationNodeAnimation_8tkhr")
+nodes/stagger/position = Vector2(640, 300)
+node_connections = [&"AttackSpeed", 0, &"Attack", &"OneShot", 0, &"WalkIdleBlend", &"OneShot", 1, &"AttackSpeed", &"Stagger", 0, &"OneShot", &"Stagger", 1, &"stagger", &"WalkIdleBlend", 0, &"Idle", &"WalkIdleBlend", 1, &"Walk", &"output", 0, &"Stagger"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_btwkv"]
 size = Vector3(2, 2, 2)
@@ -2263,6 +2277,9 @@ parameters/AttackSpeed/scale = 1.0
 parameters/OneShot/active = false
 parameters/OneShot/internal_active = false
 parameters/OneShot/request = 0
+parameters/Stagger/active = false
+parameters/Stagger/internal_active = false
+parameters/Stagger/request = 0
 parameters/WalkIdleBlend/blend_amount = 0.0
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="." index="4"]

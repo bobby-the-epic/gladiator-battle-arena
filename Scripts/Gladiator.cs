@@ -3,16 +3,21 @@ using System;
 
 public partial class Gladiator : CharacterBody3D
 {
+    public float gravity = ProjectSettings.GetSetting("physics/3d/default_gravity").AsSingle();
     bool navServerReady = false;
     bool attacking = false;
+    bool dead = false;
+    int health = 100;
     float angle;
-    public float gravity = ProjectSettings.GetSetting("physics/3d/default_gravity").AsSingle();
     const float speed = 3.0f;
     AnimationTree animTree;
     AnimationPlayer animPlayer;
     CharacterBody3D player;
     NavigationAgent3D navAgent;
     Area3D attackRange;
+
+    [Signal]
+    public delegate void HitEventHandler(int damage);
 
     public override void _Ready()
     {
@@ -23,13 +28,18 @@ public partial class Gladiator : CharacterBody3D
         animPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
         animTree.AnimationFinished += OnAnimationFinished;
         attackRange = GetNode<Area3D>("Area3D");
+        Hit += OnHit;
         CallDeferred(MethodName.ActorSetup);
     }
     public override void _PhysicsProcess(double delta)
     {
-        if (!navServerReady)
+        if (!navServerReady || dead)
             return;
         SetMovement(delta);
+    }
+    public override void _ExitTree()
+    {
+        Hit -= OnHit;
     }
     private void SetMovement(double delta)
     {
@@ -84,5 +94,17 @@ public partial class Gladiator : CharacterBody3D
     {
         Velocity = safeVelocity;
         MoveAndSlide();
+    }
+    private void OnHit(int damage)
+    {
+        if (!dead)
+        {
+            health -= damage;
+            if (health <= 0)
+                dead = true;
+            GD.Print(Name + " has taken " + damage + " damage.");
+        }
+        else
+            GD.Print(Name + " is dead.");
     }
 }
