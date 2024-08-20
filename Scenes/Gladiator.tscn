@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=4 uid="uid://s8frao1jmpyi"]
+[gd_scene load_steps=46 format=4 uid="uid://s8frao1jmpyi"]
 
 [ext_resource type="PackedScene" uid="uid://btg8x3sln11g2" path="res://Assets/Mini Arena/character-soldier.glb" id="1_c1yec"]
 [ext_resource type="Script" path="res://Scripts/Gladiator.cs" id="2_hmlhj"]
@@ -2211,7 +2211,12 @@ nodes/WalkIdleBlend/position = Vector2(120, 140)
 nodes/output/position = Vector2(620, 160)
 node_connections = [&"AttackSpeed", 0, &"Attack 2", &"OneShot", 0, &"WalkIdleBlend", &"OneShot", 1, &"AttackSpeed", &"WalkIdleBlend", 0, &"Idle", &"WalkIdleBlend", 1, &"Walk", &"output", 0, &"OneShot"]
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_mwivy"]
+size = Vector3(2, 2, 2)
+
 [node name="Gladiator" instance=ExtResource("1_c1yec")]
+collision_layer = 4
+collision_mask = 7
 script = ExtResource("2_hmlhj")
 
 [node name="character-soldier" parent="." index="0"]
@@ -2265,3 +2270,9 @@ target_desired_distance = 3.0
 avoidance_enabled = true
 radius = 1.0
 debug_enabled = true
+
+[node name="ShapeCast3D" type="ShapeCast3D" parent="." index="5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 1.5)
+shape = SubResource("BoxShape3D_mwivy")
+collision_mask = 2
+debug_shape_custom_color = Color(0, 1, 0, 1)
