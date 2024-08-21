@@ -1,4 +1,4 @@
-[gd_scene load_steps=101 format=4 uid="uid://cycmto2oewk3v"]
+[gd_scene load_steps=105 format=4 uid="uid://cycmto2oewk3v"]
 
 [ext_resource type="PackedScene" uid="uid://btg8x3sln11g2" path="res://Assets/Mini Arena/character-soldier.glb" id="1_b1a85"]
 [ext_resource type="Script" path="res://Scripts/Player.cs" id="1_r7wak"]
@@ -2305,7 +2305,7 @@ animation = &"attack"
 animation = &"walk"
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_87y11"]
-graph_offset = Vector2(-153.545, 176.26)
+graph_offset = Vector2(-46.7694, 221.465)
 nodes/Attack/node = SubResource("AnimationNodeOneShot_2jp3m")
 nodes/Attack/position = Vector2(700, 40)
 nodes/Jump/node = SubResource("AnimationNodeOneShot_f82sd")
@@ -2342,6 +2342,18 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector3(0, -1.91114, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Camera3D/RightArm:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.8, -0.786, -0.423)]
 }
 
 [sub_resource type="Animation" id="Animation_564wv"]
@@ -4450,6 +4462,34 @@ tracks/0/keys = {
 "values": [Vector3(0.731674, -2.03604, -0.323598), Vector3(0, -1.91114, 0)]
 }
 
+[sub_resource type="Animation" id="Animation_hc62u"]
+resource_name = "blockShove"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera3D/RightArm:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.731674, -2.03604, -0.323598)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Camera3D/RightArm:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0.8, -0.786, -0.423), Vector3(0.8, -0.786, -0.789604), Vector3(0.8, -0.786, -0.423)]
+}
+
 [sub_resource type="Animation" id="Animation_ct31w"]
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_eknmv"]
@@ -4457,6 +4497,7 @@ _data = {
 "attack": SubResource("Animation_6o6ke"),
 "block": SubResource("Animation_v7j2u"),
 "blockEnd": SubResource("Animation_lttqf"),
+"blockShove": SubResource("Animation_hc62u"),
 "idle": SubResource("Animation_ct31w")
 }
 
@@ -4480,6 +4521,9 @@ animation = &"custom/block"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_fwr25"]
 animation = &"custom/blockEnd"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_pfw5i"]
+animation = &"custom/blockShove"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_v66tu"]
 animation = &"custom/idle"
@@ -4509,6 +4553,16 @@ advance_mode = 2
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_d5sw7"]
 advance_mode = 2
 
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_qg8y8"]
+switch_mode = 2
+advance_mode = 2
+advance_expression = "blockShove == true"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_5g7q8"]
+xfade_time = 0.5
+switch_mode = 2
+advance_mode = 2
+
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_ppbbr"]
 states/Start/position = Vector2(129, 107)
 states/custom_attack/node = SubResource("AnimationNodeAnimation_rrk0m")
@@ -4517,10 +4571,12 @@ states/custom_block/node = SubResource("AnimationNodeAnimation_ne712")
 states/custom_block/position = Vector2(493, 62)
 states/custom_blockEnd/node = SubResource("AnimationNodeAnimation_fwr25")
 states/custom_blockEnd/position = Vector2(785.184, 134)
+states/custom_blockShove/node = SubResource("AnimationNodeAnimation_pfw5i")
+states/custom_blockShove/position = Vector2(764.599, 22.3164)
 states/custom_idle/node = SubResource("AnimationNodeAnimation_v66tu")
 states/custom_idle/position = Vector2(278, 134)
-transitions = ["custom_idle", "custom_attack", SubResource("AnimationNodeStateMachineTransition_8sak4"), "custom_idle", "custom_block", SubResource("AnimationNodeStateMachineTransition_rank5"), "custom_attack", "custom_idle", SubResource("AnimationNodeStateMachineTransition_75gpc"), "custom_block", "custom_blockEnd", SubResource("AnimationNodeStateMachineTransition_cgk06"), "custom_blockEnd", "custom_idle", SubResource("AnimationNodeStateMachineTransition_8h2ev"), "Start", "custom_idle", SubResource("AnimationNodeStateMachineTransition_d5sw7")]
-graph_offset = Vector2(-176.713, -86.9219)
+transitions = ["custom_idle", "custom_attack", SubResource("AnimationNodeStateMachineTransition_8sak4"), "custom_idle", "custom_block", SubResource("AnimationNodeStateMachineTransition_rank5"), "custom_attack", "custom_idle", SubResource("AnimationNodeStateMachineTransition_75gpc"), "custom_block", "custom_blockEnd", SubResource("AnimationNodeStateMachineTransition_cgk06"), "custom_blockEnd", "custom_idle", SubResource("AnimationNodeStateMachineTransition_8h2ev"), "Start", "custom_idle", SubResource("AnimationNodeStateMachineTransition_d5sw7"), "custom_block", "custom_blockShove", SubResource("AnimationNodeStateMachineTransition_qg8y8"), "custom_blockShove", "custom_block", SubResource("AnimationNodeStateMachineTransition_5g7q8")]
+graph_offset = Vector2(-44.7287, -81.2656)
 
 [sub_resource type="AnimationNodeBlend2" id="AnimationNodeBlend2_k6nr0"]
 filter_enabled = true
@@ -4530,7 +4586,7 @@ filters = ["character-soldier/Skeleton3D:leg-left", "character-soldier/Skeleton3
 animation = &"jump"
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_orj1r"]
-graph_offset = Vector2(286.638, 102.289)
+graph_offset = Vector2(193.516, 64.0277)
 nodes/Animation/node = SubResource("AnimationNodeAnimation_d5cr1")
 nodes/Animation/position = Vector2(720, 280)
 nodes/Jump/node = SubResource("AnimationNodeOneShot_m62s1")
@@ -4559,7 +4615,7 @@ transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 0, 0, 
 [node name="Skeleton3D" parent="character-soldier" index="0"]
 bones/4/position = Vector3(0.786, -0.41325, 0.0121531)
 bones/4/scale = Vector3(3, 3, 3)
-bones/5/position = Vector3(-0.432581, -0.41225, 0.696373)
+bones/5/position = Vector3(-0.8, -0.41225, 0.69675)
 bones/5/rotation = Quaternion(0, 0.577143, 0, 0.816643)
 bones/5/scale = Vector3(3, 3, 3)
 
@@ -4704,7 +4760,7 @@ use_external_skeleton = true
 external_skeleton = NodePath("../../character-soldier/Skeleton3D")
 
 [node name="RightArm" type="BoneAttachment3D" parent="Camera3D" index="1"]
-transform = Transform3D(-1.00143, 0, -2.82792, 0, 3, 0, 2.82792, 0, -1.00143, 0.432581, -0.786, -0.422623)
+transform = Transform3D(-1.00143, 0, -2.82792, 0, 3, 0, 2.82792, 0, -1.00143, 0.8, -0.786, -0.423)
 bone_name = "arm-right"
 bone_idx = 5
 override_pose = true

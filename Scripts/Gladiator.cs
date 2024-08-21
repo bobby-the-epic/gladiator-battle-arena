@@ -35,6 +35,8 @@ public partial class Gladiator : CharacterBody3D
 
     [Signal]
     public delegate void HitEventHandler(int damage);
+    [Signal]
+    public delegate void StaggerEventHandler();
 
     public override void _Ready()
     {
@@ -47,6 +49,7 @@ public partial class Gladiator : CharacterBody3D
         animTree.AnimationFinished += OnAnimationFinished;
         attackRange = GetNode<Area3D>("Area3D");
         Hit += OnHit;
+        Stagger += OnStagger;
         CallDeferred(MethodName.ActorSetup);
     }
     public override void _PhysicsProcess(double delta)
@@ -59,6 +62,7 @@ public partial class Gladiator : CharacterBody3D
     public override void _ExitTree()
     {
         Hit -= OnHit;
+        Stagger -= OnStagger;
     }
     private void SetMovement(double delta)
     {
@@ -167,7 +171,7 @@ public partial class Gladiator : CharacterBody3D
             Velocity = Vector3.Zero;
         MoveAndSlide();
     }
-    private async void OnHit(int damage)
+    private void OnHit(int damage)
     {
         if (!dead)
         {
@@ -178,10 +182,14 @@ public partial class Gladiator : CharacterBody3D
                 Velocity = Vector3.Zero;
                 return;
             }
-            staggered = true;
             GD.Print(Name + " has taken " + damage + " damage.");
-            await ToSignal(animTree, AnimationTree.SignalName.AnimationFinished);
-            staggered = false;
+            // staggered = true;
+            // await ToSignal(animTree, AnimationTree.SignalName.AnimationFinished);
+            // staggered = false;
         }
+    }
+    private void OnStagger()
+    {
+        staggered = true;
     }
 }

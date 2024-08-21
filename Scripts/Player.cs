@@ -46,6 +46,8 @@ public partial class Player : CharacterBody3D
     [Export]
     bool blocking = false;
     [Export]
+    bool blockShove = false;
+    [Export]
     float mouseSensitivity = 0.5f;
     [Export]
     Node3D cameraController;
@@ -81,6 +83,11 @@ public partial class Player : CharacterBody3D
             blocking = true;
         if (Input.IsActionJustReleased("block"))
             blocking = false;
+        if (blocking && Input.IsActionJustPressed("attack"))
+        {
+            GD.Print("blockShove");
+            blockShove = true;
+        }
     }
     public override void _UnhandledInput(InputEvent @event)
     {
@@ -203,7 +210,19 @@ public partial class Player : CharacterBody3D
                 Godot.Collections.Array<Node3D> gladiatorsHit = attackRange.GetOverlappingBodies();
                 for (int counter = 0; counter < gladiatorsHit.Count; counter++)
                 {
-                    gladiatorsHit[counter].EmitSignal(Gladiator.SignalName.Hit, 5);
+                    gladiatorsHit[counter].EmitSignal(Gladiator.SignalName.Hit, 50);
+                }
+            }
+        }
+        else if (name == "custom/blockShove")
+        {
+            blockShove = false;
+            if (attackRange.HasOverlappingBodies())
+            {
+                Godot.Collections.Array<Node3D> gladiatorsHit = attackRange.GetOverlappingBodies();
+                for (int counter = 0; counter < gladiatorsHit.Count; counter++)
+                {
+                    gladiatorsHit[counter].EmitSignal(Gladiator.SignalName.Stagger);
                 }
             }
         }
