@@ -4586,7 +4586,7 @@ filters = ["character-soldier/Skeleton3D:leg-left", "character-soldier/Skeleton3
 animation = &"jump"
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_orj1r"]
-graph_offset = Vector2(193.516, 64.0277)
+graph_offset = Vector2(-19.6589, 41.6448)
 nodes/Animation/node = SubResource("AnimationNodeAnimation_d5cr1")
 nodes/Animation/position = Vector2(720, 280)
 nodes/Jump/node = SubResource("AnimationNodeOneShot_m62s1")
@@ -4783,3 +4783,7 @@ monitorable = false
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -0.58667)
 shape = SubResource("BoxShape3D_0f5aw")
+
+[node name="AttackCooldown" type="Timer" parent="." index="7"]
+wait_time = 0.5
+one_shot = true

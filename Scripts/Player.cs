@@ -20,6 +20,7 @@ public partial class Player : CharacterBody3D
     Vector3 mouseRotation;
     AnimationTree animTree, dupeBodyAnimTree;
     Area3D attackRange;
+    Timer attackCooldown;
     //Animation parameter StringNames for more readable code
     StringName walkBlend = new StringName("parameters/Walk Blend/blend_amount");
     StringName jumpRequest = new StringName("parameters/Jump/request");
@@ -50,7 +51,7 @@ public partial class Player : CharacterBody3D
     [Export]
     float mouseSensitivity = 0.5f;
     [Export]
-    Node3D cameraController;
+    Camera3D cameraController;
 
     [Signal]
     public delegate void HitEventHandler(int damage);
@@ -61,6 +62,8 @@ public partial class Player : CharacterBody3D
         animTree = GetNode<AnimationTree>("AnimationTree");
         dupeBodyAnimTree = GetNode<AnimationTree>("DupeBody/AnimationTree");
         attackRange = GetNode<Area3D>("Area3D");
+        attackCooldown = GetNode<Timer>("AttackCooldown");
+        attackCooldown.Timeout += OnTimerTimeout;
         animTree.AnimationFinished += OnAnimationFinished;
         Hit += OnHit;
 
@@ -197,24 +200,12 @@ public partial class Player : CharacterBody3D
         // The animation state machine detects the attacking bool and plays the animation in the state machine.
         attacking = true;
         dupeBodyAnimTree.Set("parameters/Attack/request", (int)AnimationNodeOneShot.OneShotRequest.Fire);
-        await ToSignal(animTree, AnimationTree.SignalName.AnimationFinished);
+        attackCooldown.Start();
+        await ToSignal(attackCooldown, Timer.SignalName.Timeout);
     }
     private void OnAnimationFinished(StringName name)
     {
-        if (name == "custom/attack")
-        {
-            attacking = false;
-
-            if (attackRange.HasOverlappingBodies())
-            {
-                Godot.Collections.Array<Node3D> gladiatorsHit = attackRange.GetOverlappingBodies();
-                for (int counter = 0; counter < gladiatorsHit.Count; counter++)
-                {
-                    gladiatorsHit[counter].EmitSignal(Gladiator.SignalName.Hit, 50);
-                }
-            }
-        }
-        else if (name == "custom/blockShove")
+        if (name == "custom/blockShove")
         {
             blockShove = false;
             if (attackRange.HasOverlappingBodies())
@@ -225,6 +216,34 @@ public partial class Player : CharacterBody3D
                     gladiatorsHit[counter].EmitSignal(Gladiator.SignalName.Stagger);
                 }
             }
+        }
+    }
+    private void OnTimerTimeout()
+    {
+        attacking = false;
+        if (attackRange.HasOverlappingBodies())
+        {
+            Godot.Collections.Array<Node3D> gladiatorsHit = attackRange.GetOverlappingBodies();
+            Vector3[] gladiatorsPos = new Vector3[gladiatorsHit.Count];
+            Node3D gladiatorHit;
+            int targetsHit = gladiatorsHit.Count;
+            for (int counter = 0; counter < targetsHit; counter++)
+            {
+                gladiatorsPos[counter] = gladiatorsHit[counter].GlobalPosition;
+            }
+            gladiatorHit = gladiatorsHit[0];
+            if (targetsHit > 1)
+            {
+                for (int counter = 1; counter < targetsHit; counter++)
+                {
+                    if ((gladiatorsPos[counter - 1] - GlobalPosition) >
+                            (gladiatorsPos[counter] - GlobalPosition))
+                        gladiatorHit = gladiatorsHit[counter];
+                    GD.Print(GlobalPosition);
+                }
+            }
+            gladiatorHit.EmitSignal(Gladiator.SignalName.Hit, 10);
+            gladiatorHit.EmitSignal(Gladiator.SignalName.Stagger);
         }
     }
     private void OnHit(int damage)
