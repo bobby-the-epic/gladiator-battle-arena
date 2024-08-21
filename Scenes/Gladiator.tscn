@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=4 uid="uid://s8frao1jmpyi"]
+[gd_scene load_steps=49 format=4 uid="uid://s8frao1jmpyi"]
 
 [ext_resource type="PackedScene" uid="uid://btg8x3sln11g2" path="res://Assets/Mini Arena/character-soldier.glb" id="1_c1yec"]
 [ext_resource type="Script" path="res://Scripts/Gladiator.cs" id="2_hmlhj"]
@@ -2177,26 +2177,34 @@ _data = {
 radius = 0.7
 height = 2.6
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_drqt1"]
-animation = &"custom/attack"
-
-[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_wrmgp"]
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_y2ycj"]
-animation = &"holding-right"
-
-[sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_t1fky"]
+[sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_h65ep"]
 filter_enabled = true
 filters = ["character-soldier/Skeleton3D/BoneAttachment3D:override_pose", "character-soldier/Skeleton3D/BoneAttachment3D:rotation"]
 
-[sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_ky1wm"]
+[sub_resource type="AnimationNodeTransition" id="AnimationNodeTransition_rf653"]
+input_0/name = "Alive"
+input_0/auto_advance = false
+input_0/break_loop_at_end = false
+input_0/reset = true
+input_1/name = "Dead"
+input_1/auto_advance = false
+input_1/break_loop_at_end = false
+input_1/reset = true
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_r4t6g"]
-animation = &"walk"
+[sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_gkjmo"]
 
-[sub_resource type="AnimationNodeBlend2" id="AnimationNodeBlend2_ogrg7"]
+[sub_resource type="AnimationNodeBlend2" id="AnimationNodeBlend2_a3ahe"]
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_8tkhr"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_jancx"]
+animation = &"custom/attack"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_dfkoc"]
+animation = &"die"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_0dk6a"]
+animation = &"holding-right"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_hrco2"]
 animation = &"idle"
 use_custom_timeline = true
 timeline_length = 1.0
@@ -2204,26 +2212,31 @@ stretch_time_scale = true
 start_offset = 0.0
 loop_mode = 0
 
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_1arik"]
+animation = &"walk"
+
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_icfrc"]
-graph_offset = Vector2(181.261, 79.6657)
-nodes/Attack/node = SubResource("AnimationNodeAnimation_drqt1")
-nodes/Attack/position = Vector2(40, 380)
-nodes/AttackSpeed/node = SubResource("AnimationNodeTimeScale_wrmgp")
-nodes/AttackSpeed/position = Vector2(260, 360)
-nodes/Idle/node = SubResource("AnimationNodeAnimation_y2ycj")
-nodes/Idle/position = Vector2(-60, 80)
-nodes/OneShot/node = SubResource("AnimationNodeOneShot_t1fky")
-nodes/OneShot/position = Vector2(460, 160)
-nodes/Stagger/node = SubResource("AnimationNodeOneShot_ky1wm")
-nodes/Stagger/position = Vector2(840, 140)
-nodes/Walk/node = SubResource("AnimationNodeAnimation_r4t6g")
-nodes/Walk/position = Vector2(-360, 140)
-nodes/WalkIdleBlend/node = SubResource("AnimationNodeBlend2_ogrg7")
-nodes/WalkIdleBlend/position = Vector2(120, 140)
-nodes/output/position = Vector2(1080, 140)
-nodes/stagger/node = SubResource("AnimationNodeAnimation_8tkhr")
-nodes/stagger/position = Vector2(640, 300)
-node_connections = [&"AttackSpeed", 0, &"Attack", &"OneShot", 0, &"WalkIdleBlend", &"OneShot", 1, &"AttackSpeed", &"Stagger", 0, &"OneShot", &"Stagger", 1, &"stagger", &"WalkIdleBlend", 0, &"Idle", &"WalkIdleBlend", 1, &"Walk", &"output", 0, &"Stagger"]
+graph_offset = Vector2(-315.025, 166.692)
+nodes/Attack/node = SubResource("AnimationNodeOneShot_h65ep")
+nodes/Attack/position = Vector2(240, 180)
+"nodes/Death State/node" = SubResource("AnimationNodeTransition_rf653")
+"nodes/Death State/position" = Vector2(700, 280)
+nodes/Stagger/node = SubResource("AnimationNodeOneShot_gkjmo")
+nodes/Stagger/position = Vector2(420, 320)
+nodes/WalkIdleBlend/node = SubResource("AnimationNodeBlend2_a3ahe")
+nodes/WalkIdleBlend/position = Vector2(20, 140)
+nodes/attack/node = SubResource("AnimationNodeAnimation_jancx")
+nodes/attack/position = Vector2(-20, 440)
+nodes/die/node = SubResource("AnimationNodeAnimation_dfkoc")
+nodes/die/position = Vector2(540, 580)
+nodes/idle/node = SubResource("AnimationNodeAnimation_0dk6a")
+nodes/idle/position = Vector2(-180, 120)
+nodes/output/position = Vector2(920, 300)
+nodes/stagger/node = SubResource("AnimationNodeAnimation_hrco2")
+nodes/stagger/position = Vector2(240, 440)
+nodes/walk/node = SubResource("AnimationNodeAnimation_1arik")
+nodes/walk/position = Vector2(-220, 280)
+node_connections = [&"Attack", 0, &"WalkIdleBlend", &"Attack", 1, &"attack", &"Death State", 0, &"Stagger", &"Death State", 1, &"die", &"Stagger", 0, &"Attack", &"Stagger", 1, &"stagger", &"WalkIdleBlend", 0, &"idle", &"WalkIdleBlend", 1, &"walk", &"output", 0, &"Death State"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_btwkv"]
 size = Vector3(2, 2, 2)
@@ -2270,13 +2283,15 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3044, 0)
 shape = SubResource("CapsuleShape3D_kj2dt")
 
 [node name="AnimationTree" type="AnimationTree" parent="." index="3"]
-root_motion_track = NodePath("character-soldier/Skeleton3D:root")
 tree_root = SubResource("AnimationNodeBlendTree_icfrc")
+advance_expression_base_node = NodePath("..")
 anim_player = NodePath("../AnimationPlayer")
-parameters/AttackSpeed/scale = 1.0
-parameters/OneShot/active = false
-parameters/OneShot/internal_active = false
-parameters/OneShot/request = 0
+parameters/Attack/active = false
+parameters/Attack/internal_active = false
+parameters/Attack/request = 0
+"parameters/Death State/current_state" = "Alive"
+"parameters/Death State/transition_request" = ""
+"parameters/Death State/current_index" = 0
 parameters/Stagger/active = false
 parameters/Stagger/internal_active = false
 parameters/Stagger/request = 0

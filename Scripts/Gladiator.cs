@@ -6,6 +6,7 @@ public partial class Gladiator : CharacterBody3D
     public float gravity = ProjectSettings.GetSetting("physics/3d/default_gravity").AsSingle();
     bool navServerReady = false;
     bool attacking = false;
+    bool staggered = false;
     bool dead = false;
     int health = 100;
     float angle;
@@ -15,6 +16,22 @@ public partial class Gladiator : CharacterBody3D
     CharacterBody3D player;
     NavigationAgent3D navAgent;
     Area3D attackRange;
+
+    StringName walkIdleBlend = new StringName("parameters/WalkIdleBlend/blend_amount");
+    StringName attackRequest = new StringName("parameters/Attack/request");
+    StringName staggerRequest = new StringName("parameters/Stagger/request");
+    StringName deathTransition = new StringName("parameters/Death State/transition_request");
+
+    enum ANIM
+    {
+        IDLE,
+        ATTACKING,
+        MOVING,
+        STAGGERED,
+        DEATH
+    }
+    ANIM previousAnim = ANIM.IDLE;
+    ANIM currentAnim = ANIM.IDLE;
 
     [Signal]
     public delegate void HitEventHandler(int damage);
@@ -26,6 +43,7 @@ public partial class Gladiator : CharacterBody3D
         navAgent.VelocityComputed += OnVelocityComputed;
         animTree = GetNode<AnimationTree>("AnimationTree");
         animPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
+        animTree.AnimationStarted += OnAnimationStarted;
         animTree.AnimationFinished += OnAnimationFinished;
         attackRange = GetNode<Area3D>("Area3D");
         Hit += OnHit;
@@ -33,9 +51,10 @@ public partial class Gladiator : CharacterBody3D
     }
     public override void _PhysicsProcess(double delta)
     {
-        if (!navServerReady || dead)
+        if (!navServerReady)
             return;
         SetMovement(delta);
+        Animate();
     }
     public override void _ExitTree()
     {
@@ -43,35 +62,73 @@ public partial class Gladiator : CharacterBody3D
     }
     private void SetMovement(double delta)
     {
+        if (dead)
+            return;
+
+        //Sets the player as the target of the navigation agent.
         navAgent.TargetPosition = player.GlobalPosition;
-        Vector3 velocity = Velocity;
+        Vector3 velocity = Vector3.Zero;
         Vector3 lookDirection = GlobalPosition.DirectionTo(navAgent.GetNextPathPosition());
         lookDirection.Y = 0;
         angle = Mathf.Atan2(lookDirection.X, lookDirection.Z);
         //Rotates the gladiator to look at the player
         Rotate(Vector3.Up, angle - Rotation.Y);
 
-        if (!navAgent.IsNavigationFinished())
+        if (!navAgent.IsNavigationFinished() && !staggered)
         {
-            animTree.Set("parameters/WalkIdleBlend/blend_amount", 0.5f);
             velocity = lookDirection * speed;
         }
-        else if (!attacking)
+        else if (!attacking && !staggered)
         {
             velocity = Vector3.Zero;
-            animTree.Set("parameters/WalkIdleBlend/blend_amount", 0);
+            attacking = true;
             Attack();
         }
 
+        //Adds gravity just in case
         if (!IsOnFloor())
             velocity.Y -= gravity * (float)delta;
 
         navAgent.Velocity = velocity;
     }
+    private void Animate()
+    {
+        if (dead)
+            currentAnim = ANIM.DEATH;
+        else if (staggered)
+            currentAnim = ANIM.STAGGERED;
+        else if (attacking)
+            currentAnim = ANIM.ATTACKING;
+        else
+            currentAnim = ANIM.MOVING;
+
+        if (currentAnim != previousAnim)
+        {
+            switch (currentAnim)
+            {
+                case ANIM.MOVING:
+                    animTree.Set(walkIdleBlend, 0.5f);
+                    break;
+                case ANIM.ATTACKING:
+                    animTree.Set(walkIdleBlend, 0);
+                    Attack();
+                    break;
+                case ANIM.STAGGERED:
+                    animTree.Set(attackRequest, (int)AnimationNodeOneShot.OneShotRequest.Abort);
+                    animTree.Set(staggerRequest, (int)AnimationNodeOneShot.OneShotRequest.Fire);
+                    break;
+                case ANIM.DEATH:
+                    animTree.Set(deathTransition, "Dead");
+                    GetNode<CollisionShape3D>("CollisionShape3D").Disabled = true;
+                    break;
+            }
+        }
+
+        previousAnim = currentAnim;
+    }
     private async void Attack()
     {
-        attacking = true;
-        animTree.Set("parameters/OneShot/request", (int)AnimationNodeOneShot.OneShotRequest.Fire);
+        animTree.Set(attackRequest, (int)AnimationNodeOneShot.OneShotRequest.Fire);
         await ToSignal(animTree, AnimationTree.SignalName.AnimationFinished);
     }
     private async void ActorSetup()
@@ -79,6 +136,15 @@ public partial class Gladiator : CharacterBody3D
         // Wait for the first physics frame so the NavigationServer can sync.
         await ToSignal(GetTree(), SceneTree.SignalName.PhysicsFrame);
         navServerReady = true;
+    }
+    private async void OnAnimationStarted(StringName animName)
+    {
+        if (animName == "idle")
+        {
+            staggered = true;
+            attacking = false;
+            await ToSignal(animTree, AnimationTree.SignalName.AnimationFinished);
+        }
     }
     private void OnAnimationFinished(StringName animName)
     {
@@ -89,22 +155,33 @@ public partial class Gladiator : CharacterBody3D
             if (attackRange.HasOverlappingBodies())
                 player.EmitSignal(Player.SignalName.Hit, 5);
         }
+        else if (animName == "idle")
+        {
+            staggered = false;
+        }
     }
     private void OnVelocityComputed(Vector3 safeVelocity)
     {
         Velocity = safeVelocity;
+        if (dead)
+            Velocity = Vector3.Zero;
         MoveAndSlide();
     }
-    private void OnHit(int damage)
+    private async void OnHit(int damage)
     {
         if (!dead)
         {
             health -= damage;
             if (health <= 0)
+            {
                 dead = true;
+                Velocity = Vector3.Zero;
+                return;
+            }
+            staggered = true;
             GD.Print(Name + " has taken " + damage + " damage.");
+            await ToSignal(animTree, AnimationTree.SignalName.AnimationFinished);
+            staggered = false;
         }
-        else
-            GD.Print(Name + " is dead.");
     }
 }
