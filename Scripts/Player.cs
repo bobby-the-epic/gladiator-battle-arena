@@ -61,7 +61,7 @@ public partial class Player : CharacterBody3D
         Input.MouseMode = Input.MouseModeEnum.Captured;
         animTree = GetNode<AnimationTree>("AnimationTree");
         dupeBodyAnimTree = GetNode<AnimationTree>("DupeBody/AnimationTree");
-        attackRange = GetNode<Area3D>("Area3D");
+        attackRange = GetNode<Area3D>("Camera3D/Area3D");
         attackCooldown = GetNode<Timer>("AttackCooldown");
         attackCooldown.Timeout += OnTimerTimeout;
         animTree.AnimationFinished += OnAnimationFinished;
@@ -88,7 +88,6 @@ public partial class Player : CharacterBody3D
             blocking = false;
         if (blocking && Input.IsActionJustPressed("attack"))
         {
-            GD.Print("blockShove");
             blockShove = true;
         }
     }
@@ -229,17 +228,15 @@ public partial class Player : CharacterBody3D
             int targetsHit = gladiatorsHit.Count;
             for (int counter = 0; counter < targetsHit; counter++)
             {
-                gladiatorsPos[counter] = gladiatorsHit[counter].GlobalPosition;
+                gladiatorsPos[counter] = gladiatorsHit[counter].Position;
             }
             gladiatorHit = gladiatorsHit[0];
             if (targetsHit > 1)
             {
                 for (int counter = 1; counter < targetsHit; counter++)
                 {
-                    if ((gladiatorsPos[counter - 1] - GlobalPosition) >
-                            (gladiatorsPos[counter] - GlobalPosition))
+                    if ((gladiatorsPos[counter] - Position) < (gladiatorsPos[counter - 1] - Position))
                         gladiatorHit = gladiatorsHit[counter];
-                    GD.Print(GlobalPosition);
                 }
             }
             gladiatorHit.EmitSignal(Gladiator.SignalName.Hit, 10);

@@ -4601,7 +4601,7 @@ nodes/output/position = Vector2(1240, 280)
 node_connections = [&"Jump", 0, &"Walk Blend", &"Jump", 1, &"jump", &"Walk Blend", 0, &"StateMachine", &"Walk Blend", 1, &"Animation", &"output", 0, &"Jump"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_0f5aw"]
-size = Vector3(1, 2, 1.17334)
+size = Vector3(1.83423, 2, 1.80902)
 
 [node name="Player" node_paths=PackedStringArray("cameraController") instance=ExtResource("1_b1a85")]
 collision_layer = 2
@@ -4775,15 +4775,16 @@ cast_shadow = 0
 mesh = SubResource("ArrayMesh_31863")
 skeleton = NodePath("")
 
-[node name="Area3D" type="Area3D" parent="." index="6"]
+[node name="Area3D" type="Area3D" parent="Camera3D" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.36848e-15, -0.55, 0.25)
 collision_layer = 0
 collision_mask = 4
 monitorable = false
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" index="0"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -0.58667)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Camera3D/Area3D" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00134277, 1, -1.01642)
 shape = SubResource("BoxShape3D_0f5aw")
 
-[node name="AttackCooldown" type="Timer" parent="." index="7"]
+[node name="AttackCooldown" type="Timer" parent="." index="6"]
 wait_time = 0.5
 one_shot = true
