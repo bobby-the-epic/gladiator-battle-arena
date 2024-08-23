@@ -1,8 +1,9 @@
-[gd_scene load_steps=105 format=4 uid="uid://cycmto2oewk3v"]
+[gd_scene load_steps=106 format=4 uid="uid://cycmto2oewk3v"]
 
 [ext_resource type="PackedScene" uid="uid://btg8x3sln11g2" path="res://Assets/Mini Arena/character-soldier.glb" id="1_b1a85"]
 [ext_resource type="Script" path="res://Scripts/Player.cs" id="1_r7wak"]
 [ext_resource type="Texture2D" uid="uid://cinqdu7kqdadm" path="res://Assets/Mini Arena/Textures/colormap.png" id="3_eihrw"]
+[ext_resource type="PackedScene" uid="uid://b8sjlspgwncpn" path="res://Scenes/HUD.tscn" id="4_1ppse"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_x7dxy"]
 resource_name = "colormap"
@@ -4787,3 +4788,5 @@ shape = SubResource("BoxShape3D_0f5aw")
 [node name="AttackCooldown" type="Timer" parent="." index="6"]
 wait_time = 0.5
 one_shot = true
+
+[node name="HUD" parent="." index="7" instance=ExtResource("4_1ppse")]
