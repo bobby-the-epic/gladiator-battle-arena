@@ -21,7 +21,7 @@ public partial class Player : CharacterBody3D
     AnimationTree animTree, dupeBodyAnimTree;
     Area3D attackRange;
     Timer attackCooldown;
-    //Animation parameter StringNames for more readable code
+    // Animation parameter StringNames for more readable code
     StringName walkBlend = new StringName("parameters/Walk Blend/blend_amount");
     StringName jumpRequest = new StringName("parameters/Jump/request");
     StringName attackRequest = new StringName("parameters/Attack/request");
@@ -37,9 +37,10 @@ public partial class Player : CharacterBody3D
     ANIM newAnim = ANIM.IDLE;
 
     /*
-     * I used a duplicate body mesh for the shadows. I wanted the camera to be able
-     * to see the player's body, but I also had to do first person animations. I separated
-     * the hands from the mesh with a BoneAttachment3D node and animated that.
+     * I used a duplicate body mesh for the shadows. I wanted the camera to be
+     * able to see the player's body, but I also had to do first person
+     * animations. I separated the hands from the mesh with a BoneAttachment3D
+     * node and animated that.
      */
 
     [Export]
@@ -67,8 +68,8 @@ public partial class Player : CharacterBody3D
         animTree.AnimationFinished += OnAnimationFinished;
         Hit += OnHit;
 
-        //Recording the left hand position here, just in case I need it.
-        //Could be useful for a shield or bow animation.
+        // Recording the left hand position here, just in case I need it.
+        // Could be useful for a shield or bow animation.
         // Vector3 leftHandPos = new Vector3(-0.786f, -0.787f, -0.387f);
     }
     public override void _PhysicsProcess(double delta)
@@ -81,7 +82,7 @@ public partial class Player : CharacterBody3D
     {
         if (Input.IsActionJustPressed("attack") && !attacking && !blocking)
             Attack();
-        //The animTree detects the blocking bool and plays the animations in its state machine.
+        // The animTree detects the blocking bool and plays the animations in its state machine.
         if (Input.IsActionJustPressed("block"))
             blocking = true;
         if (Input.IsActionJustReleased("block"))
@@ -182,8 +183,10 @@ public partial class Player : CharacterBody3D
                 case ANIM.MOVINGANDJUMPING:
                     animTree.Set(walkBlend, 1);
                     dupeBodyAnimTree.Set(walkBlend, 1);
+                    // clang-format off
                     goto case ANIM.JUMPING;
                 case ANIM.IDLE:
+                    // clang-format on
                     animTree.Set(walkBlend, 0);
                     dupeBodyAnimTree.Set(walkBlend, 0);
                     animTree.Set(jumpRequest, (int)AnimationNodeOneShot.OneShotRequest.Abort);
