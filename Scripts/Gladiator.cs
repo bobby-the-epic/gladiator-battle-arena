@@ -69,13 +69,13 @@ public partial class Gladiator : CharacterBody3D
         if (dead)
             return;
 
-        //Sets the player as the target of the navigation agent.
+        // Sets the player as the target of the navigation agent.
         navAgent.TargetPosition = player.GlobalPosition;
         Vector3 velocity = Vector3.Zero;
         Vector3 lookDirection = GlobalPosition.DirectionTo(navAgent.GetNextPathPosition());
         lookDirection.Y = 0;
         angle = Mathf.Atan2(lookDirection.X, lookDirection.Z);
-        //Rotates the gladiator to look at the player
+        // Rotates the gladiator to look at the player
         Rotate(Vector3.Up, angle - Rotation.Y);
 
         if (!navAgent.IsNavigationFinished() && !staggered)
@@ -89,7 +89,7 @@ public partial class Gladiator : CharacterBody3D
             Attack();
         }
 
-        //Adds gravity just in case
+        // Adds gravity just in case
         if (!IsOnFloor())
             velocity.Y -= gravity * (float)delta;
 
@@ -155,7 +155,7 @@ public partial class Gladiator : CharacterBody3D
         if (animName == "custom/attack")
         {
             attacking = false;
-            //If the player is in the range of attack, then damage the player
+            // If the player is in the range of attack, then damage the player
             if (attackRange.HasOverlappingBodies())
                 player.EmitSignal(Player.SignalName.Hit, 5);
         }
