@@ -12,15 +12,18 @@ public partial class Player : CharacterBody3D
     public int health = 100;
     public bool dead = false;
 
+    const int maxHealth = 100;
     float rotationInput;
     float tiltInput;
     float pitch;
     float tiltLowerLimit = Mathf.DegToRad(-85);
     float tiltUpperLimit = Mathf.DegToRad(85);
+    float initialHealthBarSize;
     Vector3 mouseRotation;
     AnimationTree animTree, dupeBodyAnimTree;
     Area3D attackRange;
     Timer attackCooldown;
+    ColorRect healthBar;
     // Animation parameter StringNames for more readable code
     StringName walkBlend = new StringName("parameters/Walk Blend/blend_amount");
     StringName jumpRequest = new StringName("parameters/Jump/request");
@@ -64,6 +67,8 @@ public partial class Player : CharacterBody3D
         dupeBodyAnimTree = GetNode<AnimationTree>("DupeBody/AnimationTree");
         attackRange = GetNode<Area3D>("Camera3D/Area3D");
         attackCooldown = GetNode<Timer>("AttackCooldown");
+        healthBar = GetNode<ColorRect>("HUD/HealthBar/ColorRect");
+        initialHealthBarSize = healthBar.Size.X;
         attackCooldown.Timeout += OnTimerTimeout;
         animTree.AnimationFinished += OnAnimationFinished;
         Hit += OnHit;
@@ -250,11 +255,15 @@ public partial class Player : CharacterBody3D
     {
         if (!dead)
         {
+            Vector2 healthCalc = new Vector2();
             health -= damage;
             if (health <= 0)
             {
                 dead = true;
             }
+            // Resizes the health bar when the player takes damage.
+            healthCalc = new Vector2((((float)health / maxHealth) * initialHealthBarSize), healthBar.Size.Y);
+            healthBar.SetSize(healthCalc);
         }
     }
 }
