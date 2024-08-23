@@ -91,7 +91,7 @@ public partial class Player : CharacterBody3D
             blockShove = true;
         }
     }
-    public override void _UnhandledInput(InputEvent @event)
+    public override void _Input(InputEvent @event)
     {
         if (@event is InputEventMouseMotion mouseEvent && Input.MouseMode == Input.MouseModeEnum.Captured)
         {
