@@ -1,4 +1,4 @@
-[gd_scene load_steps=108 format=4 uid="uid://cycmto2oewk3v"]
+[gd_scene load_steps=107 format=4 uid="uid://cycmto2oewk3v"]
 
 [ext_resource type="PackedScene" uid="uid://btg8x3sln11g2" path="res://Assets/Mini Arena/character-soldier.glb" id="1_b1a85"]
 [ext_resource type="Script" path="res://Scripts/Player.cs" id="1_r7wak"]
@@ -4628,9 +4628,6 @@ nodes/jump/position = Vector2(920, 500)
 nodes/output/position = Vector2(1240, 280)
 node_connections = [&"Jump", 0, &"Walk Blend", &"Jump", 1, &"jump", &"Walk Blend", 0, &"StateMachine", &"Walk Blend", 1, &"Animation", &"output", 0, &"Jump"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_0f5aw"]
-size = Vector3(1.8, 2, 1.8)
-
 [node name="Player" node_paths=PackedStringArray("cameraController") instance=ExtResource("1_b1a85")]
 collision_layer = 2
 collision_mask = 5
@@ -4804,14 +4801,11 @@ cast_shadow = 0
 mesh = SubResource("ArrayMesh_31863")
 skeleton = NodePath("")
 
-[node name="Area3D" type="Area3D" parent="Camera3D" index="2"]
-collision_layer = 0
+[node name="RayCast3D" type="RayCast3D" parent="Camera3D" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.36848e-15, -0.05, 0.25)
+target_position = Vector3(0, 0, -3)
 collision_mask = 4
-monitorable = false
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Camera3D/Area3D" index="0"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -0.75)
-shape = SubResource("BoxShape3D_0f5aw")
+debug_shape_custom_color = Color(0, 1, 0, 1)
 
 [node name="AttackCooldown" type="Timer" parent="." index="6"]
 wait_time = 0.5
