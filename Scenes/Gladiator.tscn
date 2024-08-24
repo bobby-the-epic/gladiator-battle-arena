@@ -1,4 +1,4 @@
-[gd_scene load_steps=54 format=4 uid="uid://s8frao1jmpyi"]
+[gd_scene load_steps=53 format=4 uid="uid://s8frao1jmpyi"]
 
 [ext_resource type="PackedScene" uid="uid://btg8x3sln11g2" path="res://Assets/Mini Arena/character-soldier.glb" id="1_c1yec"]
 [ext_resource type="Script" path="res://Scripts/Gladiator.cs" id="2_hmlhj"]
@@ -2332,9 +2332,6 @@ nodes/walk/node = SubResource("AnimationNodeAnimation_1arik")
 nodes/walk/position = Vector2(-220, 280)
 node_connections = [&"Attack", 0, &"WalkIdleBlend", &"Attack", 1, &"attack", &"Death State", 0, &"Hit", &"Death State", 1, &"die", &"Hit", 0, &"Stagger", &"Hit", 1, &"Animation", &"Stagger", 0, &"Attack", &"Stagger", 1, &"stagger", &"WalkIdleBlend", 0, &"idle", &"WalkIdleBlend", 1, &"walk", &"output", 0, &"Death State"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_btwkv"]
-size = Vector3(2, 2, 2)
-
 [node name="Gladiator" instance=ExtResource("1_c1yec")]
 collision_layer = 4
 collision_mask = 7
@@ -2401,15 +2398,11 @@ avoidance_enabled = true
 radius = 1.0
 debug_enabled = true
 
-[node name="Area3D" type="Area3D" parent="." index="5"]
-collision_layer = 4
-collision_mask = 2
-monitorable = false
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" index="0"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 1)
-shape = SubResource("BoxShape3D_btwkv")
-
-[node name="VisibleOnScreenNotifier3D" type="VisibleOnScreenNotifier3D" parent="." index="6"]
+[node name="VisibleOnScreenNotifier3D" type="VisibleOnScreenNotifier3D" parent="." index="5"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.700963, 0)
 aabb = AABB(-0.6, -0.8, -1, 1.2, 2.7, 2)
+
+[node name="RayCast3D" type="RayCast3D" parent="." index="6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+target_position = Vector3(0, 0, 2)
+collision_mask = 2

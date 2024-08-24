@@ -19,8 +19,8 @@ public partial class Gladiator : CharacterBody3D
     AnimationPlayer animPlayer;
     CharacterBody3D player;
     NavigationAgent3D navAgent;
-    Area3D attackRange;
     VisibleOnScreenNotifier3D visibleBox;
+    RayCast3D rayCast;
     StringName walkIdleBlend = new StringName("parameters/WalkIdleBlend/blend_amount");
     StringName attackRequest = new StringName("parameters/Attack/request");
     StringName staggerRequest = new StringName("parameters/Stagger/request");
@@ -49,8 +49,8 @@ public partial class Gladiator : CharacterBody3D
         navAgent = GetNode<NavigationAgent3D>("NavigationAgent3D");
         animTree = GetNode<AnimationTree>("AnimationTree");
         animPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
-        attackRange = GetNode<Area3D>("Area3D");
         visibleBox = GetNode<VisibleOnScreenNotifier3D>("VisibleOnScreenNotifier3D");
+        rayCast = GetNode<RayCast3D>("RayCast3D");
 
         // Signal connections.
         visibleBox.ScreenEntered += () => onScreen = true;
@@ -165,8 +165,8 @@ public partial class Gladiator : CharacterBody3D
         if (animName == "custom/attack")
         {
             attacking = false;
-            // If the player is in the range of attack, then damage the player
-            if (attackRange.HasOverlappingBodies())
+            // If the player is in the range of the ray, then damage the player
+            if (rayCast.IsColliding())
                 player.EmitSignal(Player.SignalName.Hit, 5, this);
         }
         else if (animName == "idle")
