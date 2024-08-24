@@ -183,9 +183,6 @@ public partial class Gladiator : CharacterBody3D
                 return;
             }
             GD.Print(Name + " has taken " + damage + " damage.");
-            // staggered = true;
-            // await ToSignal(animTree, AnimationTree.SignalName.AnimationFinished);
-            // staggered = false;
         }
     }
     private void OnStagger()
