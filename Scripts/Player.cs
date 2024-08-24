@@ -58,7 +58,7 @@ public partial class Player : CharacterBody3D
     Camera3D cameraController;
 
     [Signal]
-    public delegate void HitEventHandler(int damage);
+    public delegate void HitEventHandler(int damage, CharacterBody3D gladiator);
 
     public override void _Ready()
     {
@@ -250,12 +250,15 @@ public partial class Player : CharacterBody3D
             gladiatorHit.EmitSignal(Gladiator.SignalName.Hit, 10);
         }
     }
-    private void OnHit(int damage)
+    private void OnHit(int damage, CharacterBody3D gladiator)
     {
         if (!dead)
         {
             if (blocking)
-                return;
+            {
+                if ((bool)gladiator.Get(Gladiator.PropertyName.onScreen) == true)
+                    return;
+            }
             Vector2 healthCalc = new Vector2();
             health -= damage;
             if (health <= 0)
