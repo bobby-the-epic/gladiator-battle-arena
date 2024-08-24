@@ -2413,3 +2413,7 @@ shape = SubResource("BoxShape3D_btwkv")
 [node name="GPUParticlesCollisionBox3D" type="GPUParticlesCollisionBox3D" parent="." index="6"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.147705, 1.00875, 0.0209961)
 size = Vector3(1.70459, 2.04356, 1.09473)
+
+[node name="VisibleOnScreenNotifier3D" type="VisibleOnScreenNotifier3D" parent="." index="7"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.700963, 0)
+aabb = AABB(-0.6, -0.8, -1, 1.2, 2.7, 2)
