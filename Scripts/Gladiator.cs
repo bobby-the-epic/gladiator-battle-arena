@@ -20,6 +20,7 @@ public partial class Gladiator : CharacterBody3D
     StringName walkIdleBlend = new StringName("parameters/WalkIdleBlend/blend_amount");
     StringName attackRequest = new StringName("parameters/Attack/request");
     StringName staggerRequest = new StringName("parameters/Stagger/request");
+    StringName hitRequest = new StringName("parameters/Hit/request");
     StringName deathTransition = new StringName("parameters/Death State/transition_request");
 
     enum ANIM
@@ -183,6 +184,7 @@ public partial class Gladiator : CharacterBody3D
                 return;
             }
             GD.Print(Name + " has taken " + damage + " damage.");
+            animTree.Set(hitRequest, (int)AnimationNodeOneShot.OneShotRequest.Fire);
         }
     }
     private void OnStagger()
