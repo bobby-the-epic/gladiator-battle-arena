@@ -248,13 +248,14 @@ public partial class Player : CharacterBody3D
                 }
             }
             gladiatorHit.EmitSignal(Gladiator.SignalName.Hit, 10);
-            gladiatorHit.EmitSignal(Gladiator.SignalName.Stagger);
         }
     }
     private void OnHit(int damage)
     {
         if (!dead)
         {
+            if (blocking)
+                return;
             Vector2 healthCalc = new Vector2();
             health -= damage;
             if (health <= 0)
