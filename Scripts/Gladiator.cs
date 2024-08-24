@@ -4,6 +4,9 @@ using System;
 public partial class Gladiator : CharacterBody3D
 {
     public float gravity = ProjectSettings.GetSetting("physics/3d/default_gravity").AsSingle();
+    [Export]
+    public bool onScreen = false;
+
     bool navServerReady = false;
     bool attacking = false;
     bool staggered = false;
@@ -11,12 +14,13 @@ public partial class Gladiator : CharacterBody3D
     int health = 100;
     float angle;
     const float speed = 3.0f;
+
     AnimationTree animTree;
     AnimationPlayer animPlayer;
     CharacterBody3D player;
     NavigationAgent3D navAgent;
     Area3D attackRange;
-
+    VisibleOnScreenNotifier3D visibleBox;
     StringName walkIdleBlend = new StringName("parameters/WalkIdleBlend/blend_amount");
     StringName attackRequest = new StringName("parameters/Attack/request");
     StringName staggerRequest = new StringName("parameters/Stagger/request");
@@ -43,14 +47,20 @@ public partial class Gladiator : CharacterBody3D
     {
         player = GetNode<CharacterBody3D>("/root/Main/Player");
         navAgent = GetNode<NavigationAgent3D>("NavigationAgent3D");
-        navAgent.VelocityComputed += OnVelocityComputed;
         animTree = GetNode<AnimationTree>("AnimationTree");
         animPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
+        attackRange = GetNode<Area3D>("Area3D");
+        visibleBox = GetNode<VisibleOnScreenNotifier3D>("VisibleOnScreenNotifier3D");
+
+        // Signal connections.
+        visibleBox.ScreenEntered += () => onScreen = true;
+        visibleBox.ScreenExited += () => onScreen = false;
         animTree.AnimationStarted += OnAnimationStarted;
         animTree.AnimationFinished += OnAnimationFinished;
-        attackRange = GetNode<Area3D>("Area3D");
+        navAgent.VelocityComputed += OnVelocityComputed;
         Hit += OnHit;
-        Stagger += OnStagger;
+        Stagger += () => staggered = true;
+
         CallDeferred(MethodName.ActorSetup);
     }
     public override void _PhysicsProcess(double delta)
@@ -63,7 +73,6 @@ public partial class Gladiator : CharacterBody3D
     public override void _ExitTree()
     {
         Hit -= OnHit;
-        Stagger -= OnStagger;
     }
     private void SetMovement(double delta)
     {
@@ -158,7 +167,7 @@ public partial class Gladiator : CharacterBody3D
             attacking = false;
             // If the player is in the range of attack, then damage the player
             if (attackRange.HasOverlappingBodies())
-                player.EmitSignal(Player.SignalName.Hit, 5);
+                player.EmitSignal(Player.SignalName.Hit, 5, this);
         }
         else if (animName == "idle")
         {
@@ -186,9 +195,5 @@ public partial class Gladiator : CharacterBody3D
             GD.Print(Name + " has taken " + damage + " damage.");
             animTree.Set(hitRequest, (int)AnimationNodeOneShot.OneShotRequest.Fire);
         }
-    }
-    private void OnStagger()
-    {
-        staggered = true;
     }
 }
