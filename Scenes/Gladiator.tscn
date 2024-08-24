@@ -2306,7 +2306,7 @@ loop_mode = 0
 animation = &"walk"
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_icfrc"]
-graph_offset = Vector2(-137.611, 239.211)
+graph_offset = Vector2(-37.4432, 134.419)
 nodes/Animation/node = SubResource("AnimationNodeAnimation_yleb6")
 nodes/Animation/position = Vector2(560, 460)
 nodes/Attack/node = SubResource("AnimationNodeOneShot_h65ep")

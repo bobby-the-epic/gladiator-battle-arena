@@ -12,6 +12,7 @@ public partial class Gladiator : CharacterBody3D
     bool staggered = false;
     bool dead = false;
     int health = 100;
+    int weaponDamage = 5;
     float angle;
     const float speed = 3.0f;
 
@@ -167,7 +168,7 @@ public partial class Gladiator : CharacterBody3D
             attacking = false;
             // If the player is in the range of the ray, then damage the player
             if (rayCast.IsColliding())
-                player.EmitSignal(Player.SignalName.Hit, 5, this);
+                player.EmitSignal(Player.SignalName.Hit, weaponDamage, this);
         }
         else if (animName == "idle")
         {

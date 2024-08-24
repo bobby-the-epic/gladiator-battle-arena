@@ -13,6 +13,7 @@ public partial class Player : CharacterBody3D
     public bool dead = false;
 
     const int maxHealth = 100;
+    int weaponDamage = 5;
     float rotationInput;
     float tiltInput;
     float pitch;
@@ -204,7 +205,7 @@ public partial class Player : CharacterBody3D
         if (rayCast.IsColliding())
         {
             CharacterBody3D target = (CharacterBody3D)rayCast.GetCollider();
-            target.EmitSignal(Gladiator.SignalName.Hit, 5);
+            target.EmitSignal(Gladiator.SignalName.Hit, weaponDamage);
         }
 
         // Plays the attack animation and waits for the AnimationFinished signal to fire.
