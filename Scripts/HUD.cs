@@ -6,6 +6,7 @@ public partial class HUD : Control
     float initialHealthBarSize;
     TextureRect damageEffect;
     ColorRect healthBar;
+    AnimationPlayer animPlayer;
 
     [Signal]
     public delegate void DamageTakenEventHandler(float damage, float health, float maxHealth);
@@ -15,6 +16,7 @@ public partial class HUD : Control
         damageEffect = GetNode<TextureRect>("TextureRect");
         healthBar = GetNode<ColorRect>("HealthBar/ColorRect");
         initialHealthBarSize = healthBar.Size.X;
+        animPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
 
         DamageTaken += OnDamageTaken;
     }
@@ -24,5 +26,6 @@ public partial class HUD : Control
         Vector2 healthCalc = new Vector2();
         healthCalc = new Vector2((((float)health / maxHealth) * initialHealthBarSize), healthBar.Size.Y);
         healthBar.SetSize(healthCalc);
+        animPlayer.Play("damageEffect");
     }
 }
