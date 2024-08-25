@@ -23,8 +23,8 @@ public partial class Player : CharacterBody3D
     Vector3 mouseRotation;
     AnimationTree animTree, dupeBodyAnimTree;
     Timer attackCooldown;
-    ColorRect healthBar;
     RayCast3D rayCast;
+    Control hud;
     // Animation parameter StringNames for more readable code
     StringName walkBlend = new StringName("parameters/Walk Blend/blend_amount");
     StringName jumpRequest = new StringName("parameters/Jump/request");
@@ -67,9 +67,8 @@ public partial class Player : CharacterBody3D
         animTree = GetNode<AnimationTree>("AnimationTree");
         dupeBodyAnimTree = GetNode<AnimationTree>("DupeBody/AnimationTree");
         attackCooldown = GetNode<Timer>("AttackCooldown");
-        healthBar = GetNode<ColorRect>("HUD/HealthBar/ColorRect");
         rayCast = GetNode<RayCast3D>("Camera3D/RayCast3D");
-        initialHealthBarSize = healthBar.Size.X;
+        hud = GetNode<Control>("HUD");
         attackCooldown.Timeout += () => attacking = false;
         animTree.AnimationFinished += OnAnimationFinished;
         Hit += OnHit;
@@ -236,15 +235,12 @@ public partial class Player : CharacterBody3D
                 if ((bool)gladiator.Get(Gladiator.PropertyName.onScreen) == true)
                     return;
             }
-            Vector2 healthCalc = new Vector2();
             health -= damage;
             if (health <= 0)
             {
                 dead = true;
             }
-            // Resizes the health bar when the player takes damage.
-            healthCalc = new Vector2((((float)health / maxHealth) * initialHealthBarSize), healthBar.Size.Y);
-            healthBar.SetSize(healthCalc);
+            hud.EmitSignal(HUD.SignalName.DamageTaken, (float)damage, (float)health, (float)maxHealth);
         }
     }
 }
