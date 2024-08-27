@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://b8sjlspgwncpn"]
+[gd_scene load_steps=18 format=3 uid="uid://b8sjlspgwncpn"]
 
 [ext_resource type="Script" path="res://Scripts/HUD.cs" id="1_cs451"]
 [ext_resource type="Texture2D" uid="uid://sb7jfe3ccpdp" path="res://Assets/Textures/damageDirection.png" id="2_plkex"]
@@ -6,6 +6,12 @@
 
 [sub_resource type="LabelSettings" id="LabelSettings_2s4o2"]
 font_size = 33
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bj6i3"]
+bg_color = Color(0.172833, 0.172833, 0.172833, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wn55h"]
+bg_color = Color(0.745098, 0, 0, 1)
 
 [sub_resource type="Animation" id="Animation_kn6ux"]
 length = 0.001
@@ -140,7 +146,7 @@ text = "Health: "
 label_settings = SubResource("LabelSettings_2s4o2")
 vertical_alignment = 3
 
-[node name="ColorRect" type="ColorRect" parent="HealthBar"]
+[node name="ProgressBar" type="ProgressBar" parent="HealthBar"]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -151,7 +157,10 @@ offset_right = 272.0
 offset_bottom = -43.0
 grow_vertical = 0
 mouse_filter = 2
-color = Color(1, 0, 0, 1)
+theme_override_styles/background = SubResource("StyleBoxFlat_bj6i3")
+theme_override_styles/fill = SubResource("StyleBoxFlat_wn55h")
+value = 100.0
+show_percentage = false
 
 [node name="DamageDirection" type="TextureRect" parent="."]
 self_modulate = Color(1, 1, 1, 0)

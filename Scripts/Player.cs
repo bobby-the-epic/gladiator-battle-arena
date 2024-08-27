@@ -19,7 +19,6 @@ public partial class Player : CharacterBody3D
     float pitch;
     float tiltLowerLimit = Mathf.DegToRad(-85);
     float tiltUpperLimit = Mathf.DegToRad(85);
-    float initialHealthBarSize;
     Vector3 mouseRotation;
     AnimationTree animTree, dupeBodyAnimTree;
     Timer attackCooldown;
@@ -244,7 +243,7 @@ public partial class Player : CharacterBody3D
             {
                 dead = true;
             }
-            hud.EmitSignal(HUD.SignalName.DamageTaken, (float)damage, (float)health, (float)maxHealth, angle);
+            hud.EmitSignal(HUD.SignalName.DamageTaken, health, angle);
         }
     }
 }

@@ -8,23 +8,21 @@ public partial class HUD : Control
         public Vector2 center, radius;
     }
 
-    float initialHealthBarSize;
     TextureRect damageDirection, damageAlert;
-    ColorRect healthBar;
+    ProgressBar healthBar;
     Circle circle;
     AnimationTree animTree;
     StringName damageTransition = new StringName("parameters/Transition/transition_request");
 
     [Signal]
-    public delegate void DamageTakenEventHandler(float damage, float health, float maxHealth, float angle);
+    public delegate void DamageTakenEventHandler(int health, float angle);
 
     public override void _Ready()
     {
         damageDirection = GetNode<TextureRect>("DamageDirection");
         damageAlert = GetNode<TextureRect>("DamageAlert");
-        healthBar = GetNode<ColorRect>("HealthBar/ColorRect");
+        healthBar = GetNode<ProgressBar>("HealthBar/ProgressBar");
         animTree = GetNode<AnimationTree>("AnimationTree");
-        initialHealthBarSize = healthBar.Size.X;
 
         DamageTaken += OnDamageTaken;
         CircleInit();
@@ -35,12 +33,10 @@ public partial class HUD : Control
         circle.radius.Y = Size.Y / 2 - 100;
         circle.center = new Vector2(Size.X / 2, Size.Y / 2);
     }
-    private void OnDamageTaken(float damage, float health, float maxHealth, float angle)
+    private void OnDamageTaken(int health, float angle)
     {
         // Resizes the health bar when the player takes damage.
-        Vector2 healthCalc = new Vector2();
-        healthCalc = new Vector2((((float)health / maxHealth) * initialHealthBarSize), healthBar.Size.Y);
-        healthBar.SetSize(healthCalc);
+        healthBar.SetValueNoSignal(health);
         DamageAlert(angle);
     }
     private void DamageAlert(float angle)
