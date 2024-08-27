@@ -228,6 +228,10 @@ public partial class Player : CharacterBody3D
     }
     private void OnHit(int damage, CharacterBody3D gladiator)
     {
+        Vector3 gladiatorDirection = Transform.Origin.DirectionTo(gladiator.Transform.Origin);
+        Vector3 forwardVector = -Transform.Basis.Z.Normalized();
+        float angle = -forwardVector.SignedAngleTo(gladiatorDirection, Vector3.Up);
+
         if (!dead)
         {
             if (blocking)
@@ -240,7 +244,7 @@ public partial class Player : CharacterBody3D
             {
                 dead = true;
             }
-            hud.EmitSignal(HUD.SignalName.DamageTaken, (float)damage, (float)health, (float)maxHealth);
+            hud.EmitSignal(HUD.SignalName.DamageTaken, (float)damage, (float)health, (float)maxHealth, angle);
         }
     }
 }

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bvayxq5fq2b6i"
-path="res://.godot/imported/damageEffect.png-75eff77b6e3c71b8ed6680a7e3688926.ctex"
+uid="uid://sb7jfe3ccpdp"
+path="res://.godot/imported/damageDirection.png-68921a1bcf286a8c9735b865d4f1c128.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Textures/damageEffect.png"
-dest_files=["res://.godot/imported/damageEffect.png-75eff77b6e3c71b8ed6680a7e3688926.ctex"]
+source_file="res://Assets/Textures/damageDirection.png"
+dest_files=["res://.godot/imported/damageDirection.png-68921a1bcf286a8c9735b865d4f1c128.ctex"]
 
 [params]
 
