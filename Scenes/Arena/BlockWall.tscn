@@ -1,0 +1,57 @@
+[gd_scene load_steps=6 format=4 uid="uid://d2cy1qutt4hft"]
+
+[ext_resource type="Texture2D" uid="uid://cinqdu7kqdadm" path="res://Assets/Mini Arena/Textures/colormap.png" id="1_ijf8g"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1eooo"]
+resource_name = "colormap"
+cull_mode = 2
+albedo_texture = ExtResource("1_ijf8g")
+texture_filter = 2
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_ya6yb"]
+_surfaces = [{
+"aabb": AABB(-0.5, 0, -0.5, 1, 0.5, 1),
+"format": 34896613377,
+"index_count": 36,
+"index_data": PackedByteArray("AgAAAAEAAQADAAIABgAEAAUABQAHAAYAAgADAAYABgAHAAIABgADAAEAAQAEAAYABQAEAAEAAQAAAAUABQAAAAIAAgAHAAUA"),
+"name": "colormap",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 8,
+"vertex_data": PackedByteArray("//8AAP//AAD//wAAAAAAAAAAAAD//wAAAAAAAAAAAAD/////AAAAAP///////wAAAAD//wAAAAAAAP////8AAA==")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_y2q1h"]
+resource_name = "block_block"
+_surfaces = [{
+"aabb": AABB(-0.5, 0, -0.5, 1, 0.5, 1),
+"attribute_data": PackedByteArray("//eY+f/3mPn/95j5//eY+f/3Zcb/92XG//dlxv/3Zcb/95j5//dlxv/3mPn/92XG//eY+f/3mPn/92XG//dlxv/3Zcb/95j5//dlxv/3mPn/95j5//eY+f/3Zcb/92XG"),
+"format": 34896613399,
+"index_count": 36,
+"index_data": PackedByteArray("AgAAAAEAAQADAAIABgAEAAUABQAHAAYACgAIAAkACQALAAoADgAMAA0ADQAPAA4AEgAQABEAEQATABIAFgAUABUAFQAXABYA"),
+"material": SubResource("StandardMaterial3D_1eooo"),
+"name": "colormap",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("//8AAP///7///wAAAAD/vwAAAAD///+/AAAAAAAA/7//////AAD/////////////AAD//wAA//8AAP///////wAAAAAAAP+/AAD//wAA/78AAAAA////vwAA//////+/AAAAAAAA/////wAAAAD//wAA//8AAP///////wAA////////AAD/v///AAAAAP+//////////7///wAA////v///AAD//wCAAAAAAP//AID///////8AgAAA/////wCAAAD/fwAA/38AAP9/AAD/f/9//7//f/+//3//v/9//7//f////3////9/////f////3////9/////f////3////9/AAD/fwAA/38AAP9/AAD/f////3////9/////f///")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_ya6yb")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_u5uxd"]
+size = Vector3(1, 0.5, 1)
+
+[node name="BlockWall" type="Node3D"]
+transform = Transform3D(-6, -1.50996e-07, 3.96014e-14, 0, -4.37114e-08, -6, 9.05975e-07, -1, 2.62268e-07, 0, 3, 0.25)
+
+[node name="block" type="MeshInstance3D" parent="."]
+mesh = SubResource("ArrayMesh_y2q1h")
+skeleton = NodePath("")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 1.13687e-13, 1, 0, 0, 0, 1, 0, 0.25, 0)
+shape = SubResource("BoxShape3D_u5uxd")

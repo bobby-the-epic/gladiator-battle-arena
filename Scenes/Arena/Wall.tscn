@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://cr4d66niixu7v"]
+
+[ext_resource type="PackedScene" uid="uid://dfkc66se1web6" path="res://Assets/Mini Arena/wall.glb" id="1_8xmfb"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_fvwlg"]
+size = Vector3(1, 1, 0.65)
+
+[node name="wall" instance=ExtResource("1_8xmfb")]
+transform = Transform3D(6, 0, 0, 0, 6, 0, 0, 0, 3, 0, 0, 0)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." index="1"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("BoxShape3D_fvwlg")
