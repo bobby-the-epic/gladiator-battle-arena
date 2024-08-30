@@ -13,6 +13,8 @@ public partial class Player : CharacterBody3D
     public bool dead = false;
 
     const int maxHealth = 100;
+    const int fire = (int)AnimationNodeOneShot.OneShotRequest.Fire;
+    const int abort = (int)AnimationNodeOneShot.OneShotRequest.Abort;
     int weaponDamage = 5;
     float rotationInput;
     float tiltInput;
@@ -171,14 +173,12 @@ public partial class Player : CharacterBody3D
                 case ANIM.MOVING:
                     animTree.Set(walkBlend, 1);
                     dupeBodyAnimTree.Set(walkBlend, 1);
-                    animTree.Set(jumpRequest, (int)AnimationNodeOneShot.OneShotRequest.Abort);
-                    dupeBodyAnimTree.Set(jumpRequest,
-                                         (int)AnimationNodeOneShot.OneShotRequest.Abort);
+                    animTree.Set(jumpRequest, abort);
+                    dupeBodyAnimTree.Set(jumpRequest, abort);
                     break;
                 case ANIM.JUMPING:
-                    animTree.Set(jumpRequest, (int)AnimationNodeOneShot.OneShotRequest.Fire);
-                    dupeBodyAnimTree.Set(jumpRequest,
-                                         (int)AnimationNodeOneShot.OneShotRequest.Fire);
+                    animTree.Set(jumpRequest, fire);
+                    dupeBodyAnimTree.Set(jumpRequest, fire);
                     break;
                 case ANIM.MOVINGANDJUMPING:
                     animTree.Set(walkBlend, 1);
@@ -189,9 +189,8 @@ public partial class Player : CharacterBody3D
                     // clang-format on
                     animTree.Set(walkBlend, 0);
                     dupeBodyAnimTree.Set(walkBlend, 0);
-                    animTree.Set(jumpRequest, (int)AnimationNodeOneShot.OneShotRequest.Abort);
-                    dupeBodyAnimTree.Set(jumpRequest,
-                                         (int)AnimationNodeOneShot.OneShotRequest.Abort);
+                    animTree.Set(jumpRequest, abort);
+                    dupeBodyAnimTree.Set(jumpRequest, abort);
                     break;
             }
         }
@@ -211,8 +210,7 @@ public partial class Player : CharacterBody3D
         The animation state machine detects the attacking bool and plays the animation in the
         state machine. */
 
-        dupeBodyAnimTree.Set("parameters/Attack/request",
-                             (int)AnimationNodeOneShot.OneShotRequest.Fire);
+        dupeBodyAnimTree.Set("parameters/Attack/request", fire);
         attackCooldown.Start();
         await ToSignal(attackCooldown, Timer.SignalName.Timeout);
     }
