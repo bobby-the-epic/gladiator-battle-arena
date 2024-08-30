@@ -39,12 +39,10 @@ public partial class Player : CharacterBody3D
     ANIM previousAnim = ANIM.IDLE;
     ANIM newAnim = ANIM.IDLE;
 
-    /*
-     * I used a duplicate body mesh for the shadows. I wanted the camera to be
-     * able to see the player's body, but I also had to do first person
-     * animations. I separated the hands from the mesh with a BoneAttachment3D
-     * node and animated that.
-     */
+    /*  I used a duplicate body mesh for the shadows. I wanted the camera to be
+     able to see the player's body, but I also had to do first person
+     animations. I separated the hands from the mesh with a BoneAttachment3D
+     node and animated that. */
 
     [Export]
     bool attacking = false;
@@ -84,7 +82,8 @@ public partial class Player : CharacterBody3D
     }
     public override void _UnhandledInput(InputEvent @event)
     {
-        if (@event is InputEventMouseMotion mouseEvent && Input.MouseMode == Input.MouseModeEnum.Captured)
+        if (@event is InputEventMouseMotion mouseEvent &&
+            Input.MouseMode == Input.MouseModeEnum.Captured)
         {
             rotationInput = -mouseEvent.Relative.X * mouseSensitivity;
             tiltInput = -mouseEvent.Relative.Y * mouseSensitivity;
@@ -99,7 +98,8 @@ public partial class Player : CharacterBody3D
         Rotate(Vector3.Up, rotationInput * (float)delta);
 
         // Rotate the camera controller node around the X-axis for vertical camera movement
-        cameraController.Rotation = new Vector3(pitch, cameraController.Rotation.Y, cameraController.Rotation.Z);
+        cameraController.Rotation =
+            new Vector3(pitch, cameraController.Rotation.Y, cameraController.Rotation.Z);
 
         rotationInput = 0.0f;
         tiltInput = 0.0f;
@@ -152,10 +152,8 @@ public partial class Player : CharacterBody3D
         if (blocking && Input.IsActionJustPressed("attack"))
             blockShove = true;
 
-        /*
-         * Sets the player's animation based on whether the player is
-         * moving and if they are on the floor.
-         */
+        /*  Sets the player's animation based on whether the player is
+         moving and if they are on the floor. */
 
         if (Velocity != Vector3.Zero && IsOnFloor())
             newAnim = ANIM.MOVING;
@@ -174,11 +172,13 @@ public partial class Player : CharacterBody3D
                     animTree.Set(walkBlend, 1);
                     dupeBodyAnimTree.Set(walkBlend, 1);
                     animTree.Set(jumpRequest, (int)AnimationNodeOneShot.OneShotRequest.Abort);
-                    dupeBodyAnimTree.Set(jumpRequest, (int)AnimationNodeOneShot.OneShotRequest.Abort);
+                    dupeBodyAnimTree.Set(jumpRequest,
+                                         (int)AnimationNodeOneShot.OneShotRequest.Abort);
                     break;
                 case ANIM.JUMPING:
                     animTree.Set(jumpRequest, (int)AnimationNodeOneShot.OneShotRequest.Fire);
-                    dupeBodyAnimTree.Set(jumpRequest, (int)AnimationNodeOneShot.OneShotRequest.Fire);
+                    dupeBodyAnimTree.Set(jumpRequest,
+                                         (int)AnimationNodeOneShot.OneShotRequest.Fire);
                     break;
                 case ANIM.MOVINGANDJUMPING:
                     animTree.Set(walkBlend, 1);
@@ -190,7 +190,8 @@ public partial class Player : CharacterBody3D
                     animTree.Set(walkBlend, 0);
                     dupeBodyAnimTree.Set(walkBlend, 0);
                     animTree.Set(jumpRequest, (int)AnimationNodeOneShot.OneShotRequest.Abort);
-                    dupeBodyAnimTree.Set(jumpRequest, (int)AnimationNodeOneShot.OneShotRequest.Abort);
+                    dupeBodyAnimTree.Set(jumpRequest,
+                                         (int)AnimationNodeOneShot.OneShotRequest.Abort);
                     break;
             }
         }
@@ -206,10 +207,12 @@ public partial class Player : CharacterBody3D
             target.EmitSignal(Gladiator.SignalName.Hit, weaponDamage);
         }
 
-        // Plays the attack animation and waits for the AnimationFinished signal to fire.
-        // The animation state machine detects the attacking bool and plays the animation in the state machine.
+        /* Plays the attack animation and waits for the AnimationFinished signal to fire.
+        The animation state machine detects the attacking bool and plays the animation in the
+        state machine. */
 
-        dupeBodyAnimTree.Set("parameters/Attack/request", (int)AnimationNodeOneShot.OneShotRequest.Fire);
+        dupeBodyAnimTree.Set("parameters/Attack/request",
+                             (int)AnimationNodeOneShot.OneShotRequest.Fire);
         attackCooldown.Start();
         await ToSignal(attackCooldown, Timer.SignalName.Timeout);
     }

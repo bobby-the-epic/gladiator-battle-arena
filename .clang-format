@@ -1,3 +1,4 @@
 Language: CSharp
 BasedOnStyle: Microsoft
 IndentCaseLabels: true
+ColumnLimit: 100
