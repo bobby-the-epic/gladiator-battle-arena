@@ -52,9 +52,9 @@ public partial class HUD : Control
 
         // Positions the texture on the screen on a point of a circle,
         // which is defined by the size of the screen minus an offset.
-        damageDirection.Position =
-            new Vector2((circle.center.X + circle.radius.X * Mathf.Cos(angle)) - damageDirection.PivotOffset.X,
-                        (circle.center.Y + circle.radius.Y * Mathf.Sin(angle)) - damageDirection.PivotOffset.Y);
+        damageDirection.Position = new Vector2(
+            (circle.center.X + circle.radius.X * Mathf.Cos(angle)) - damageDirection.PivotOffset.X,
+            (circle.center.Y + circle.radius.Y * Mathf.Sin(angle)) - damageDirection.PivotOffset.Y);
         animTree.Set(damageTransition, "damaged");
     }
 }
