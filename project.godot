@@ -27,6 +27,10 @@ display_server/driver.linuxbsd="wayland"
 
 project/assembly_name="Fps 1"
 
+[global_group]
+
+gladiators=""
+
 [input]
 
 moveLeft={

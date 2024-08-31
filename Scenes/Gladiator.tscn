@@ -2306,7 +2306,7 @@ loop_mode = 0
 animation = &"walk"
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_icfrc"]
-graph_offset = Vector2(-37.4432, 134.419)
+graph_offset = Vector2(-598.768, 129.525)
 nodes/Animation/node = SubResource("AnimationNodeAnimation_yleb6")
 nodes/Animation/position = Vector2(560, 460)
 nodes/Attack/node = SubResource("AnimationNodeOneShot_h65ep")
@@ -2332,7 +2332,7 @@ nodes/walk/node = SubResource("AnimationNodeAnimation_1arik")
 nodes/walk/position = Vector2(-220, 280)
 node_connections = [&"Attack", 0, &"WalkIdleBlend", &"Attack", 1, &"attack", &"Death State", 0, &"Hit", &"Death State", 1, &"die", &"Hit", 0, &"Stagger", &"Hit", 1, &"Animation", &"Stagger", 0, &"Attack", &"Stagger", 1, &"stagger", &"WalkIdleBlend", 0, &"idle", &"WalkIdleBlend", 1, &"walk", &"output", 0, &"Death State"]
 
-[node name="Gladiator" instance=ExtResource("1_c1yec")]
+[node name="Gladiator" groups=["gladiators"] instance=ExtResource("1_c1yec")]
 collision_layer = 4
 collision_mask = 7
 script = ExtResource("2_hmlhj")
