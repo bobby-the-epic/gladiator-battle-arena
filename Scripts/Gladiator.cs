@@ -22,6 +22,7 @@ public partial class Gladiator : CharacterBody3D
     NavigationAgent3D navAgent;
     VisibleOnScreenNotifier3D visibleBox;
     RayCast3D rayCast;
+    Node mainNode;
     StringName walkIdleBlend = new StringName("parameters/WalkIdleBlend/blend_amount");
     StringName attackRequest = new StringName("parameters/Attack/request");
     StringName staggerRequest = new StringName("parameters/Stagger/request");
@@ -52,6 +53,7 @@ public partial class Gladiator : CharacterBody3D
         animPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
         visibleBox = GetNode<VisibleOnScreenNotifier3D>("VisibleOnScreenNotifier3D");
         rayCast = GetNode<RayCast3D>("RayCast3D");
+        mainNode = GetNode<Node>("/root/Main");
 
         // Signal connections.
         visibleBox.ScreenEntered += () => onScreen = true;
@@ -190,6 +192,7 @@ public partial class Gladiator : CharacterBody3D
             if (health <= 0)
             {
                 dead = true;
+                mainNode.EmitSignal(Main.SignalName.GladiatorDeath);
                 Velocity = Vector3.Zero;
                 return;
             }
