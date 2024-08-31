@@ -1,11 +1,12 @@
-[gd_scene load_steps=11 format=3 uid="uid://wwfx231mesb"]
+[gd_scene load_steps=8 format=3 uid="uid://wwfx231mesb"]
 
 [ext_resource type="Script" path="res://Scripts/Main.cs" id="1_bchyn"]
-[ext_resource type="PackedScene" uid="uid://38a4olg5usri" path="res://Scenes/Test Level.tscn" id="2_qx8tq"]
+[ext_resource type="PackedScene" uid="uid://dywe1cf4s68if" path="res://Scenes/ArenaLevel.tscn" id="2_2c2rb"]
+[ext_resource type="PackedScene" uid="uid://s8frao1jmpyi" path="res://Scenes/Gladiator.tscn" id="2_83ao1"]
 [ext_resource type="PackedScene" uid="uid://cycmto2oewk3v" path="res://Scenes/Player.tscn" id="3_kq7my"]
-[ext_resource type="PackedScene" uid="uid://s8frao1jmpyi" path="res://Scenes/Gladiator.tscn" id="5_kcoa1"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_i8m2w"]
+energy_multiplier = 2.0
 
 [sub_resource type="Sky" id="Sky_tdcyl"]
 sky_material = SubResource("ProceduralSkyMaterial_i8m2w")
@@ -13,50 +14,46 @@ sky_material = SubResource("ProceduralSkyMaterial_i8m2w")
 [sub_resource type="Environment" id="Environment_hj1xv"]
 background_mode = 2
 sky = SubResource("Sky_tdcyl")
-ambient_light_energy = 2.0
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_flsuu"]
-albedo_color = Color(0.923579, 0.671227, 7.70092e-07, 1)
-
-[sub_resource type="BoxMesh" id="BoxMesh_ipdd0"]
-material = SubResource("StandardMaterial3D_flsuu")
-size = Vector3(1, 5, 1)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_k7uk8"]
-size = Vector3(1, 5, 1)
-
-[node name="Main" type="Node"]
+[node name="Main" type="Node" node_paths=PackedStringArray("spawnPoint1", "spawnPoint2", "spawnPoint3", "spawnPoint4")]
 script = ExtResource("1_bchyn")
+gladiatorScene = ExtResource("2_83ao1")
+spawnPoint1 = NodePath("World/SpawnPoint1")
+spawnPoint2 = NodePath("World/SpawnPoint2")
+spawnPoint3 = NodePath("World/SpawnPoint3")
+spawnPoint4 = NodePath("World/SpawnPoint4")
 
 [node name="World" type="Node" parent="."]
-
-[node name="Level1" parent="World" instance=ExtResource("2_qx8tq")]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="World"]
 environment = SubResource("Environment_hj1xv")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-4.37114e-08, -1, 0, -0.642788, 2.80971e-08, 0.766044, -0.766044, 3.34849e-08, -0.642788, 0, 64, 0)
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="World"]
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 64, 0)
 shadow_enabled = true
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -3)
-mesh = SubResource("BoxMesh_ipdd0")
+[node name="DirectionalLight3D2" type="DirectionalLight3D" parent="World"]
+transform = Transform3D(1, 0, 0, 0, -0.707107, -0.707107, 0, 0.707107, -0.707107, 0, 64, 0)
+light_energy = 0.05
+light_indirect_energy = 0.0
 
-[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]
+[node name="ArenaLevel" parent="World" instance=ExtResource("2_2c2rb")]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
-shape = SubResource("BoxShape3D_k7uk8")
+[node name="SpawnPoint1" type="Node3D" parent="World"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -28)
 
-[node name="Gladiator" parent="." instance=ExtResource("5_kcoa1")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, -1, 5)
+[node name="SpawnPoint2" type="Node3D" parent="World"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 28)
 
-[node name="Gladiator2" parent="." instance=ExtResource("5_kcoa1")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, -1, 9)
+[node name="SpawnPoint3" type="Node3D" parent="World"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 0, 0)
 
-[node name="Gladiator3" parent="." instance=ExtResource("5_kcoa1")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, -1, 14)
+[node name="SpawnPoint4" type="Node3D" parent="World"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28, 0, 0)
 
 [node name="Player" parent="." instance=ExtResource("3_kq7my")]
-transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, -1, 4)
 mouseSensitivity = 0.2
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
