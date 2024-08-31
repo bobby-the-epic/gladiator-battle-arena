@@ -192,6 +192,7 @@ public partial class Gladiator : CharacterBody3D
             if (health <= 0)
             {
                 dead = true;
+                navAgent.AvoidanceEnabled = false;
                 mainNode.EmitSignal(Main.SignalName.GladiatorDeath);
                 Velocity = Vector3.Zero;
                 return;
