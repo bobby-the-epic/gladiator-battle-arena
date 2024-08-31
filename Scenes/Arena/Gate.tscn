@@ -80,22 +80,6 @@ size = Vector3(0.6, 1, 0.25)
 [sub_resource type="BoxShape3D" id="BoxShape3D_memwj"]
 size = Vector3(0.2, 1, 0.6)
 
-[sub_resource type="Animation" id="Animation_shg8s"]
-resource_name = "open"
-length = 1.5
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("wall-gate/gate:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(0, 0.6, 0)]
-}
-
 [sub_resource type="Animation" id="Animation_7qmnu"]
 length = 0.001
 tracks/0/type = "value"
@@ -125,6 +109,22 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Vector3(0, 0.6, 0), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_shg8s"]
+resource_name = "open"
+length = 1.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("wall-gate/gate:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 0.6, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_iw5v2"]
