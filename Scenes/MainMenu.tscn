@@ -1,0 +1,57 @@
+[gd_scene load_steps=5 format=3 uid="uid://ck0pxanqt2h2w"]
+
+[ext_resource type="PackedScene" uid="uid://dywe1cf4s68if" path="res://Scenes/ArenaLevel.tscn" id="1_bnyly"]
+[ext_resource type="Script" path="res://Scripts/MainMenu.cs" id="1_wxtq2"]
+[ext_resource type="PackedScene" uid="uid://s8frao1jmpyi" path="res://Scenes/Gladiator.tscn" id="2_drgcf"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_lhx7c"]
+font_size = 64
+
+[node name="MainMenu" type="Node" node_paths=PackedStringArray("cameraPivot")]
+script = ExtResource("1_wxtq2")
+cameraPivot = NodePath("Node3D")
+gladiatorScene = ExtResource("2_drgcf")
+
+[node name="ArenaLevel" parent="." instance=ExtResource("1_bnyly")]
+
+[node name="Node3D" type="Node3D" parent="."]
+
+[node name="Camera3D" type="Camera3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 0.819152, 0.573576, 0, -0.573576, 0.819152, 0, 17, 25)
+
+[node name="MenuScreen" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TitleScreen" type="Control" parent="MenuScreen"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="MenuScreen/TitleScreen"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -61.5
+offset_top = 159.0
+offset_right = 61.5
+offset_bottom = 182.0
+grow_horizontal = 2
+text = "Gladiator Arena Battle"
+label_settings = SubResource("LabelSettings_lhx7c")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Gladiator" parent="." instance=ExtResource("2_drgcf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -9)
+
+[node name="Gladiator2" parent="." instance=ExtResource("2_drgcf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)
