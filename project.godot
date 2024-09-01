@@ -30,6 +30,8 @@ project/assembly_name="Fps 1"
 [global_group]
 
 gladiators=""
+gates=""
+spawnPoints=""
 
 [input]
 
