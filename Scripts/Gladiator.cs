@@ -9,6 +9,7 @@ public partial class Gladiator : CharacterBody3D
     bool attacking = false;
     bool staggered = false;
     bool dead = false;
+    bool inMainMenu = false;
     int health = 100;
     int weaponDamage = 5;
     float angle;
@@ -40,6 +41,8 @@ public partial class Gladiator : CharacterBody3D
 
     [Export]
     public bool onScreen = false;
+    [Export]
+    public CharacterBody3D target;
 
     [Signal]
     public delegate void HitEventHandler(int damage);
@@ -48,7 +51,27 @@ public partial class Gladiator : CharacterBody3D
 
     public override void _Ready()
     {
-        player = GetNode<CharacterBody3D>("/root/Main/Player");
+        if (GetTree().CurrentScene.Name == "Main")
+        {
+            player = (CharacterBody3D)GetTree().GetFirstNodeInGroup("player");
+            target = player;
+        }
+        else if (GetTree().CurrentScene.Name == "MainMenu")
+        {
+            Godot.Collections.Array<Node> gladiators = GetTree().GetNodesInGroup("gladiators");
+            for (int counter = 0; counter < gladiators.Count; counter++)
+            {
+                CharacterBody3D gladiator = (CharacterBody3D)gladiators[counter];
+                if (gladiator != this)
+                {
+                    target = gladiator;
+                    break;
+                }
+            }
+        }
+        else
+            GD.PrintErr("Gladiator scene placed in wrong scene. No target assigned.");
+
         navAgent = GetNode<NavigationAgent3D>("NavigationAgent3D");
         animTree = GetNode<AnimationTree>("AnimationTree");
         animPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
@@ -83,13 +106,13 @@ public partial class Gladiator : CharacterBody3D
         if (dead)
             return;
 
-        // Sets the player as the target of the navigation agent.
-        navAgent.TargetPosition = player.GlobalPosition;
+        // Sets the target of the navigation agent.
+        navAgent.TargetPosition = target.GlobalPosition;
         Vector3 velocity = Vector3.Zero;
         Vector3 lookDirection = GlobalPosition.DirectionTo(navAgent.GetNextPathPosition());
         lookDirection.Y = 0;
         angle = Mathf.Atan2(lookDirection.X, lookDirection.Z);
-        // Rotates the gladiator to look at the player
+        // Rotates the gladiator to look at the target.
         Rotate(Vector3.Up, angle - Rotation.Y);
 
         if (!navAgent.IsNavigationFinished() && !staggered)
@@ -169,9 +192,14 @@ public partial class Gladiator : CharacterBody3D
         if (animName == "custom/attack")
         {
             attacking = false;
-            // If the player is in the range of the ray, then damage the player
+            // If the target is in the range of the ray, then damage the target.
             if (rayCast.IsColliding())
-                player.EmitSignal(Player.SignalName.Hit, weaponDamage, this);
+            {
+                if (target == player)
+                    target.EmitSignal(Player.SignalName.Hit, weaponDamage, this);
+                else
+                    target.EmitSignal(Gladiator.SignalName.Hit, weaponDamage);
+            }
         }
         else if (animName == "idle")
         {
