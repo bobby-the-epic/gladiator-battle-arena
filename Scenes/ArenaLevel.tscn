@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=4 uid="uid://dywe1cf4s68if"]
+[gd_scene load_steps=31 format=4 uid="uid://dywe1cf4s68if"]
 
 [ext_resource type="PackedScene" uid="uid://diebdi0m6wnfn" path="res://Assets/Mini Arena/floor.glb" id="1_onh05"]
 [ext_resource type="Texture2D" uid="uid://cinqdu7kqdadm" path="res://Assets/Mini Arena/Textures/colormap.png" id="1_sbf46"]
@@ -141,6 +141,16 @@ animations = [{
 "name": &"default",
 "speed": 5.0
 }]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_nsswe"]
+energy_multiplier = 2.0
+
+[sub_resource type="Sky" id="Sky_tdcyl"]
+sky_material = SubResource("ProceduralSkyMaterial_nsswe")
+
+[sub_resource type="Environment" id="Environment_1f5we"]
+background_mode = 2
+sky = SubResource("Sky_tdcyl")
 
 [node name="ArenaLevel" type="Node3D"]
 
@@ -3080,3 +3090,15 @@ gizmo_extents = 1.0
 [node name="SpawnPoint4" type="Marker3D" parent="." groups=["spawnPoints"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -27)
 gizmo_extents = 1.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_1f5we")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 64, 0)
+shadow_enabled = true
+
+[node name="DirectionalLight3D2" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -0.707107, -0.707107, 0, 0.707107, -0.707107, 0, 64, 0)
+light_energy = 0.05
+light_indirect_energy = 0.0

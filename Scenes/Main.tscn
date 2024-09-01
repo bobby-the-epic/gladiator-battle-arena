@@ -1,39 +1,15 @@
-[gd_scene load_steps=8 format=3 uid="uid://wwfx231mesb"]
+[gd_scene load_steps=5 format=3 uid="uid://wwfx231mesb"]
 
 [ext_resource type="Script" path="res://Scripts/Main.cs" id="1_bchyn"]
 [ext_resource type="PackedScene" uid="uid://dywe1cf4s68if" path="res://Scenes/ArenaLevel.tscn" id="2_2c2rb"]
 [ext_resource type="PackedScene" uid="uid://s8frao1jmpyi" path="res://Scenes/Gladiator.tscn" id="2_83ao1"]
 [ext_resource type="PackedScene" uid="uid://cycmto2oewk3v" path="res://Scenes/Player.tscn" id="3_kq7my"]
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_i8m2w"]
-energy_multiplier = 2.0
-
-[sub_resource type="Sky" id="Sky_tdcyl"]
-sky_material = SubResource("ProceduralSkyMaterial_i8m2w")
-
-[sub_resource type="Environment" id="Environment_hj1xv"]
-background_mode = 2
-sky = SubResource("Sky_tdcyl")
-
 [node name="Main" type="Node"]
 script = ExtResource("1_bchyn")
 gladiatorScene = ExtResource("2_83ao1")
 
-[node name="World" type="Node" parent="."]
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="World"]
-environment = SubResource("Environment_hj1xv")
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="World"]
-transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 64, 0)
-shadow_enabled = true
-
-[node name="DirectionalLight3D2" type="DirectionalLight3D" parent="World"]
-transform = Transform3D(1, 0, 0, 0, -0.707107, -0.707107, 0, 0.707107, -0.707107, 0, 64, 0)
-light_energy = 0.05
-light_indirect_energy = 0.0
-
-[node name="ArenaLevel" parent="World" instance=ExtResource("2_2c2rb")]
+[node name="ArenaLevel" parent="." instance=ExtResource("2_2c2rb")]
 
 [node name="Player" parent="." instance=ExtResource("3_kq7my")]
 
