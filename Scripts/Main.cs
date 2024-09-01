@@ -3,27 +3,14 @@ using System;
 
 public partial class Main : Node
 {
-
     int waveNum = 0;
     int enemyCount;
-    Node3D[] spawnPoints;
-    AnimationPlayer[] gateAnimPlayers;
     Timer gateTimer;
-
-    // Exported fields so I don't have to keep calling GetNode in _Ready function.
+    Godot.Collections.Array<Node> gates;
+    Godot.Collections.Array<Node> spawnPoints;
 
     [Export]
     PackedScene gladiatorScene;
-
-    [ExportGroup("Spawn Points")]
-    [Export]
-    Node3D spawnPoint1;
-    [Export]
-    Node3D spawnPoint2;
-    [Export]
-    Node3D spawnPoint3;
-    [Export]
-    Node3D spawnPoint4;
 
     // Main menu will emit the GameStart signal when the player presses the play button.
     [Signal]
@@ -34,13 +21,8 @@ public partial class Main : Node
     public override void _Ready()
     {
         gateTimer = GetNode<Timer>("Timer");
-        spawnPoints = new Node3D[] { spawnPoint1, spawnPoint2, spawnPoint3, spawnPoint4 };
-        gateAnimPlayers = new AnimationPlayer[4];
-        for (int counter = 0; counter < gateAnimPlayers.Length; counter++)
-        {
-            gateAnimPlayers[counter] = GetNode<AnimationPlayer>(
-                String.Format("World/ArenaLevel/Gates/Gate{0}/AnimationPlayer", counter + 1));
-        }
+        gates = GetTree().GetNodesInGroup("gates");
+        spawnPoints = GetTree().GetNodesInGroup("spawnPoints");
 
         // Signal connections
         gateTimer.Timeout += CloseGates;
@@ -67,19 +49,18 @@ public partial class Main : Node
         {
             // Spawn the gladiators at the spawn points.
             CharacterBody3D newGladiator = gladiatorScene.Instantiate() as CharacterBody3D;
-            newGladiator.Position = spawnPoints[counter].Position;
+            Node3D spawnPoint = (Node3D)spawnPoints[counter];
+            newGladiator.Position = spawnPoint.Position;
             AddChild(newGladiator);
             // Open the gates.
-            gateAnimPlayers[counter].Play("open");
+            gates[counter].GetNode<AnimationPlayer>("AnimationPlayer").Play("open");
             gateTimer.Start();
         }
     }
     private void CloseGates()
     {
-        for (int counter = 0; counter < 4; counter++)
-        {
-            gateAnimPlayers[counter].Play("close");
-        }
+        for (int counter = 0; counter < gates.Count; counter++)
+            gates[counter].GetNode<AnimationPlayer>("AnimationPlayer").Play("close");
     }
     private void CleanUpArena()
     {
