@@ -4,8 +4,6 @@ using System;
 public partial class Gladiator : CharacterBody3D
 {
     public float gravity = ProjectSettings.GetSetting("physics/3d/default_gravity").AsSingle();
-    [Export]
-    public bool onScreen = false;
 
     bool navServerReady = false;
     bool attacking = false;
@@ -39,6 +37,9 @@ public partial class Gladiator : CharacterBody3D
     }
     ANIM previousAnim = ANIM.IDLE;
     ANIM currentAnim = ANIM.IDLE;
+
+    [Export]
+    public bool onScreen = false;
 
     [Signal]
     public delegate void HitEventHandler(int damage);
