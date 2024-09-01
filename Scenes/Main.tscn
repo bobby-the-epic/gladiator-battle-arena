@@ -15,13 +15,9 @@ sky_material = SubResource("ProceduralSkyMaterial_i8m2w")
 background_mode = 2
 sky = SubResource("Sky_tdcyl")
 
-[node name="Main" type="Node" node_paths=PackedStringArray("spawnPoint1", "spawnPoint2", "spawnPoint3", "spawnPoint4")]
+[node name="Main" type="Node"]
 script = ExtResource("1_bchyn")
 gladiatorScene = ExtResource("2_83ao1")
-spawnPoint1 = NodePath("World/SpawnPoint1")
-spawnPoint2 = NodePath("World/SpawnPoint2")
-spawnPoint3 = NodePath("World/SpawnPoint3")
-spawnPoint4 = NodePath("World/SpawnPoint4")
 
 [node name="World" type="Node" parent="."]
 
@@ -39,20 +35,7 @@ light_indirect_energy = 0.0
 
 [node name="ArenaLevel" parent="World" instance=ExtResource("2_2c2rb")]
 
-[node name="SpawnPoint1" type="Node3D" parent="World"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -28)
-
-[node name="SpawnPoint2" type="Node3D" parent="World"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 28)
-
-[node name="SpawnPoint3" type="Node3D" parent="World"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 0, 0)
-
-[node name="SpawnPoint4" type="Node3D" parent="World"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28, 0, 0)
-
 [node name="Player" parent="." instance=ExtResource("3_kq7my")]
-mouseSensitivity = 0.2
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 3.0
