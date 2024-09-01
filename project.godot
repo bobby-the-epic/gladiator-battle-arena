@@ -32,6 +32,7 @@ project/assembly_name="Fps 1"
 gladiators=""
 gates=""
 spawnPoints=""
+player=""
 
 [input]
 

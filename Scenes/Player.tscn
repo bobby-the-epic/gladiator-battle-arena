@@ -4628,7 +4628,7 @@ nodes/jump/position = Vector2(920, 500)
 nodes/output/position = Vector2(1240, 280)
 node_connections = [&"Jump", 0, &"Walk Blend", &"Jump", 1, &"jump", &"Walk Blend", 0, &"StateMachine", &"Walk Blend", 1, &"Animation", &"output", 0, &"Jump"]
 
-[node name="Player" node_paths=PackedStringArray("cameraController") instance=ExtResource("1_b1a85")]
+[node name="Player" node_paths=PackedStringArray("cameraController") groups=["player"] instance=ExtResource("1_b1a85")]
 transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
 collision_layer = 2
 collision_mask = 5
@@ -4643,6 +4643,7 @@ bones/4/position = Vector3(0.262, 0.111417, 0.186551)
 bones/4/scale = Vector3(0.999999, 1, 0.999999)
 bones/5/position = Vector3(-0.266667, 0.11175, 0.41475)
 bones/5/rotation = Quaternion(0, 0.577143, 0, 0.816643)
+bones/5/scale = Vector3(1, 1, 1)
 
 [node name="body-mesh" parent="character-soldier/Skeleton3D" index="0"]
 cast_shadow = 0
