@@ -3,14 +3,14 @@ using System;
 
 public partial class Player : CharacterBody3D
 {
-    public const float speed = 8.0f;
-    public const float sprintSpeed = 12.0f;
-    public const float jumpVelocity = 4.5f;
+    const float speed = 8.0f;
+    const float sprintSpeed = 12.0f;
+    const float jumpVelocity = 4.5f;
 
     // Get the gravity from the project settings to be synced with RigidBody nodes.
-    public float gravity = ProjectSettings.GetSetting("physics/3d/default_gravity").AsSingle();
-    public int health = 100;
-    public bool dead = false;
+    float gravity = ProjectSettings.GetSetting("physics/3d/default_gravity").AsSingle();
+    int health = 100;
+    bool dead = false;
 
     const int maxHealth = 100;
     const int fire = (int)AnimationNodeOneShot.OneShotRequest.Fire;
@@ -22,10 +22,6 @@ public partial class Player : CharacterBody3D
     float tiltLowerLimit = Mathf.DegToRad(-85);
     float tiltUpperLimit = Mathf.DegToRad(85);
     Vector3 mouseRotation;
-    AnimationTree animTree, dupeBodyAnimTree;
-    Timer attackCooldown;
-    RayCast3D rayCast;
-    Control hud;
     // Animation parameter StringNames for more readable code
     StringName walkBlend = new StringName("parameters/Walk Blend/blend_amount");
     StringName jumpRequest = new StringName("parameters/Jump/request");
@@ -56,6 +52,14 @@ public partial class Player : CharacterBody3D
     float mouseSensitivity = 0.5f;
     [Export]
     Camera3D cameraController;
+    [Export]
+    RayCast3D rayCast;
+    [Export]
+    Timer attackCooldown;
+    [Export]
+    AnimationTree animTree, dupeBodyAnimTree;
+    [Export]
+    Control hud;
 
     [Signal]
     public delegate void HitEventHandler(int damage, CharacterBody3D gladiator);
@@ -63,18 +67,9 @@ public partial class Player : CharacterBody3D
     public override void _Ready()
     {
         Input.MouseMode = Input.MouseModeEnum.Captured;
-        animTree = GetNode<AnimationTree>("AnimationTree");
-        dupeBodyAnimTree = GetNode<AnimationTree>("DupeBody/AnimationTree");
-        attackCooldown = GetNode<Timer>("AttackCooldown");
-        rayCast = GetNode<RayCast3D>("Camera3D/RayCast3D");
-        hud = GetNode<Control>("HUD");
         attackCooldown.Timeout += () => attacking = false;
         animTree.AnimationFinished += OnAnimationFinished;
         Hit += OnHit;
-
-        // Recording the left hand position here, just in case I need it.
-        // Could be useful for a shield or bow animation.
-        // Vector3 leftHandPos = new Vector3(-0.786f, -0.787f, -0.387f);
     }
     public override void _PhysicsProcess(double delta)
     {
@@ -222,7 +217,7 @@ public partial class Player : CharacterBody3D
             if (rayCast.IsColliding())
             {
                 CharacterBody3D target = (CharacterBody3D)rayCast.GetCollider();
-                target.EmitSignal(Gladiator.SignalName.Stagger);
+                target.EmitSignal(Gladiator.SignalName.Staggered);
             }
         }
     }
@@ -244,7 +239,7 @@ public partial class Player : CharacterBody3D
             {
                 dead = true;
             }
-            hud.EmitSignal(HUD.SignalName.DamageTaken, health, angle);
+            SignalBus.Instance.EmitSignal(SignalBus.SignalName.DamageTaken, health, angle);
         }
     }
 }

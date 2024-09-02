@@ -4614,7 +4614,6 @@ filters = ["character-soldier/Skeleton3D:leg-left", "character-soldier/Skeleton3
 animation = &"jump"
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_orj1r"]
-graph_offset = Vector2(-19.6589, 41.6448)
 nodes/Animation/node = SubResource("AnimationNodeAnimation_d5cr1")
 nodes/Animation/position = Vector2(720, 280)
 nodes/Jump/node = SubResource("AnimationNodeOneShot_m62s1")
@@ -4628,12 +4627,17 @@ nodes/jump/position = Vector2(920, 500)
 nodes/output/position = Vector2(1240, 280)
 node_connections = [&"Jump", 0, &"Walk Blend", &"Jump", 1, &"jump", &"Walk Blend", 0, &"StateMachine", &"Walk Blend", 1, &"Animation", &"output", 0, &"Jump"]
 
-[node name="Player" node_paths=PackedStringArray("cameraController") groups=["player"] instance=ExtResource("1_b1a85")]
+[node name="Player" node_paths=PackedStringArray("cameraController", "rayCast", "attackCooldown", "animTree", "dupeBodyAnimTree", "hud") groups=["player"] instance=ExtResource("1_b1a85")]
 transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
 collision_layer = 2
 collision_mask = 5
 script = ExtResource("1_r7wak")
 cameraController = NodePath("Camera3D")
+rayCast = NodePath("Camera3D/RayCast3D")
+attackCooldown = NodePath("AttackCooldown")
+animTree = NodePath("AnimationTree")
+dupeBodyAnimTree = NodePath("DupeBody/AnimationTree")
+hud = NodePath("HUD")
 
 [node name="character-soldier" parent="." index="0"]
 transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 0, 0, 0)
