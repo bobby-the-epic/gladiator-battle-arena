@@ -71,7 +71,8 @@ public partial class Main : Node
         Godot.Collections.Array<Node> deadGladiators = GetTree().GetNodesInGroup("gladiators");
         for (int counter = 0; counter < deadGladiators.Count; counter++)
         {
-            deadGladiators[counter].QueueFree();
+            if ((bool)deadGladiators[counter].Get("dead") == true)
+                deadGladiators[counter].QueueFree();
         }
     }
     private void OnGladiatorDied()
@@ -84,6 +85,5 @@ public partial class Main : Node
         }
         else if (inMainMenu && enemyCount <= 1)
             SpawnWave();
-        GD.Print(enemyCount);
     }
 }

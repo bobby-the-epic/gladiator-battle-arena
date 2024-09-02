@@ -16,7 +16,7 @@ gateTimer = NodePath("GateTimer")
 [node name="ArenaLevel" parent="." instance=ExtResource("2_2c2rb")]
 
 [node name="GateTimer" type="Timer" parent="."]
-wait_time = 3.0
+wait_time = 5.0
 one_shot = true
 
 [node name="CameraPivot" type="Node3D" parent="."]
