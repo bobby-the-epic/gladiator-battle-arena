@@ -1,15 +1,30 @@
-[gd_scene load_steps=2 format=3 uid="uid://ck0pxanqt2h2w"]
+[gd_scene load_steps=6 format=3 uid="uid://ck0pxanqt2h2w"]
+
+[ext_resource type="Script" path="res://Scripts/MainMenu.cs" id="1_hw0n0"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8hlsg"]
+bg_color = Color(0.72, 0.49536, 0.1584, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_lhx7c"]
 font_size = 64
 
-[node name="MainMenu" type="Control"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_plm06"]
+bg_color = Color(0.66, 0.47982, 0.1452, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aauju"]
+bg_color = Color(0.52, 0.37804, 0.1144, 1)
+
+[node name="MainMenu" type="Control" node_paths=PackedStringArray("playButton", "optionsButton", "quitButton")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_hw0n0")
+playButton = NodePath("TitleScreen/PlayButton")
+optionsButton = NodePath("TitleScreen/OptionsButton")
+quitButton = NodePath("TitleScreen/QuitButton")
 
 [node name="TitleScreen" type="Control" parent="."]
 layout_mode = 1
@@ -21,15 +36,57 @@ grow_vertical = 2
 
 [node name="Label" type="Label" parent="TitleScreen"]
 layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -61.5
-offset_top = 159.0
-offset_right = 61.5
-offset_bottom = 182.0
-grow_horizontal = 2
+offset_left = 75.0
+offset_top = 200.0
+offset_right = 765.0
+offset_bottom = 288.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_8hlsg")
 text = "Gladiator Arena Battle"
 label_settings = SubResource("LabelSettings_lhx7c")
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="PlayButton" type="Button" parent="TitleScreen"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 250.0
+offset_top = -139.5
+offset_right = 581.0
+offset_bottom = -60.5
+grow_vertical = 2
+theme_override_font_sizes/font_size = 58
+theme_override_styles/hover = SubResource("StyleBoxFlat_plm06")
+theme_override_styles/normal = SubResource("StyleBoxFlat_aauju")
+text = "Play"
+
+[node name="OptionsButton" type="Button" parent="TitleScreen"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 250.0
+offset_top = 60.5
+offset_right = 581.0
+offset_bottom = 139.5
+grow_vertical = 2
+theme_override_font_sizes/font_size = 58
+theme_override_styles/hover = SubResource("StyleBoxFlat_plm06")
+theme_override_styles/normal = SubResource("StyleBoxFlat_aauju")
+text = "Options"
+
+[node name="QuitButton" type="Button" parent="TitleScreen"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 250.0
+offset_top = 260.5
+offset_right = 581.0
+offset_bottom = 339.5
+grow_vertical = 2
+theme_override_font_sizes/font_size = 58
+theme_override_styles/hover = SubResource("StyleBoxFlat_plm06")
+theme_override_styles/normal = SubResource("StyleBoxFlat_aauju")
+text = "Quit"

@@ -5,6 +5,7 @@ public partial class Main : Node
 {
     int waveNum = 0;
     int enemyCount = 0;
+    bool inMainMenu = true;
     Godot.Collections.Array<Node> gates;
     Godot.Collections.Array<Node> spawnPoints;
 
@@ -25,17 +26,9 @@ public partial class Main : Node
         // Signal connections
         gateTimer.Timeout += CloseGates;
         SignalBus.Instance.GameStart += () => OnGameStart();
-        SignalBus.Instance.GladiatorDied += () =>
-        {
-            enemyCount--;
-            if (enemyCount == 0)
-            {
-                CleanUpArena();
-                SpawnWave();
-            }
-        };
-        // Emit signal when the player presses the play button.
-        SignalBus.Instance.EmitSignal(SignalBus.SignalName.GameStart);
+        SignalBus.Instance.GladiatorDied += OnGladiatorDied;
+
+        SpawnWave();
     }
     public override void _Process(double delta)
     {
@@ -43,6 +36,8 @@ public partial class Main : Node
     }
     private void OnGameStart()
     {
+        inMainMenu = false;
+        CleanUpArena();
         CharacterBody3D player = (CharacterBody3D)playerScene.Instantiate();
         AddChild(player);
         cameraPivot.GetNode<Camera3D>("Camera3D").Current = false;
@@ -50,7 +45,7 @@ public partial class Main : Node
     }
     private void SpawnWave()
     {
-        enemyCount = 4;
+        enemyCount += 4;
         waveNum++;
         for (int counter = 0; counter < 4; counter++)
         {
@@ -78,5 +73,17 @@ public partial class Main : Node
         {
             deadGladiators[counter].QueueFree();
         }
+    }
+    private void OnGladiatorDied()
+    {
+        enemyCount--;
+        if (!inMainMenu && enemyCount == 0)
+        {
+            CleanUpArena();
+            SpawnWave();
+        }
+        else if (inMainMenu && enemyCount <= 1)
+            SpawnWave();
+        GD.Print(enemyCount);
     }
 }

@@ -7,7 +7,7 @@ public partial class Gladiator : CharacterBody3D
 
     bool navServerReady = false;
     bool attacking = false;
-    int weaponDamage = 5;
+    int weaponDamage = 50;
     float angle;
     const float speed = 3.0f;
 
@@ -57,26 +57,15 @@ public partial class Gladiator : CharacterBody3D
 
     public override void _Ready()
     {
-        if (GetTree().CurrentScene.Name == "Main")
+        player = (CharacterBody3D)GetTree().GetFirstNodeInGroup("player");
+        // If there is no player node (because the player is in the main menu).
+        if (player == null)
         {
-            player = (CharacterBody3D)GetTree().GetFirstNodeInGroup("player");
-            target = player;
-        }
-        else if (GetTree().CurrentScene.Name == "MainMenu")
-        {
-            Godot.Collections.Array<Node> gladiators = GetTree().GetNodesInGroup("gladiators");
-            for (int counter = 0; counter < gladiators.Count; counter++)
-            {
-                CharacterBody3D gladiator = (CharacterBody3D)gladiators[counter];
-                if (gladiator != this)
-                {
-                    target = gladiator;
-                    break;
-                }
-            }
+            // Extends the gladiator's attack range to reach other gladiators.
+            rayCast.TargetPosition += Vector3.Back;
         }
         else
-            GD.PrintErr("Gladiator scene placed in wrong scene. No target assigned.");
+            target = player;
 
         // Signal connections.
         visibleBox.ScreenEntered += () => onScreen = true;
@@ -104,6 +93,9 @@ public partial class Gladiator : CharacterBody3D
     {
         if (dead)
             return;
+
+        if (target == null || (bool)target.Get("dead") == true)
+            FindNewTarget();
 
         // Sets the target of the navigation agent.
         navAgent.TargetPosition = target.GlobalPosition;
@@ -177,6 +169,20 @@ public partial class Gladiator : CharacterBody3D
         await ToSignal(GetTree(), SceneTree.SignalName.PhysicsFrame);
         navServerReady = true;
     }
+    private void FindNewTarget()
+    {
+        Godot.Collections.Array<Node> gladiators = GetTree().GetNodesInGroup("gladiators");
+        // Generate a random number.
+        Random rng = new Random();
+        target = (CharacterBody3D)gladiators[rng.Next(gladiators.Count)];
+        if (target == this)
+            FindNewTarget();
+        // for (int counter = 0; counter < gladiators.Count; counter++)
+        // {
+        //     if (gladiators[counter] != this)
+        //         target = (CharacterBody3D)gladiators[counter];
+        // }
+    }
     private async void OnAnimationStarted(StringName animName)
     {
         if (animName == "idle")
@@ -197,7 +203,9 @@ public partial class Gladiator : CharacterBody3D
                 if (target == player)
                     target.EmitSignal(Player.SignalName.Hit, weaponDamage, this);
                 else
+                {
                     target.EmitSignal(Gladiator.SignalName.Hit, weaponDamage);
+                }
             }
         }
         else if (animName == "idle")
