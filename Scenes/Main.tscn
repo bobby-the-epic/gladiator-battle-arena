@@ -1,18 +1,28 @@
-[gd_scene load_steps=5 format=3 uid="uid://wwfx231mesb"]
+[gd_scene load_steps=6 format=3 uid="uid://wwfx231mesb"]
 
 [ext_resource type="Script" path="res://Scripts/Main.cs" id="1_bchyn"]
 [ext_resource type="PackedScene" uid="uid://dywe1cf4s68if" path="res://Scenes/ArenaLevel.tscn" id="2_2c2rb"]
 [ext_resource type="PackedScene" uid="uid://s8frao1jmpyi" path="res://Scenes/Gladiator.tscn" id="2_83ao1"]
 [ext_resource type="PackedScene" uid="uid://cycmto2oewk3v" path="res://Scenes/Player.tscn" id="3_kq7my"]
+[ext_resource type="PackedScene" uid="uid://ck0pxanqt2h2w" path="res://Scenes/MainMenu.tscn" id="5_ybxwk"]
 
-[node name="Main" type="Node"]
+[node name="Main" type="Node" node_paths=PackedStringArray("cameraPivot", "gateTimer")]
 script = ExtResource("1_bchyn")
 gladiatorScene = ExtResource("2_83ao1")
+playerScene = ExtResource("3_kq7my")
+cameraPivot = NodePath("CameraPivot")
+gateTimer = NodePath("GateTimer")
 
 [node name="ArenaLevel" parent="." instance=ExtResource("2_2c2rb")]
 
-[node name="Player" parent="." instance=ExtResource("3_kq7my")]
-
-[node name="Timer" type="Timer" parent="."]
+[node name="GateTimer" type="Timer" parent="."]
 wait_time = 3.0
 one_shot = true
+
+[node name="CameraPivot" type="Node3D" parent="."]
+
+[node name="Camera3D" type="Camera3D" parent="CameraPivot"]
+transform = Transform3D(1, 0, 0, 0, 0.819152, 0.573576, 0, -0.573576, 0.819152, 0, 17, 25)
+current = true
+
+[node name="MainMenu" parent="." instance=ExtResource("5_ybxwk")]

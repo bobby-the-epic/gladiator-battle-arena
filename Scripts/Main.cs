@@ -4,30 +4,28 @@ using System;
 public partial class Main : Node
 {
     int waveNum = 0;
-    int enemyCount;
-    Timer gateTimer;
+    int enemyCount = 0;
     Godot.Collections.Array<Node> gates;
     Godot.Collections.Array<Node> spawnPoints;
 
     [Export]
     PackedScene gladiatorScene;
-
-    // Main menu will emit the GameStart signal when the player presses the play button.
-    [Signal]
-    public delegate void GameStartEventHandler();
-    [Signal]
-    public delegate void GladiatorDeathEventHandler();
+    [Export]
+    PackedScene playerScene;
+    [Export]
+    Node3D cameraPivot;
+    [Export]
+    Timer gateTimer;
 
     public override void _Ready()
     {
-        gateTimer = GetNode<Timer>("Timer");
         gates = GetTree().GetNodesInGroup("gates");
         spawnPoints = GetTree().GetNodesInGroup("spawnPoints");
 
         // Signal connections
         gateTimer.Timeout += CloseGates;
-        GameStart += () => SpawnWave();
-        GladiatorDeath += () =>
+        SignalBus.Instance.GameStart += () => OnGameStart();
+        SignalBus.Instance.GladiatorDied += () =>
         {
             enemyCount--;
             if (enemyCount == 0)
@@ -36,10 +34,19 @@ public partial class Main : Node
                 SpawnWave();
             }
         };
-        EmitSignal("GameStart");
+        // Emit signal when the player presses the play button.
+        SignalBus.Instance.EmitSignal(SignalBus.SignalName.GameStart);
     }
     public override void _Process(double delta)
     {
+        cameraPivot.Rotate(Vector3.Up, (float)delta * .25f);
+    }
+    private void OnGameStart()
+    {
+        CharacterBody3D player = (CharacterBody3D)playerScene.Instantiate();
+        AddChild(player);
+        cameraPivot.GetNode<Camera3D>("Camera3D").Current = false;
+        SpawnWave();
     }
     private void SpawnWave()
     {
