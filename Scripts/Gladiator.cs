@@ -3,25 +3,15 @@ using System;
 
 public partial class Gladiator : CharacterBody3D
 {
-    public float gravity = ProjectSettings.GetSetting("physics/3d/default_gravity").AsSingle();
+    float gravity = ProjectSettings.GetSetting("physics/3d/default_gravity").AsSingle();
 
     bool navServerReady = false;
     bool attacking = false;
-    bool staggered = false;
-    bool dead = false;
-    bool inMainMenu = false;
-    int health = 100;
     int weaponDamage = 5;
     float angle;
     const float speed = 3.0f;
 
-    AnimationTree animTree;
-    AnimationPlayer animPlayer;
     CharacterBody3D player;
-    NavigationAgent3D navAgent;
-    VisibleOnScreenNotifier3D visibleBox;
-    RayCast3D rayCast;
-    Node mainNode;
     StringName walkIdleBlend = new StringName("parameters/WalkIdleBlend/blend_amount");
     StringName attackRequest = new StringName("parameters/Attack/request");
     StringName staggerRequest = new StringName("parameters/Stagger/request");
@@ -40,14 +30,30 @@ public partial class Gladiator : CharacterBody3D
     ANIM currentAnim = ANIM.IDLE;
 
     [Export]
-    public bool onScreen = false;
+    bool onScreen = false;
+    [Export]
+    bool staggered = false;
+    [Export]
+    bool dead = false;
+    [Export]
+    int health = 100;
+    [Export]
+    RayCast3D rayCast;
+    [Export]
+    VisibleOnScreenNotifier3D visibleBox;
+    [Export]
+    NavigationAgent3D navAgent;
+    [Export]
+    AnimationPlayer animPlayer;
+    [Export]
+    AnimationTree animTree;
     [Export]
     public CharacterBody3D target;
 
     [Signal]
     public delegate void HitEventHandler(int damage);
     [Signal]
-    public delegate void StaggerEventHandler();
+    public delegate void StaggeredEventHandler();
 
     public override void _Ready()
     {
@@ -72,13 +78,6 @@ public partial class Gladiator : CharacterBody3D
         else
             GD.PrintErr("Gladiator scene placed in wrong scene. No target assigned.");
 
-        navAgent = GetNode<NavigationAgent3D>("NavigationAgent3D");
-        animTree = GetNode<AnimationTree>("AnimationTree");
-        animPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
-        visibleBox = GetNode<VisibleOnScreenNotifier3D>("VisibleOnScreenNotifier3D");
-        rayCast = GetNode<RayCast3D>("RayCast3D");
-        mainNode = GetNode<Node>("/root/Main");
-
         // Signal connections.
         visibleBox.ScreenEntered += () => onScreen = true;
         visibleBox.ScreenExited += () => onScreen = false;
@@ -86,7 +85,7 @@ public partial class Gladiator : CharacterBody3D
         animTree.AnimationFinished += OnAnimationFinished;
         navAgent.VelocityComputed += OnVelocityComputed;
         Hit += OnHit;
-        Stagger += () => staggered = true;
+        Staggered += () => staggered = true;
 
         CallDeferred(MethodName.ActorSetup);
     }
@@ -222,7 +221,7 @@ public partial class Gladiator : CharacterBody3D
             {
                 dead = true;
                 navAgent.AvoidanceEnabled = false;
-                mainNode.EmitSignal(Main.SignalName.GladiatorDeath);
+                SignalBus.Instance.EmitSignal(SignalBus.SignalName.GladiatorDied);
                 Velocity = Vector3.Zero;
                 return;
             }

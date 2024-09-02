@@ -2332,10 +2332,15 @@ nodes/walk/node = SubResource("AnimationNodeAnimation_1arik")
 nodes/walk/position = Vector2(-220, 280)
 node_connections = [&"Attack", 0, &"WalkIdleBlend", &"Attack", 1, &"attack", &"Death State", 0, &"Hit", &"Death State", 1, &"die", &"Hit", 0, &"Stagger", &"Hit", 1, &"Animation", &"Stagger", 0, &"Attack", &"Stagger", 1, &"stagger", &"WalkIdleBlend", 0, &"idle", &"WalkIdleBlend", 1, &"walk", &"output", 0, &"Death State"]
 
-[node name="Gladiator" groups=["gladiators"] instance=ExtResource("1_c1yec")]
+[node name="Gladiator" node_paths=PackedStringArray("rayCast", "visibleBox", "navAgent", "animPlayer", "animTree") groups=["gladiators"] instance=ExtResource("1_c1yec")]
 collision_layer = 4
 collision_mask = 7
 script = ExtResource("2_hmlhj")
+rayCast = NodePath("RayCast3D")
+visibleBox = NodePath("VisibleOnScreenNotifier3D")
+navAgent = NodePath("NavigationAgent3D")
+animPlayer = NodePath("AnimationPlayer")
+animTree = NodePath("AnimationTree")
 
 [node name="character-soldier" parent="." index="0"]
 unique_name_in_owner = true
