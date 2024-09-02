@@ -14,9 +14,6 @@ public partial class HUD : Control
     AnimationTree animTree;
     StringName damageTransition = new StringName("parameters/Transition/transition_request");
 
-    [Signal]
-    public delegate void DamageTakenEventHandler(int health, float angle);
-
     public override void _Ready()
     {
         damageDirection = GetNode<TextureRect>("DamageDirection");
@@ -24,7 +21,7 @@ public partial class HUD : Control
         healthBar = GetNode<ProgressBar>("HealthBar/ProgressBar");
         animTree = GetNode<AnimationTree>("AnimationTree");
 
-        DamageTaken += OnDamageTaken;
+        SignalBus.Instance.DamageTaken += OnDamageTaken;
         CircleInit();
     }
     private void CircleInit()
