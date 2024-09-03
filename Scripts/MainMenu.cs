@@ -17,6 +17,7 @@ public partial class MainMenu : Control
             Hide();
             SignalBus.Instance.EmitSignal(SignalBus.SignalName.GameStart);
         };
+        quitButton.Pressed += () => GetTree().Quit();
     }
     public override void _Process(double delta)
     {
