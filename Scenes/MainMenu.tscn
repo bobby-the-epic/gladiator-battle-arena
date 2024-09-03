@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://ck0pxanqt2h2w"]
+[gd_scene load_steps=10 format=3 uid="uid://ck0pxanqt2h2w"]
 
 [ext_resource type="Script" path="res://Scripts/MainMenu.cs" id="1_hw0n0"]
 
@@ -13,6 +13,20 @@ bg_color = Color(0.66, 0.47982, 0.1452, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aauju"]
 bg_color = Color(0.52, 0.37804, 0.1144, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ddrrb"]
+content_margin_top = 15.0
+content_margin_bottom = 15.0
+bg_color = Color(0.229112, 0.229112, 0.229112, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1v11m"]
+bg_color = Color(0.783938, 0.551105, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f18ir"]
+bg_color = Color(0.784314, 0.552941, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_wy71s"]
+font_size = 48
 
 [node name="MainMenu" type="Control" node_paths=PackedStringArray("playButton", "optionsButton", "quitButton", "backButton", "titleScreen", "optionsScreen")]
 layout_mode = 3
@@ -136,3 +150,40 @@ theme_override_font_sizes/font_size = 58
 theme_override_styles/hover = SubResource("StyleBoxFlat_plm06")
 theme_override_styles/normal = SubResource("StyleBoxFlat_aauju")
 text = "Back"
+
+[node name="HSlider" type="HSlider" parent="OptionsScreen"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -296.0
+offset_top = -15.0
+offset_right = 296.0
+offset_bottom = 15.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/slider = SubResource("StyleBoxFlat_ddrrb")
+theme_override_styles/grabber_area = SubResource("StyleBoxFlat_1v11m")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_f18ir")
+value = 50.0
+rounded = true
+
+[node name="Label2" type="Label" parent="OptionsScreen"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -111.5
+offset_right = 20.0
+offset_bottom = -88.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Volume"
+label_settings = SubResource("LabelSettings_wy71s")
+horizontal_alignment = 1
+vertical_alignment = 1
