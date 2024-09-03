@@ -7,7 +7,7 @@ public partial class Gladiator : CharacterBody3D
 
     bool navServerReady = false;
     bool attacking = false;
-    int weaponDamage = 50;
+    int weaponDamage = 5;
     float angle;
     const float speed = 3.0f;
 
@@ -177,11 +177,6 @@ public partial class Gladiator : CharacterBody3D
         target = (CharacterBody3D)gladiators[rng.Next(gladiators.Count)];
         if (target == this)
             FindNewTarget();
-        // for (int counter = 0; counter < gladiators.Count; counter++)
-        // {
-        //     if (gladiators[counter] != this)
-        //         target = (CharacterBody3D)gladiators[counter];
-        // }
     }
     private async void OnAnimationStarted(StringName animName)
     {
