@@ -22,8 +22,8 @@ public partial class MainMenu : Control
         // Emit signal when the player presses the play button.
         playButton.Pressed += () =>
         {
-            Hide();
             SignalBus.Instance.EmitSignal(SignalBus.SignalName.GameStart);
+            QueueFree();
         };
         optionsButton.Pressed += () =>
         {

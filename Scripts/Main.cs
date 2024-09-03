@@ -9,10 +9,16 @@ public partial class Main : Node
     Godot.Collections.Array<Node> gates;
     Godot.Collections.Array<Node> spawnPoints;
 
+    [ExportGroup("Scenes")]
     [Export]
     PackedScene gladiatorScene;
     [Export]
     PackedScene playerScene;
+    [Export]
+    PackedScene mainMenuScene;
+    [Export]
+    PackedScene pauseMenuScene;
+    [ExportGroup("")]
     [Export]
     Node3D cameraPivot;
     [Export]
@@ -28,6 +34,8 @@ public partial class Main : Node
         SignalBus.Instance.GameStart += () => OnGameStart();
         SignalBus.Instance.GladiatorDied += OnGladiatorDied;
 
+        Node mainMenuNode = mainMenuScene.Instantiate();
+        AddChild(mainMenuNode);
         SpawnWave();
     }
     public override void _Process(double delta)

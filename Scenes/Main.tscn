@@ -10,6 +10,7 @@
 script = ExtResource("1_bchyn")
 gladiatorScene = ExtResource("2_83ao1")
 playerScene = ExtResource("3_kq7my")
+mainMenuScene = ExtResource("5_ybxwk")
 cameraPivot = NodePath("CameraPivot")
 gateTimer = NodePath("GateTimer")
 
@@ -24,5 +25,3 @@ one_shot = true
 [node name="Camera3D" type="Camera3D" parent="CameraPivot"]
 transform = Transform3D(1, 0, 0, 0, 0.819152, 0.573576, 0, -0.573576, 0.819152, 0, 17, 25)
 current = true
-
-[node name="MainMenu" parent="." instance=ExtResource("5_ybxwk")]
