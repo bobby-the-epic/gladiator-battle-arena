@@ -8,6 +8,7 @@ public partial class Main : Node
     bool inMainMenu = true;
     bool paused = false;
     Control pauseMenu;
+    CharacterBody3D player;
     Godot.Collections.Array<Node> gates;
     Godot.Collections.Array<Node> spawnPoints;
 
@@ -33,8 +34,9 @@ public partial class Main : Node
         gateTimer.Timeout += CloseGates;
         SignalBus.Instance.GameStart += OnGameStart;
         SignalBus.Instance.GladiatorDied += OnGladiatorDied;
+        SignalBus.Instance.QuitToMainMenu += OnQuitToMainMenu;
 
-        Node mainMenuNode = mainMenuScene.Instantiate();
+        Control mainMenuNode = mainMenuScene.Instantiate<Control>();
         AddChild(mainMenuNode);
         SpawnWave();
     }
@@ -50,7 +52,7 @@ public partial class Main : Node
     {
         inMainMenu = false;
         CleanUpArena();
-        CharacterBody3D player = playerScene.Instantiate<CharacterBody3D>();
+        player = playerScene.Instantiate<CharacterBody3D>();
         AddChild(player);
         SpawnWave();
         GetNode<Control>("MainMenu").QueueFree();
@@ -62,7 +64,7 @@ public partial class Main : Node
         for (int counter = 0; counter < 4; counter++)
         {
             // Spawn the gladiators at the spawn points.
-            CharacterBody3D newGladiator = gladiatorScene.Instantiate() as CharacterBody3D;
+            CharacterBody3D newGladiator = gladiatorScene.Instantiate<CharacterBody3D>();
             Node3D spawnPoint = (Node3D)spawnPoints[counter];
             newGladiator.Position = spawnPoint.Position;
             AddChild(newGladiator);
@@ -94,5 +96,16 @@ public partial class Main : Node
         }
         else if (inMainMenu && enemyCount <= 1)
             SpawnWave();
+    }
+    private void OnQuitToMainMenu()
+    {
+        CleanUpArena();
+        player.Free();
+        Control mainMenu = mainMenuScene.Instantiate<Control>();
+        AddChild(mainMenu);
+        Input.MouseMode = Input.MouseModeEnum.Visible;
+        inMainMenu = true;
+        waveNum = 0;
+        SpawnWave();
     }
 }

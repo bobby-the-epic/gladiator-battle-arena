@@ -26,6 +26,7 @@ public partial class PauseMenu : Control
         resumeButton.Pressed += () =>
         {
             GetTree().Paused = false;
+            Input.MouseMode = Input.MouseModeEnum.Captured;
             QueueFree();
         };
         // Show the options menu.
@@ -39,9 +40,11 @@ public partial class PauseMenu : Control
             optionsMenu.Hide();
             menu.Show();
         };
+        // Quit to main menu.
         quitButton.Pressed += () =>
         {
-            // Quit to main menu.
+            SignalBus.Instance.EmitSignal(SignalBus.SignalName.QuitToMainMenu);
+            QueueFree();
         };
 
         Input.MouseMode = Input.MouseModeEnum.Visible;
@@ -51,12 +54,12 @@ public partial class PauseMenu : Control
     {
         if (@event.IsActionPressed("pause"))
         {
+            Input.MouseMode = Input.MouseModeEnum.Captured;
             QueueFree();
         }
     }
     public override void _ExitTree()
     {
         GetTree().Paused = false;
-        Input.MouseMode = Input.MouseModeEnum.Captured;
     }
 }
