@@ -3,6 +3,8 @@ using System;
 
 public partial class MainMenu : Control
 {
+    Button backButton;
+
     [Export]
     Node3D cameraPivot;
     [ExportGroup("Buttons")]
@@ -20,6 +22,8 @@ public partial class MainMenu : Control
 
     public override void _Ready()
     {
+        backButton = GetNode<Button>("OptionsMenu/BackButton");
+
         // Signal connections.
         playButton.Pressed += () =>
         {
@@ -30,6 +34,11 @@ public partial class MainMenu : Control
         {
             titleMenu.Hide();
             optionsMenu.Show();
+        };
+        backButton.Pressed += () =>
+        {
+            optionsMenu.Hide();
+            titleMenu.Show();
         };
         quitButton.Pressed += () => GetTree().Quit();
 
