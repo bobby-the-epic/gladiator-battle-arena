@@ -10,16 +10,15 @@ public partial class MainMenu : Control
     Button optionsButton;
     [Export]
     Button quitButton;
+    [ExportGroup("Menus")]
     [Export]
-    Button backButton;
-    [ExportGroup("Menu Screens")]
+    Control titleMenu;
     [Export]
-    Control titleScreen;
-    [Export]
-    Control optionsScreen;
+    Control optionsMenu;
+
     public override void _Ready()
     {
-        // Emit signal when the player presses the play button.
+        // Signal connections.
         playButton.Pressed += () =>
         {
             SignalBus.Instance.EmitSignal(SignalBus.SignalName.GameStart);
@@ -27,13 +26,8 @@ public partial class MainMenu : Control
         };
         optionsButton.Pressed += () =>
         {
-            optionsScreen.Show();
-            titleScreen.Hide();
-        };
-        backButton.Pressed += () =>
-        {
-            optionsScreen.Hide();
-            titleScreen.Show();
+            titleMenu.Hide();
+            optionsMenu.Show();
         };
         quitButton.Pressed += () => GetTree().Quit();
     }
