@@ -31,7 +31,7 @@ public partial class Main : Node
 
         // Signal connections
         gateTimer.Timeout += CloseGates;
-        SignalBus.Instance.GameStart += () => OnGameStart();
+        SignalBus.Instance.GameStart += OnGameStart;
         SignalBus.Instance.GladiatorDied += OnGladiatorDied;
 
         Node mainMenuNode = mainMenuScene.Instantiate();
