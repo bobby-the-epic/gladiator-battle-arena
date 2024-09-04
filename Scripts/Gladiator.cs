@@ -168,6 +168,8 @@ public partial class Gladiator : CharacterBody3D
         // Wait for the first physics frame so the NavigationServer can sync.
         await ToSignal(GetTree(), SceneTree.SignalName.PhysicsFrame);
         navServerReady = true;
+        if (player != null)
+            return;
 
         // Get a random gladiator and assign it as a target.
         Godot.Collections.Array<Node> gladiators = GetTree().GetNodesInGroup("gladiators");
