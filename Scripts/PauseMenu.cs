@@ -3,6 +3,12 @@ using System;
 
 public partial class PauseMenu : Control
 {
+    Button backButton;
+
+    [Export]
+    Control menu;
+    [Export]
+    Control optionsMenu;
     [ExportGroup("Buttons")]
     [Export]
     Button resumeButton;
@@ -10,11 +16,10 @@ public partial class PauseMenu : Control
     Button optionsButton;
     [Export]
     Button quitButton;
-    [ExportGroup("")]
-    [Export]
-    PackedScene optionsMenuScene;
+
     public override void _Ready()
     {
+        backButton = GetNode<Button>("OptionsMenu/BackButton");
         // Signal connections.
 
         // Resume the game.
@@ -26,9 +31,13 @@ public partial class PauseMenu : Control
         // Show the options menu.
         optionsButton.Pressed += () =>
         {
-            Hide();
-            Control optionsMenu = optionsMenuScene.Instantiate<Control>();
+            menu.Hide();
             optionsMenu.Show();
+        };
+        backButton.Pressed += () =>
+        {
+            optionsMenu.Hide();
+            menu.Show();
         };
         quitButton.Pressed += () =>
         {

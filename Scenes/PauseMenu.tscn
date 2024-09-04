@@ -1,6 +1,7 @@
-[gd_scene load_steps=10 format=3 uid="uid://dsex310m8geqg"]
+[gd_scene load_steps=11 format=3 uid="uid://dsex310m8geqg"]
 
 [ext_resource type="Script" path="res://Scripts/PauseMenu.cs" id="1_mma8v"]
+[ext_resource type="PackedScene" uid="uid://cpp7mjy22t6nb" path="res://Scenes/OptionsMenu.tscn" id="2_ts22b"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t6kb2"]
 bg_color = Color(0.72, 0.49536, 0.1584, 1)
@@ -26,7 +27,7 @@ bg_color = Color(0.66, 0.47982, 0.1452, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qnvkb"]
 bg_color = Color(0.52, 0.37804, 0.1144, 1)
 
-[node name="PauseMenu" type="Control" node_paths=PackedStringArray("resumeButton", "optionsButton", "quitButton")]
+[node name="PauseMenu" type="Control" node_paths=PackedStringArray("menu", "optionsMenu", "resumeButton", "optionsButton", "quitButton")]
 process_mode = 3
 layout_mode = 3
 anchors_preset = 15
@@ -35,20 +36,27 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_mma8v")
-resumeButton = NodePath("VBoxContainer/ResumeButton")
-optionsButton = NodePath("VBoxContainer/OptionsButton")
-quitButton = NodePath("VBoxContainer/QuitButton")
+menu = NodePath("Menu")
+optionsMenu = NodePath("OptionsMenu")
+resumeButton = NodePath("Menu/VBoxContainer/ResumeButton")
+optionsButton = NodePath("Menu/VBoxContainer/OptionsButton")
+quitButton = NodePath("Menu/VBoxContainer/QuitButton")
 metadata/_edit_horizontal_guides_ = [1309.0]
 metadata/_edit_vertical_guides_ = [960.0]
 
-[node name="Label" type="Label" parent="."]
+[node name="Menu" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="Menu"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -345.0
+offset_left = 595.0
 offset_top = 200.0
-offset_right = 345.0
+offset_right = 1285.0
 offset_bottom = 288.0
 grow_horizontal = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_t6kb2")
@@ -57,21 +65,21 @@ label_settings = SubResource("LabelSettings_8y5t0")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="Menu"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -181.5
-offset_top = -163.0
-offset_right = 181.5
-offset_bottom = 333.0
+offset_left = 758.5
+offset_top = 357.0
+offset_right = 1121.5
+offset_bottom = 853.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ResumeButton" type="Button" parent="VBoxContainer"]
+[node name="ResumeButton" type="Button" parent="Menu/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 6
 theme_override_font_sizes/font_size = 58
@@ -79,7 +87,7 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_umn37")
 theme_override_styles/normal = SubResource("StyleBoxFlat_2q5im")
 text = "Resume"
 
-[node name="OptionsButton" type="Button" parent="VBoxContainer"]
+[node name="OptionsButton" type="Button" parent="Menu/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 6
 theme_override_font_sizes/font_size = 58
@@ -87,10 +95,14 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_ddoy4")
 theme_override_styles/normal = SubResource("StyleBoxFlat_tw2rh")
 text = "Options"
 
-[node name="QuitButton" type="Button" parent="VBoxContainer"]
+[node name="QuitButton" type="Button" parent="Menu/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 6
 theme_override_font_sizes/font_size = 58
 theme_override_styles/hover = SubResource("StyleBoxFlat_domcx")
 theme_override_styles/normal = SubResource("StyleBoxFlat_qnvkb")
 text = "Quit"
+
+[node name="OptionsMenu" parent="." instance=ExtResource("2_ts22b")]
+visible = false
+layout_mode = 1
