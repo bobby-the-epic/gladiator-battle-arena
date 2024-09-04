@@ -3,6 +3,8 @@ using System;
 
 public partial class Main : Node
 {
+    public static int Volume = 50;
+
     int waveNum = 0;
     int enemyCount = 0;
     bool inMainMenu = true;

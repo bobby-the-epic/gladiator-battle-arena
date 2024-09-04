@@ -4,6 +4,7 @@ using System;
 public partial class PauseMenu : Control
 {
     Button backButton;
+    HSlider volumeControl;
 
     [Export]
     Control menu;
@@ -20,6 +21,8 @@ public partial class PauseMenu : Control
     public override void _Ready()
     {
         backButton = GetNode<Button>("OptionsMenu/BackButton");
+        volumeControl = GetNode<HSlider>("OptionsMenu/HSlider");
+        volumeControl.Value = Main.Volume;
         // Signal connections.
 
         // Resume the game.
@@ -46,6 +49,7 @@ public partial class PauseMenu : Control
             SignalBus.Instance.EmitSignal(SignalBus.SignalName.QuitToMainMenu);
             QueueFree();
         };
+        volumeControl.ValueChanged += (double volume) => Main.Volume = (int)volume;
 
         Input.MouseMode = Input.MouseModeEnum.Visible;
         GetTree().Paused = true;
