@@ -91,10 +91,10 @@ public partial class Gladiator : CharacterBody3D
     }
     private void SetMovement(double delta)
     {
-        if (dead)
+        if (dead || target == null)
             return;
 
-        if (target == null || (bool)target.Get("dead") == true)
+        if ((bool)target.Get("dead") == true)
             FindNewTarget();
 
         // Sets the target of the navigation agent.
@@ -168,15 +168,31 @@ public partial class Gladiator : CharacterBody3D
         // Wait for the first physics frame so the NavigationServer can sync.
         await ToSignal(GetTree(), SceneTree.SignalName.PhysicsFrame);
         navServerReady = true;
+
+        // Get a random gladiator and assign it as a target.
+        Godot.Collections.Array<Node> gladiators = GetTree().GetNodesInGroup("gladiators");
+        Random randomNum = new Random();
+        CharacterBody3D potentialTarget;
+        potentialTarget = (CharacterBody3D)gladiators[randomNum.Next(gladiators.Count)];
+        while (potentialTarget == this)
+            potentialTarget = (CharacterBody3D)gladiators[randomNum.Next(gladiators.Count)];
+        target = potentialTarget;
     }
     private void FindNewTarget()
     {
+        // Gets a target in the gladiator group that is not this and not dead.
         Godot.Collections.Array<Node> gladiators = GetTree().GetNodesInGroup("gladiators");
-        // Generate a random number.
-        Random rng = new Random();
-        target = (CharacterBody3D)gladiators[rng.Next(gladiators.Count)];
-        if (target == this)
-            FindNewTarget();
+        for (int counter = 0; counter < gladiators.Count; counter++)
+        {
+            CharacterBody3D potentialTarget = (CharacterBody3D)gladiators[counter];
+            if (potentialTarget == this || (bool)potentialTarget.Get("dead"))
+                continue;
+            else
+            {
+                target = potentialTarget;
+                break;
+            }
+        }
     }
     private async void OnAnimationStarted(StringName animName)
     {
