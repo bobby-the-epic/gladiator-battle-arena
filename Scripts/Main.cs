@@ -50,6 +50,7 @@ public partial class Main : Node
         AddChild(player);
         cameraPivot.GetNode<Camera3D>("Camera3D").Current = false;
         SpawnWave();
+        GetNode<Control>("MainMenu").QueueFree();
     }
     private void SpawnWave()
     {
@@ -76,12 +77,9 @@ public partial class Main : Node
     {
         // Gets all of the gladiators in the arena (because they are all in the "gladiators group")
         // and deletes them.
-        Godot.Collections.Array<Node> deadGladiators = GetTree().GetNodesInGroup("gladiators");
-        for (int counter = 0; counter < deadGladiators.Count; counter++)
-        {
-            if ((bool)deadGladiators[counter].Get("dead") == true)
-                deadGladiators[counter].QueueFree();
-        }
+        Godot.Collections.Array<Node> gladiators = GetTree().GetNodesInGroup("gladiators");
+        for (int counter = 0; counter < gladiators.Count; counter++)
+            gladiators[counter].QueueFree();
     }
     private void OnGladiatorDied()
     {
