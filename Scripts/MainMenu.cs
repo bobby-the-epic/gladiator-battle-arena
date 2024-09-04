@@ -32,6 +32,8 @@ public partial class MainMenu : Control
             optionsMenu.Show();
         };
         quitButton.Pressed += () => GetTree().Quit();
+
+        Input.MouseMode = Input.MouseModeEnum.Visible;
     }
     public override void _Process(double delta)
     {

@@ -6,6 +6,8 @@ public partial class Main : Node
     int waveNum = 0;
     int enemyCount = 0;
     bool inMainMenu = true;
+    bool paused = false;
+    Control pauseMenu;
     Godot.Collections.Array<Node> gates;
     Godot.Collections.Array<Node> spawnPoints;
 
@@ -19,8 +21,6 @@ public partial class Main : Node
     [Export]
     PackedScene pauseMenuScene;
     [ExportGroup("")]
-    [Export]
-    Node3D cameraPivot;
     [Export]
     Timer gateTimer;
 
@@ -38,13 +38,20 @@ public partial class Main : Node
         AddChild(mainMenuNode);
         SpawnWave();
     }
+    public override void _UnhandledInput(InputEvent @event)
+    {
+        if (@event.IsActionPressed("pause") && !inMainMenu)
+        {
+            pauseMenu = pauseMenuScene.Instantiate<Control>();
+            AddChild(pauseMenu);
+        }
+    }
     private void OnGameStart()
     {
         inMainMenu = false;
         CleanUpArena();
-        CharacterBody3D player = (CharacterBody3D)playerScene.Instantiate();
+        CharacterBody3D player = playerScene.Instantiate<CharacterBody3D>();
         AddChild(player);
-        cameraPivot.GetNode<Camera3D>("Camera3D").Current = false;
         SpawnWave();
         GetNode<Control>("MainMenu").QueueFree();
     }

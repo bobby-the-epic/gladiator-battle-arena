@@ -1,0 +1,96 @@
+[gd_scene load_steps=10 format=3 uid="uid://dsex310m8geqg"]
+
+[ext_resource type="Script" path="res://Scripts/PauseMenu.cs" id="1_mma8v"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t6kb2"]
+bg_color = Color(0.72, 0.49536, 0.1584, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_8y5t0"]
+font_size = 64
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_umn37"]
+bg_color = Color(0.66, 0.47982, 0.1452, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2q5im"]
+bg_color = Color(0.52, 0.37804, 0.1144, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ddoy4"]
+bg_color = Color(0.66, 0.47982, 0.1452, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tw2rh"]
+bg_color = Color(0.52, 0.37804, 0.1144, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_domcx"]
+bg_color = Color(0.66, 0.47982, 0.1452, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qnvkb"]
+bg_color = Color(0.52, 0.37804, 0.1144, 1)
+
+[node name="PauseMenu" type="Control" node_paths=PackedStringArray("resumeButton", "optionsButton", "quitButton")]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_mma8v")
+resumeButton = NodePath("VBoxContainer/ResumeButton")
+optionsButton = NodePath("VBoxContainer/OptionsButton")
+quitButton = NodePath("VBoxContainer/QuitButton")
+metadata/_edit_horizontal_guides_ = [1309.0]
+metadata/_edit_vertical_guides_ = [960.0]
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -345.0
+offset_top = 200.0
+offset_right = 345.0
+offset_bottom = 288.0
+grow_horizontal = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_t6kb2")
+text = "PAUSED"
+label_settings = SubResource("LabelSettings_8y5t0")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -181.5
+offset_top = -163.0
+offset_right = 181.5
+offset_bottom = 333.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ResumeButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 6
+theme_override_font_sizes/font_size = 58
+theme_override_styles/hover = SubResource("StyleBoxFlat_umn37")
+theme_override_styles/normal = SubResource("StyleBoxFlat_2q5im")
+text = "Resume"
+
+[node name="OptionsButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 6
+theme_override_font_sizes/font_size = 58
+theme_override_styles/hover = SubResource("StyleBoxFlat_ddoy4")
+theme_override_styles/normal = SubResource("StyleBoxFlat_tw2rh")
+text = "Options"
+
+[node name="QuitButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 6
+theme_override_font_sizes/font_size = 58
+theme_override_styles/hover = SubResource("StyleBoxFlat_domcx")
+theme_override_styles/normal = SubResource("StyleBoxFlat_qnvkb")
+text = "Quit"

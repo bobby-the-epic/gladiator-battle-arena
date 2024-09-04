@@ -7,13 +7,12 @@
 [ext_resource type="PackedScene" uid="uid://dsex310m8geqg" path="res://Scenes/PauseMenu.tscn" id="5_83ahd"]
 [ext_resource type="PackedScene" uid="uid://ck0pxanqt2h2w" path="res://Scenes/MainMenu.tscn" id="5_ybxwk"]
 
-[node name="Main" type="Node" node_paths=PackedStringArray("cameraPivot", "gateTimer")]
+[node name="Main" type="Node" node_paths=PackedStringArray("gateTimer")]
 script = ExtResource("1_bchyn")
 gladiatorScene = ExtResource("2_83ao1")
 playerScene = ExtResource("3_kq7my")
 mainMenuScene = ExtResource("5_ybxwk")
 pauseMenuScene = ExtResource("5_83ahd")
-cameraPivot = NodePath("")
 gateTimer = NodePath("GateTimer")
 
 [node name="ArenaLevel" parent="." instance=ExtResource("2_2c2rb")]
