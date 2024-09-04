@@ -38,10 +38,6 @@ public partial class Main : Node
         AddChild(mainMenuNode);
         SpawnWave();
     }
-    public override void _Process(double delta)
-    {
-        cameraPivot.Rotate(Vector3.Up, (float)delta * .25f);
-    }
     private void OnGameStart()
     {
         inMainMenu = false;

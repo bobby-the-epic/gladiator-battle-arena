@@ -15,7 +15,7 @@ bg_color = Color(0.66, 0.47982, 0.1452, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aauju"]
 bg_color = Color(0.52, 0.37804, 0.1144, 1)
 
-[node name="MainMenu" type="Control" node_paths=PackedStringArray("playButton", "optionsButton", "quitButton", "titleMenu", "optionsMenu")]
+[node name="MainMenu" type="Control" node_paths=PackedStringArray("cameraPivot", "playButton", "optionsButton", "quitButton", "titleMenu", "optionsMenu")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -23,6 +23,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_hw0n0")
+cameraPivot = NodePath("CameraPivot")
 playButton = NodePath("TitleMenu/VBoxContainer/PlayButton")
 optionsButton = NodePath("TitleMenu/VBoxContainer/OptionsButton")
 quitButton = NodePath("TitleMenu/VBoxContainer/QuitButton")
@@ -89,3 +90,9 @@ text = "Quit"
 [node name="OptionsMenu" parent="." instance=ExtResource("2_nmh2x")]
 visible = false
 layout_mode = 1
+
+[node name="CameraPivot" type="Node3D" parent="."]
+
+[node name="Camera3D" type="Camera3D" parent="CameraPivot"]
+transform = Transform3D(1, 0, 0, 0, 0.819152, 0.573576, 0, -0.573576, 0.819152, 0, 17, 25)
+current = true

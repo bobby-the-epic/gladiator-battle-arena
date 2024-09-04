@@ -3,6 +3,8 @@ using System;
 
 public partial class MainMenu : Control
 {
+    [Export]
+    Node3D cameraPivot;
     [ExportGroup("Buttons")]
     [Export]
     Button playButton;
@@ -33,5 +35,6 @@ public partial class MainMenu : Control
     }
     public override void _Process(double delta)
     {
+        cameraPivot.Rotate(Vector3.Up, (float)delta * .25f);
     }
 }
