@@ -9,6 +9,7 @@ bg_color = Color(0.721569, 0.494118, 0.156863, 1)
 [sub_resource type="SystemFont" id="SystemFont_6ywh3"]
 font_names = PackedStringArray("Cinzel")
 font_weight = 700
+subpixel_positioning = 0
 
 [sub_resource type="LabelSettings" id="LabelSettings_lhx7c"]
 font = SubResource("SystemFont_6ywh3")
@@ -60,7 +61,7 @@ offset_right = 765.0
 offset_bottom = 277.0
 size_flags_vertical = 0
 theme_override_styles/normal = SubResource("StyleBoxFlat_8hlsg")
-text = "Gladiator Arena Battle"
+text = "Gladiator Battle Arena"
 label_settings = SubResource("LabelSettings_lhx7c")
 horizontal_alignment = 1
 vertical_alignment = 1
