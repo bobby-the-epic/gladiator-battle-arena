@@ -1,10 +1,17 @@
-[gd_scene load_steps=9 format=3 uid="uid://cpp7mjy22t6nb"]
+[gd_scene load_steps=12 format=3 uid="uid://cpp7mjy22t6nb"]
+
+[sub_resource type="SystemFont" id="SystemFont_jrotx"]
+font_names = PackedStringArray("Cinzel")
+font_weight = 800
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8hlsg"]
 bg_color = Color(0.72, 0.49536, 0.1584, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_lhx7c"]
 font_size = 64
+
+[sub_resource type="SystemFont" id="SystemFont_13s1o"]
+font_names = PackedStringArray("Cinzel")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_plm06"]
 bg_color = Color(0.66, 0.47982, 0.1452, 1)
@@ -22,6 +29,9 @@ bg_color = Color(0.783938, 0.551105, 0, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f18ir"]
 bg_color = Color(0.784314, 0.552941, 0, 1)
+
+[sub_resource type="SystemFont" id="SystemFont_ipw40"]
+font_names = PackedStringArray("Cinzel")
 
 [sub_resource type="LabelSettings" id="LabelSettings_wy71s"]
 font_size = 48
@@ -45,6 +55,7 @@ offset_top = 200.0
 offset_right = 345.0
 offset_bottom = 288.0
 grow_horizontal = 2
+theme_override_fonts/font = SubResource("SystemFont_jrotx")
 theme_override_styles/normal = SubResource("StyleBoxFlat_8hlsg")
 text = "Options"
 label_settings = SubResource("LabelSettings_lhx7c")
@@ -64,6 +75,7 @@ offset_right = 165.5
 offset_bottom = 339.5
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_fonts/font = SubResource("SystemFont_13s1o")
 theme_override_font_sizes/font_size = 58
 theme_override_styles/hover = SubResource("StyleBoxFlat_plm06")
 theme_override_styles/normal = SubResource("StyleBoxFlat_aauju")
@@ -100,6 +112,7 @@ offset_right = 20.0
 offset_bottom = -88.5
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_fonts/font = SubResource("SystemFont_ipw40")
 text = "Volume"
 label_settings = SubResource("LabelSettings_wy71s")
 horizontal_alignment = 1
