@@ -2,7 +2,8 @@
 
 [sub_resource type="SystemFont" id="SystemFont_jrotx"]
 font_names = PackedStringArray("Cinzel")
-font_weight = 800
+font_weight = 700
+subpixel_positioning = 0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8hlsg"]
 bg_color = Color(0.72, 0.49536, 0.1584, 1)
@@ -12,6 +13,7 @@ font_size = 64
 
 [sub_resource type="SystemFont" id="SystemFont_13s1o"]
 font_names = PackedStringArray("Cinzel")
+subpixel_positioning = 0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_plm06"]
 bg_color = Color(0.66, 0.47982, 0.1452, 1)
@@ -32,6 +34,7 @@ bg_color = Color(0.784314, 0.552941, 0, 1)
 
 [sub_resource type="SystemFont" id="SystemFont_ipw40"]
 font_names = PackedStringArray("Cinzel")
+subpixel_positioning = 0
 
 [sub_resource type="LabelSettings" id="LabelSettings_wy71s"]
 font_size = 48

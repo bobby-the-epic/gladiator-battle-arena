@@ -6,16 +6,17 @@
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8hlsg"]
 bg_color = Color(0.721569, 0.494118, 0.156863, 1)
 
-[sub_resource type="SystemFont" id="SystemFont_7x71w"]
+[sub_resource type="SystemFont" id="SystemFont_6ywh3"]
 font_names = PackedStringArray("Cinzel")
-font_weight = 800
+font_weight = 700
 
 [sub_resource type="LabelSettings" id="LabelSettings_lhx7c"]
-font = SubResource("SystemFont_7x71w")
+font = SubResource("SystemFont_6ywh3")
 font_size = 64
 
 [sub_resource type="SystemFont" id="SystemFont_nlfho"]
 font_names = PackedStringArray("Cinzel")
+subpixel_positioning = 0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_plm06"]
 bg_color = Color(0.66, 0.47982, 0.1452, 1)
@@ -25,6 +26,7 @@ bg_color = Color(0.52, 0.37804, 0.1144, 1)
 
 [sub_resource type="SystemFont" id="SystemFont_6ugtf"]
 font_names = PackedStringArray("Cinzel")
+subpixel_positioning = 0
 
 [node name="MainMenu" type="Control" node_paths=PackedStringArray("cameraPivot", "playButton", "optionsButton", "quitButton", "titleMenu", "optionsMenu")]
 layout_mode = 3

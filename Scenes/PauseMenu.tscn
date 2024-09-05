@@ -5,7 +5,8 @@
 
 [sub_resource type="SystemFont" id="SystemFont_fm3gh"]
 font_names = PackedStringArray("Cinzel")
-font_weight = 800
+font_weight = 700
+subpixel_positioning = 0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t6kb2"]
 bg_color = Color(0.72, 0.49536, 0.1584, 1)
@@ -15,6 +16,7 @@ font_size = 64
 
 [sub_resource type="SystemFont" id="SystemFont_e4geh"]
 font_names = PackedStringArray("Cinzel")
+subpixel_positioning = 0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_umn37"]
 bg_color = Color(0.66, 0.47982, 0.1452, 1)
