@@ -17,7 +17,7 @@ config/icon="res://icon.svg"
 
 [audio]
 
-buses/default_bus_layout="res://Assets/Audio/default_bus_layout.tres"
+buses/default_bus_layout=""
 
 [autoload]
 
@@ -41,6 +41,7 @@ gladiators=""
 gates=""
 spawnPoints=""
 player=""
+audio=""
 
 [input]
 

@@ -1,4 +1,6 @@
-[gd_scene load_steps=12 format=3 uid="uid://cpp7mjy22t6nb"]
+[gd_scene load_steps=13 format=3 uid="uid://cpp7mjy22t6nb"]
+
+[ext_resource type="Script" path="res://Scripts/OptionsMenu.cs" id="1_wcmsc"]
 
 [sub_resource type="SystemFont" id="SystemFont_jrotx"]
 font_names = PackedStringArray("Cinzel")
@@ -39,13 +41,15 @@ subpixel_positioning = 0
 [sub_resource type="LabelSettings" id="LabelSettings_wy71s"]
 font_size = 48
 
-[node name="OptionsMenu" type="Control"]
+[node name="OptionsMenu" type="Control" node_paths=PackedStringArray("volumeControl")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_wcmsc")
+volumeControl = NodePath("HSlider")
 
 [node name="Label" type="Label" parent="."]
 process_mode = 3
@@ -100,7 +104,9 @@ grow_vertical = 2
 theme_override_styles/slider = SubResource("StyleBoxFlat_ddrrb")
 theme_override_styles/grabber_area = SubResource("StyleBoxFlat_1v11m")
 theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_f18ir")
-value = 50.0
+min_value = -60.0
+max_value = 0.0
+value = -30.0
 
 [node name="Label2" type="Label" parent="."]
 layout_mode = 1

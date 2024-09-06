@@ -34,6 +34,6 @@ crowdNoise = NodePath("AudioStreamPlayer")
 wait_time = 5.0
 one_shot = true
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." groups=["audio"]]
 stream = SubResource("AudioStreamSynchronized_2ttye")
-bus = &"Background"
+volume_db = -30.0

@@ -24,8 +24,6 @@ public partial class MainMenu : Control
     public override void _Ready()
     {
         backButton = GetNode<Button>("OptionsMenu/BackButton");
-        volumeControl = GetNode<HSlider>("OptionsMenu/HSlider");
-        volumeControl.Value = Main.Volume;
 
         // Signal connections.
         playButton.Pressed += () =>
@@ -43,7 +41,6 @@ public partial class MainMenu : Control
             optionsMenu.Hide();
             titleMenu.Show();
         };
-        volumeControl.ValueChanged += (double volume) => Main.Volume = (int)volume;
         quitButton.Pressed += () => GetTree().Quit();
 
         Input.MouseMode = Input.MouseModeEnum.Visible;

@@ -3,7 +3,7 @@ using System;
 
 public partial class Main : Node
 {
-    public static int Volume = 50;
+    public static int volume = -30;
 
     int waveNum = 0;
     int enemyCount = 0;
