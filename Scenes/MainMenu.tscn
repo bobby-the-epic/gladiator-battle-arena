@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Scripts/MainMenu.cs" id="1_hw0n0"]
 [ext_resource type="PackedScene" uid="uid://cpp7mjy22t6nb" path="res://Scenes/OptionsMenu.tscn" id="2_nmh2x"]
-[ext_resource type="AudioStream" uid="uid://c1682rxy45cdg" path="res://560454__migfus20__epic-trailer-background-music.mp3" id="3_gusjt"]
+[ext_resource type="AudioStream" uid="uid://c1682rxy45cdg" path="res://Assets/Audio/560454__migfus20__epic-trailer-background-music.mp3" id="3_gusjt"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8hlsg"]
 bg_color = Color(0.721569, 0.494118, 0.156863, 1)

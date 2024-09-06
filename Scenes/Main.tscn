@@ -6,9 +6,9 @@
 [ext_resource type="PackedScene" uid="uid://cycmto2oewk3v" path="res://Scenes/Player.tscn" id="3_kq7my"]
 [ext_resource type="PackedScene" uid="uid://dsex310m8geqg" path="res://Scenes/PauseMenu.tscn" id="5_83ahd"]
 [ext_resource type="PackedScene" uid="uid://ck0pxanqt2h2w" path="res://Scenes/MainMenu.tscn" id="5_ybxwk"]
-[ext_resource type="AudioStream" uid="uid://c48gm0g6d1lf0" path="res://crowd cheer 1.wav" id="7_y8e7i"]
-[ext_resource type="AudioStream" uid="uid://dw34snkmhesih" path="res://crowd cheer 2.wav" id="8_u5k6n"]
-[ext_resource type="AudioStream" uid="uid://chh7wmlkohm7r" path="res://crowd cheer 3.wav" id="9_2puce"]
+[ext_resource type="AudioStream" uid="uid://c48gm0g6d1lf0" path="res://Assets/Audio/crowd cheer 1.wav" id="7_y8e7i"]
+[ext_resource type="AudioStream" uid="uid://dw34snkmhesih" path="res://Assets/Audio/crowd cheer 2.wav" id="8_u5k6n"]
+[ext_resource type="AudioStream" uid="uid://chh7wmlkohm7r" path="res://Assets/Audio/crowd cheer 3.wav" id="9_2puce"]
 
 [sub_resource type="AudioStreamSynchronized" id="AudioStreamSynchronized_2ttye"]
 stream_count = 3

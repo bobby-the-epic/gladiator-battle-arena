@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://chh7wmlkohm7r"
-path="res://.godot/imported/crowd cheer 3.wav-50892a40893ce293f0c5df3c1925b9a8.sample"
+path="res://.godot/imported/crowd cheer 3.wav-68ff084a622289c20b194c5a8b061cb9.sample"
 
 [deps]
 
-source_file="res://crowd cheer 3.wav"
-dest_files=["res://.godot/imported/crowd cheer 3.wav-50892a40893ce293f0c5df3c1925b9a8.sample"]
+source_file="res://Assets/Audio/crowd cheer 3.wav"
+dest_files=["res://.godot/imported/crowd cheer 3.wav-68ff084a622289c20b194c5a8b061cb9.sample"]
 
 [params]
 
