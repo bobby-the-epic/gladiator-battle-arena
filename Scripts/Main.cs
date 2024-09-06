@@ -26,6 +26,8 @@ public partial class Main : Node
     [ExportGroup("")]
     [Export]
     Timer gateTimer;
+    [Export]
+    AudioStreamPlayer crowdNoise;
 
     public override void _Ready()
     {
@@ -58,6 +60,7 @@ public partial class Main : Node
         AddChild(player);
         SpawnWave();
         GetNode<Control>("MainMenu").QueueFree();
+        crowdNoise.Play();
     }
     private void SpawnWave()
     {
@@ -109,5 +112,6 @@ public partial class Main : Node
         inMainMenu = true;
         waveNum = 0;
         SpawnWave();
+        crowdNoise.Stop();
     }
 }

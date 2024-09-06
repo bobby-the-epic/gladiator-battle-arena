@@ -19,13 +19,14 @@ stream_1/volume = 0.0
 stream_2/stream = ExtResource("9_2puce")
 stream_2/volume = 0.0
 
-[node name="Main" type="Node" node_paths=PackedStringArray("gateTimer")]
+[node name="Main" type="Node" node_paths=PackedStringArray("gateTimer", "crowdNoise")]
 script = ExtResource("1_bchyn")
 gladiatorScene = ExtResource("2_83ao1")
 playerScene = ExtResource("3_kq7my")
 mainMenuScene = ExtResource("5_ybxwk")
 pauseMenuScene = ExtResource("5_83ahd")
 gateTimer = NodePath("GateTimer")
+crowdNoise = NodePath("AudioStreamPlayer")
 
 [node name="ArenaLevel" parent="." instance=ExtResource("2_2c2rb")]
 
@@ -35,4 +36,4 @@ one_shot = true
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamSynchronized_2ttye")
-autoplay = true
+bus = &"Background"
