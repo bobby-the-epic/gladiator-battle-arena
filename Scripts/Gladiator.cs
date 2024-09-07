@@ -65,13 +65,9 @@ public partial class Gladiator : CharacterBody3D
     {
         player = (CharacterBody3D)GetTree().GetFirstNodeInGroup("player");
         gladiatorAudio = (AudioStreamPlaybackPolyphonic)gladiatorAudioPlayer.GetStreamPlayback();
+
         // If there is no player node (because the player is in the main menu).
-        if (player == null)
-        {
-            // Extends the gladiator's attack range to reach other gladiators.
-            rayCast.TargetPosition += Vector3.Back;
-        }
-        else
+        if (player != null)
             target = player;
 
         // Signal connections.
@@ -82,7 +78,7 @@ public partial class Gladiator : CharacterBody3D
         navAgent.VelocityComputed += OnVelocityComputed;
         Hit += OnHit;
         Staggered += () => staggered = true;
-        SignalBus.Instance.PlayerDied += () => OnPlayerDied();
+        SignalBus.Instance.PlayerDied += () => player = null;
 
         CallDeferred(MethodName.ActorSetup);
     }
@@ -262,10 +258,5 @@ public partial class Gladiator : CharacterBody3D
             GD.Print(Name + " has taken " + damage + " damage.");
             animTree.Set(hitRequest, (int)AnimationNodeOneShot.OneShotRequest.Fire);
         }
-    }
-    private void OnPlayerDied()
-    {
-        player = null;
-        rayCast.TargetPosition += Vector3.Back;
     }
 }

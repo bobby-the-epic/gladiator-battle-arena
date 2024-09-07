@@ -64,6 +64,7 @@ public partial class Main : Node
         CleanUpArena();
         player = playerScene.Instantiate<CharacterBody3D>();
         AddChild(player);
+        waveNum = 0;
         SpawnWave();
         GetNode<Control>("MainMenu").QueueFree();
         crowdNoise.Play();
@@ -128,5 +129,15 @@ public partial class Main : Node
         Node3D cameraPivot = cameraPivotScene.Instantiate<Node3D>();
         AddChild(deathMenu);
         AddChild(cameraPivot);
+
+        Input.MouseMode = Input.MouseModeEnum.Visible;
+        // Displays how many waves the player survived.
+        Label deathMenuLabel = deathMenu.GetNode<Label>("Label2");
+        String waveString = "wave";
+        if (waveNum > 1)
+            waveString += "s";
+
+        deathMenuLabel.Text =
+            String.Format("You survived {0} {1}.\nContinue?", waveNum, waveString);
     }
 }
