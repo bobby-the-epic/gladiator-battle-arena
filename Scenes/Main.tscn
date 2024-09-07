@@ -39,5 +39,6 @@ wait_time = 5.0
 one_shot = true
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." groups=["audio"]]
+process_mode = 3
 stream = SubResource("AudioStreamSynchronized_2ttye")
 volume_db = -30.0
