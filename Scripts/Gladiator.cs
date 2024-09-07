@@ -255,7 +255,6 @@ public partial class Gladiator : CharacterBody3D
                 return;
             }
             gladiatorAudio.PlayStream(painSfx, volumeDb: Main.volume);
-            GD.Print(Name + " has taken " + damage + " damage.");
             animTree.Set(hitRequest, (int)AnimationNodeOneShot.OneShotRequest.Fire);
         }
     }

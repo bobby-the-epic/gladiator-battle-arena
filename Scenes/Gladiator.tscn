@@ -2412,7 +2412,6 @@ parameters/WalkIdleBlend/blend_amount = 0.0
 target_desired_distance = 3.0
 avoidance_enabled = true
 radius = 1.0
-debug_enabled = true
 
 [node name="VisibleOnScreenNotifier3D" type="VisibleOnScreenNotifier3D" parent="." index="5"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.700963, 0)
