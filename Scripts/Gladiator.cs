@@ -48,7 +48,7 @@ public partial class Gladiator : CharacterBody3D
     [Export]
     AnimationTree animTree;
     [Export]
-    public CharacterBody3D target;
+    CharacterBody3D target;
 
     [Signal]
     public delegate void HitEventHandler(int damage);
