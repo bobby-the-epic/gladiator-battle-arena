@@ -11,7 +11,10 @@ public partial class DeathMenu : Control
     public override void _Ready()
     {
         restartButton.Pressed += () =>
-        { GD.Print("resume"); };
+        {
+            SignalBus.Instance.EmitSignal(SignalBus.SignalName.GameRestarted);
+            QueueFree();
+        };
         quitButton.Pressed += () =>
         {
             SignalBus.Instance.EmitSignal(SignalBus.SignalName.QuitToMainMenu);

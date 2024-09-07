@@ -47,6 +47,7 @@ public partial class Main : Node
         SignalBus.Instance.GladiatorDied += OnGladiatorDied;
         SignalBus.Instance.QuitToMainMenu += OnQuitToMainMenu;
         SignalBus.Instance.PlayerDied += OnPlayerDied;
+        SignalBus.Instance.GameRestarted += OnGameRestarted;
 
         Control mainMenuNode = mainMenuScene.Instantiate<Control>();
         AddChild(mainMenuNode);
@@ -110,7 +111,7 @@ public partial class Main : Node
             CleanUpArena();
             SpawnWave();
         }
-        else if (inMainMenu && enemyCount <= 1)
+        else if ((inMainMenu) || (enemyCount <= 1 && gameOver))
             SpawnWave();
     }
     private void OnQuitToMainMenu()
@@ -149,5 +150,15 @@ public partial class Main : Node
 
         deathMenuLabel.Text =
             String.Format("You survived {0} {1}.\nContinue?", waveNum, waveString);
+    }
+    private void OnGameRestarted()
+    {
+        CleanUpArena();
+        waveNum = 0;
+        player = playerScene.Instantiate<CharacterBody3D>();
+        AddChild(player);
+        cameraPivot.QueueFree();
+        SpawnWave();
+        gameOver = false;
     }
 }
