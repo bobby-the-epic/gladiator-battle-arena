@@ -118,7 +118,7 @@ nodes/Transition/position = Vector2(300, 280)
 nodes/output/position = Vector2(660, 240)
 node_connections = [&"Add2", 0, &"Animation", &"Add2", 1, &"Animation 2", &"Transition", 0, &"StateMachine", &"Transition", 1, &"Add2", &"output", 0, &"Transition"]
 
-[node name="HUD" type="Control"]
+[node name="HUD" type="Control" node_paths=PackedStringArray("damageDirection", "damageAlert", "healthBar", "animTree")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -127,6 +127,10 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_cs451")
+damageDirection = NodePath("DamageDirection")
+damageAlert = NodePath("DamageAlert")
+healthBar = NodePath("HealthBar/ProgressBar")
+animTree = NodePath("AnimationTree")
 
 [node name="HealthBar" type="Control" parent="."]
 layout_mode = 1
