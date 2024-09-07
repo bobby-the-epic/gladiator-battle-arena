@@ -247,7 +247,10 @@ public partial class Player : CharacterBody3D
             if (blocking)
             {
                 if ((bool)gladiator.Get(Gladiator.PropertyName.onScreen) == true)
+                {
+                    playerAudioStream.PlayStream(swordSwingSfx, volumeDb: Main.volume + 10);
                     return;
+                }
             }
 
             playerAudioStream.PlayStream(playerHitSfx, volumeDb: Main.volume);
@@ -256,6 +259,7 @@ public partial class Player : CharacterBody3D
             if (health <= 0)
             {
                 dead = true;
+                SignalBus.Instance.EmitSignal(SignalBus.SignalName.PlayerDied);
                 return;
             }
             SignalBus.Instance.EmitSignal(SignalBus.SignalName.DamageTaken, health, angle);

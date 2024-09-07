@@ -14,6 +14,8 @@ public partial class SignalBus : Node
     public delegate void GameStartEventHandler();
     [Signal]
     public delegate void QuitToMainMenuEventHandler();
+    [Signal]
+    public delegate void PlayerDiedEventHandler();
 
     public override void _Ready()
     {

@@ -1,0 +1,29 @@
+[gd_scene load_steps=3 format=3 uid="uid://chqygif6g1a21"]
+
+[sub_resource type="SystemFont" id="SystemFont_n0e76"]
+font_names = PackedStringArray("Cinzel")
+
+[sub_resource type="LabelSettings" id="LabelSettings_0obrc"]
+font = SubResource("SystemFont_n0e76")
+font_size = 64
+
+[node name="DeathMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -36.0
+offset_top = 150.0
+offset_right = 36.0
+offset_bottom = 173.0
+grow_horizontal = 2
+text = "You died!"
+label_settings = SubResource("LabelSettings_0obrc")

@@ -23,6 +23,10 @@ public partial class Main : Node
     PackedScene mainMenuScene;
     [Export]
     PackedScene pauseMenuScene;
+    [Export]
+    PackedScene deathMenuScene;
+    [Export]
+    PackedScene cameraPivotScene;
     [ExportGroup("")]
     [Export]
     Timer gateTimer;
@@ -39,6 +43,7 @@ public partial class Main : Node
         SignalBus.Instance.GameStart += OnGameStart;
         SignalBus.Instance.GladiatorDied += OnGladiatorDied;
         SignalBus.Instance.QuitToMainMenu += OnQuitToMainMenu;
+        SignalBus.Instance.PlayerDied += OnPlayerDied;
 
         Control mainMenuNode = mainMenuScene.Instantiate<Control>();
         AddChild(mainMenuNode);
@@ -46,7 +51,8 @@ public partial class Main : Node
     }
     public override void _UnhandledInput(InputEvent @event)
     {
-        if (@event.IsActionPressed("pause") && !inMainMenu)
+        // If the pause button is pressed, the player is not in the main menu, and not dead.
+        if (@event.IsActionPressed("pause") && !inMainMenu && !(bool)player.Get("dead"))
         {
             pauseMenu = pauseMenuScene.Instantiate<Control>();
             AddChild(pauseMenu);
@@ -114,5 +120,13 @@ public partial class Main : Node
         waveNum = 0;
         SpawnWave();
         crowdNoise.Stop();
+    }
+    private void OnPlayerDied()
+    {
+        player.QueueFree();
+        Control deathMenu = deathMenuScene.Instantiate<Control>();
+        Node3D cameraPivot = cameraPivotScene.Instantiate<Node3D>();
+        AddChild(deathMenu);
+        AddChild(cameraPivot);
     }
 }

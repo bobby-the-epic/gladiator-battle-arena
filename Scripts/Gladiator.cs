@@ -82,6 +82,7 @@ public partial class Gladiator : CharacterBody3D
         navAgent.VelocityComputed += OnVelocityComputed;
         Hit += OnHit;
         Staggered += () => staggered = true;
+        SignalBus.Instance.PlayerDied += () => OnPlayerDied();
 
         CallDeferred(MethodName.ActorSetup);
     }
@@ -101,7 +102,7 @@ public partial class Gladiator : CharacterBody3D
         if (dead || target == null)
             return;
 
-        if ((bool)target.Get("dead") == true)
+        if (player == null || (bool)target.Get("dead") == true || target == null)
             FindNewTarget();
 
         // Sets the target of the navigation agent.
@@ -261,5 +262,10 @@ public partial class Gladiator : CharacterBody3D
             GD.Print(Name + " has taken " + damage + " damage.");
             animTree.Set(hitRequest, (int)AnimationNodeOneShot.OneShotRequest.Fire);
         }
+    }
+    private void OnPlayerDied()
+    {
+        player = null;
+        rayCast.TargetPosition += Vector3.Back;
     }
 }
