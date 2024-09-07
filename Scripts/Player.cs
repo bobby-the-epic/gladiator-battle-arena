@@ -234,6 +234,7 @@ public partial class Player : CharacterBody3D
                 CharacterBody3D target = (CharacterBody3D)rayCast.GetCollider();
                 target.EmitSignal(Gladiator.SignalName.Staggered);
             }
+            playerAudioStream.PlayStream(swordSwingSfx, volumeDb: Main.volume + 10);
         }
     }
     private void OnHit(int damage, CharacterBody3D gladiator)
@@ -247,10 +248,7 @@ public partial class Player : CharacterBody3D
             if (blocking)
             {
                 if ((bool)gladiator.Get(Gladiator.PropertyName.onScreen) == true)
-                {
-                    playerAudioStream.PlayStream(swordSwingSfx, volumeDb: Main.volume + 10);
                     return;
-                }
             }
 
             playerAudioStream.PlayStream(playerHitSfx, volumeDb: Main.volume);
