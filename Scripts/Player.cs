@@ -22,6 +22,7 @@ public partial class Player : CharacterBody3D
     float tiltLowerLimit = Mathf.DegToRad(-85);
     float tiltUpperLimit = Mathf.DegToRad(85);
     Vector3 mouseRotation;
+    AudioStreamPlaybackPolyphonic playerAudioStream;
     // Animation parameter StringNames for more readable code
     StringName walkBlend = new StringName("parameters/Walk Blend/blend_amount");
     StringName jumpRequest = new StringName("parameters/Jump/request");
@@ -60,6 +61,11 @@ public partial class Player : CharacterBody3D
     AnimationTree animTree, dupeBodyAnimTree;
     [Export]
     Control hud;
+    [ExportGroup("Audio")]
+    [Export]
+    AudioStreamPlayer playerAudio;
+    [Export]
+    AudioStream swordSwingSfx, swordHitSfx, playerHitSfx;
 
     [Signal]
     public delegate void HitEventHandler(int damage, CharacterBody3D gladiator);
@@ -67,9 +73,16 @@ public partial class Player : CharacterBody3D
     public override void _Ready()
     {
         Input.MouseMode = Input.MouseModeEnum.Captured;
+        playerAudio.Play();
+        playerAudioStream = (AudioStreamPlaybackPolyphonic)playerAudio.GetStreamPlayback();
+
         attackCooldown.Timeout += () => attacking = false;
         animTree.AnimationFinished += OnAnimationFinished;
         Hit += OnHit;
+    }
+    public override void _ExitTree()
+    {
+        Hit -= OnHit;
     }
     public override void _PhysicsProcess(double delta)
     {
@@ -199,7 +212,10 @@ public partial class Player : CharacterBody3D
         {
             CharacterBody3D target = (CharacterBody3D)rayCast.GetCollider();
             target.EmitSignal(Gladiator.SignalName.Hit, weaponDamage);
+            playerAudioStream.PlayStream(swordHitSfx, volumeDb: Main.volume);
         }
+        else
+            playerAudioStream.PlayStream(swordSwingSfx, volumeDb: Main.volume + 10);
 
         /* Plays the attack animation and waits for the AnimationFinished signal to fire.
         The animation state machine detects the attacking bool and plays the animation in the
@@ -234,10 +250,14 @@ public partial class Player : CharacterBody3D
                 if ((bool)gladiator.Get(Gladiator.PropertyName.onScreen) == true)
                     return;
             }
+
+            playerAudioStream.PlayStream(playerHitSfx, volumeDb: Main.volume);
+
             health -= damage;
             if (health <= 0)
             {
                 dead = true;
+                return;
             }
             SignalBus.Instance.EmitSignal(SignalBus.SignalName.DamageTaken, health, angle);
         }
