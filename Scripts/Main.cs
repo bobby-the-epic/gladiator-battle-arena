@@ -90,6 +90,7 @@ public partial class Main : Node
         Godot.Collections.Array<Node> gladiators = GetTree().GetNodesInGroup("gladiators");
         for (int counter = 0; counter < gladiators.Count; counter++)
             gladiators[counter].QueueFree();
+        enemyCount = 0;
     }
     private void OnGladiatorDied()
     {
