@@ -73,7 +73,6 @@ public partial class Player : CharacterBody3D
     public override void _Ready()
     {
         Input.MouseMode = Input.MouseModeEnum.Captured;
-        playerAudio.Play();
         playerAudioStream = (AudioStreamPlaybackPolyphonic)playerAudio.GetStreamPlayback();
 
         attackCooldown.Timeout += () => attacking = false;
