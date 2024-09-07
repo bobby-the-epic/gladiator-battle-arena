@@ -8,21 +8,24 @@ public partial class HUD : Control
         public Vector2 center, radius;
     }
 
-    TextureRect damageDirection, damageAlert;
-    ProgressBar healthBar;
     Circle circle;
-    AnimationTree animTree;
     StringName damageTransition = new StringName("parameters/Transition/transition_request");
+
+    [Export]
+    TextureRect damageDirection, damageAlert;
+    [Export]
+    ProgressBar healthBar;
+    [Export]
+    AnimationTree animTree;
 
     public override void _Ready()
     {
-        damageDirection = GetNode<TextureRect>("DamageDirection");
-        damageAlert = GetNode<TextureRect>("DamageAlert");
-        healthBar = GetNode<ProgressBar>("HealthBar/ProgressBar");
-        animTree = GetNode<AnimationTree>("AnimationTree");
-
         SignalBus.Instance.DamageTaken += OnDamageTaken;
         CircleInit();
+    }
+    public override void _ExitTree()
+    {
+        SignalBus.Instance.DamageTaken -= OnDamageTaken;
     }
     private void CircleInit()
     {
