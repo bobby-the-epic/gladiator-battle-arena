@@ -15,6 +15,7 @@ font_size = 64
 
 [sub_resource type="SystemFont" id="SystemFont_5po65"]
 font_names = PackedStringArray("Cinzel")
+subpixel_positioning = 0
 
 [sub_resource type="LabelSettings" id="LabelSettings_71xii"]
 font = SubResource("SystemFont_5po65")

@@ -15,7 +15,7 @@ public partial class Player : CharacterBody3D
     const int maxHealth = 100;
     const int fire = (int)AnimationNodeOneShot.OneShotRequest.Fire;
     const int abort = (int)AnimationNodeOneShot.OneShotRequest.Abort;
-    int weaponDamage = 5;
+    int weaponDamage = 20;
     float rotationInput;
     float tiltInput;
     float pitch;
