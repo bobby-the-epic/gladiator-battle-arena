@@ -12,6 +12,7 @@ public partial class Gladiator : CharacterBody3D
     const float speed = 3.0f;
 
     CharacterBody3D player;
+    AudioStreamPlaybackPolyphonic gladiatorAudio;
     StringName walkIdleBlend = new StringName("parameters/WalkIdleBlend/blend_amount");
     StringName attackRequest = new StringName("parameters/Attack/request");
     StringName staggerRequest = new StringName("parameters/Stagger/request");
@@ -49,6 +50,11 @@ public partial class Gladiator : CharacterBody3D
     AnimationTree animTree;
     [Export]
     CharacterBody3D target;
+    [ExportGroup("Audio")]
+    [Export]
+    AudioStreamPlayer3D gladiatorAudioPlayer;
+    [Export]
+    AudioStream swordHitSfx, swordSwingSfx, painSfx, deathSfx;
 
     [Signal]
     public delegate void HitEventHandler(int damage);
@@ -58,6 +64,7 @@ public partial class Gladiator : CharacterBody3D
     public override void _Ready()
     {
         player = (CharacterBody3D)GetTree().GetFirstNodeInGroup("player");
+        gladiatorAudio = (AudioStreamPlaybackPolyphonic)gladiatorAudioPlayer.GetStreamPlayback();
         // If there is no player node (because the player is in the main menu).
         if (player == null)
         {
@@ -219,7 +226,10 @@ public partial class Gladiator : CharacterBody3D
                 {
                     target.EmitSignal(Gladiator.SignalName.Hit, weaponDamage);
                 }
+                gladiatorAudio.PlayStream(swordHitSfx, volumeDb: Main.volume);
             }
+            else
+                gladiatorAudio.PlayStream(swordSwingSfx, volumeDb: Main.volume + 10);
         }
         else if (animName == "idle")
         {
@@ -244,8 +254,10 @@ public partial class Gladiator : CharacterBody3D
                 navAgent.AvoidanceEnabled = false;
                 SignalBus.Instance.EmitSignal(SignalBus.SignalName.GladiatorDied);
                 Velocity = Vector3.Zero;
+                gladiatorAudio.PlayStream(deathSfx, volumeDb: Main.volume + 10);
                 return;
             }
+            gladiatorAudio.PlayStream(painSfx, volumeDb: Main.volume);
             GD.Print(Name + " has taken " + damage + " damage.");
             animTree.Set(hitRequest, (int)AnimationNodeOneShot.OneShotRequest.Fire);
         }

@@ -1,9 +1,13 @@
-[gd_scene load_steps=53 format=4 uid="uid://s8frao1jmpyi"]
+[gd_scene load_steps=58 format=4 uid="uid://s8frao1jmpyi"]
 
 [ext_resource type="PackedScene" uid="uid://btg8x3sln11g2" path="res://Assets/Mini Arena/character-soldier.glb" id="1_c1yec"]
 [ext_resource type="Script" path="res://Scripts/Gladiator.cs" id="2_hmlhj"]
 [ext_resource type="PackedScene" uid="uid://bad8vxl63flqw" path="res://Assets/Mini Arena/weapon-sword.glb" id="3_bw5or"]
+[ext_resource type="AudioStream" uid="uid://dquk2ohww1f07" path="res://Assets/Audio/702942__franzzle__swordhit1.wav" id="3_dbgcr"]
 [ext_resource type="Texture2D" uid="uid://cinqdu7kqdadm" path="res://Assets/Mini Arena/Textures/colormap.png" id="4_1r50k"]
+[ext_resource type="AudioStream" uid="uid://bkyocj0jgi6ga" path="res://Assets/Audio/192052__wdfourtee__mxl993_yarstick_swoosh_2.wav" id="4_rldao"]
+[ext_resource type="AudioStream" uid="uid://byxo283ho3ull" path="res://Assets/Audio/695385__fmaudio__male-death-cry-2.wav" id="5_1wivw"]
+[ext_resource type="AudioStream" uid="uid://b62phgu3yfct1" path="res://Assets/Audio/547202__mrfossy__voice_adultmale_paingrunts_02.wav" id="5_6n3sm"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_x7dxy"]
 resource_local_to_scene = true
@@ -2332,7 +2336,9 @@ nodes/walk/node = SubResource("AnimationNodeAnimation_1arik")
 nodes/walk/position = Vector2(-220, 280)
 node_connections = [&"Attack", 0, &"WalkIdleBlend", &"Attack", 1, &"attack", &"Death State", 0, &"Hit", &"Death State", 1, &"die", &"Hit", 0, &"Stagger", &"Hit", 1, &"Animation", &"Stagger", 0, &"Attack", &"Stagger", 1, &"stagger", &"WalkIdleBlend", 0, &"idle", &"WalkIdleBlend", 1, &"walk", &"output", 0, &"Death State"]
 
-[node name="Gladiator" node_paths=PackedStringArray("rayCast", "visibleBox", "navAgent", "animPlayer", "animTree") groups=["gladiators"] instance=ExtResource("1_c1yec")]
+[sub_resource type="AudioStreamPolyphonic" id="AudioStreamPolyphonic_4msqc"]
+
+[node name="Gladiator" node_paths=PackedStringArray("rayCast", "visibleBox", "navAgent", "animPlayer", "animTree", "gladiatorAudioPlayer") groups=["gladiators"] instance=ExtResource("1_c1yec")]
 collision_layer = 4
 collision_mask = 7
 script = ExtResource("2_hmlhj")
@@ -2341,6 +2347,11 @@ visibleBox = NodePath("VisibleOnScreenNotifier3D")
 navAgent = NodePath("NavigationAgent3D")
 animPlayer = NodePath("AnimationPlayer")
 animTree = NodePath("AnimationTree")
+gladiatorAudioPlayer = NodePath("AudioStreamPlayer3D")
+swordHitSfx = ExtResource("3_dbgcr")
+swordSwingSfx = ExtResource("4_rldao")
+painSfx = ExtResource("5_6n3sm")
+deathSfx = ExtResource("5_1wivw")
 
 [node name="character-soldier" parent="." index="0"]
 unique_name_in_owner = true
@@ -2411,3 +2422,8 @@ aabb = AABB(-0.6, -0.8, -1, 1.2, 2.7, 2)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 target_position = Vector3(0, 0, 2)
 collision_mask = 6
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." index="7"]
+stream = SubResource("AudioStreamPolyphonic_4msqc")
+autoplay = true
+max_distance = 10.0
