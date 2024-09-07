@@ -1,7 +1,8 @@
-[gd_scene load_steps=11 format=3 uid="uid://ck0pxanqt2h2w"]
+[gd_scene load_steps=12 format=3 uid="uid://ck0pxanqt2h2w"]
 
 [ext_resource type="Script" path="res://Scripts/MainMenu.cs" id="1_hw0n0"]
 [ext_resource type="PackedScene" uid="uid://cpp7mjy22t6nb" path="res://Scenes/OptionsMenu.tscn" id="2_nmh2x"]
+[ext_resource type="PackedScene" uid="uid://dm2m5skgydmf8" path="res://Scenes/CameraPivot.tscn" id="3_8ogjr"]
 [ext_resource type="AudioStream" uid="uid://c1682rxy45cdg" path="res://Assets/Audio/560454__migfus20__epic-trailer-background-music.mp3" id="3_gusjt"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8hlsg"]
@@ -110,11 +111,7 @@ text = "Quit"
 visible = false
 layout_mode = 1
 
-[node name="CameraPivot" type="Node3D" parent="."]
-
-[node name="Camera3D" type="Camera3D" parent="CameraPivot"]
-transform = Transform3D(1, 0, 0, 0, 0.819152, 0.573576, 0, -0.573576, 0.819152, 0, 17, 25)
-current = true
+[node name="CameraPivot" parent="." instance=ExtResource("3_8ogjr")]
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." groups=["audio"]]
 stream = ExtResource("3_gusjt")

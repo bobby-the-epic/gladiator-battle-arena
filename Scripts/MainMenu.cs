@@ -6,8 +6,6 @@ public partial class MainMenu : Control
     Button backButton;
     HSlider volumeControl;
 
-    [Export]
-    Node3D cameraPivot;
     [ExportGroup("Buttons")]
     [Export]
     Button playButton;
@@ -44,9 +42,5 @@ public partial class MainMenu : Control
         quitButton.Pressed += () => GetTree().Quit();
 
         Input.MouseMode = Input.MouseModeEnum.Visible;
-    }
-    public override void _Process(double delta)
-    {
-        cameraPivot.Rotate(Vector3.Up, (float)delta * .25f);
     }
 }
