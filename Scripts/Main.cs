@@ -9,7 +9,10 @@ public partial class Main : Node
     int enemyCount = 0;
     bool inMainMenu = true;
     bool paused = false;
+    bool gameOver = false;
     Control pauseMenu;
+    Control deathMenu;
+    Node3D cameraPivot;
     CharacterBody3D player;
     Godot.Collections.Array<Node> gates;
     Godot.Collections.Array<Node> spawnPoints;
@@ -113,7 +116,12 @@ public partial class Main : Node
     private void OnQuitToMainMenu()
     {
         CleanUpArena();
-        player.Free();
+
+        if (!gameOver)
+            player.Free();
+        else
+            cameraPivot.QueueFree();
+
         Control mainMenu = mainMenuScene.Instantiate<Control>();
         AddChild(mainMenu);
         Input.MouseMode = Input.MouseModeEnum.Visible;
@@ -121,12 +129,14 @@ public partial class Main : Node
         waveNum = 0;
         SpawnWave();
         crowdNoise.Stop();
+        gameOver = false;
     }
     private void OnPlayerDied()
     {
+        gameOver = true;
         player.QueueFree();
-        Control deathMenu = deathMenuScene.Instantiate<Control>();
-        Node3D cameraPivot = cameraPivotScene.Instantiate<Node3D>();
+        deathMenu = deathMenuScene.Instantiate<Control>();
+        cameraPivot = cameraPivotScene.Instantiate<Node3D>();
         AddChild(deathMenu);
         AddChild(cameraPivot);
 

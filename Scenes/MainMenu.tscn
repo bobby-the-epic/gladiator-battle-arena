@@ -31,7 +31,7 @@ bg_color = Color(0.52, 0.37804, 0.1144, 1)
 font_names = PackedStringArray("Cinzel")
 subpixel_positioning = 0
 
-[node name="MainMenu" type="Control" node_paths=PackedStringArray("cameraPivot", "playButton", "optionsButton", "quitButton", "titleMenu", "optionsMenu")]
+[node name="MainMenu" type="Control" node_paths=PackedStringArray("playButton", "optionsButton", "quitButton", "titleMenu", "optionsMenu")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -39,7 +39,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_hw0n0")
-cameraPivot = NodePath("CameraPivot")
 playButton = NodePath("TitleMenu/VBoxContainer/PlayButton")
 optionsButton = NodePath("TitleMenu/VBoxContainer/OptionsButton")
 quitButton = NodePath("TitleMenu/VBoxContainer/QuitButton")

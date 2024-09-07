@@ -1,4 +1,6 @@
-[gd_scene load_steps=9 format=3 uid="uid://chqygif6g1a21"]
+[gd_scene load_steps=10 format=3 uid="uid://chqygif6g1a21"]
+
+[ext_resource type="Script" path="res://Scripts/DeathMenu.cs" id="1_vv4fq"]
 
 [sub_resource type="SystemFont" id="SystemFont_066lm"]
 font_names = PackedStringArray("Cinzel")
@@ -28,13 +30,16 @@ bg_color = Color(0.66, 0.47982, 0.1452, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n5s5p"]
 bg_color = Color(0.52, 0.37804, 0.1144, 1)
 
-[node name="DeathMenu" type="Control"]
+[node name="DeathMenu" type="Control" node_paths=PackedStringArray("restartButton", "quitButton")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_vv4fq")
+restartButton = NodePath("RestartButton")
+quitButton = NodePath("QuitButton")
 
 [node name="Label" type="Label" parent="."]
 process_mode = 3
