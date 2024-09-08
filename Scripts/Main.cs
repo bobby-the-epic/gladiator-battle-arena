@@ -111,7 +111,7 @@ public partial class Main : Node
             CleanUpArena();
             SpawnWave();
         }
-        else if ((inMainMenu) || (enemyCount <= 1 && gameOver))
+        else if ((inMainMenu || gameOver) && enemyCount <= 1)
             SpawnWave();
     }
     private void OnQuitToMainMenu()
