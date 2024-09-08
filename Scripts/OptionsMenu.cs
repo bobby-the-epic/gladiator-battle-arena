@@ -19,11 +19,11 @@ public partial class OptionsMenu : Control
         {
             audioStreamPlayers[counter] = (AudioStreamPlayer)audioStreams[counter];
         }
-        volumeControl.ValueChanged += OnValueChanged;
+        volumeControl.ValueChanged += OnVolumeChanged;
         for (int counter = 0; counter < audioStreams.Count; counter++)
             audioStreamPlayers[counter].VolumeDb = Main.volume;
     }
-    private void OnValueChanged(double volume)
+    private void OnVolumeChanged(double volume)
     {
         // Change the volume in all the audio streams when the volume slider is changed.
         for (int counter = 0; counter < audioStreams.Count; counter++)
