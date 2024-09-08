@@ -41,7 +41,7 @@ bg_color = Color(0.783938, 0.551105, 0, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f18ir"]
 bg_color = Color(0.784314, 0.552941, 0, 1)
 
-[node name="OptionsMenu" type="Control" node_paths=PackedStringArray("volumeControl")]
+[node name="OptionsMenu" type="Control" node_paths=PackedStringArray("volumeControl", "sensitivityControl")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -50,6 +50,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_wcmsc")
 volumeControl = NodePath("HSlider")
+sensitivityControl = NodePath("HSlider2")
 
 [node name="BackButton" type="Button" parent="."]
 layout_mode = 1
