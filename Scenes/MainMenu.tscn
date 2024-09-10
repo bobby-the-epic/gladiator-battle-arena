@@ -1,35 +1,24 @@
-[gd_scene load_steps=12 format=3 uid="uid://ck0pxanqt2h2w"]
+[gd_scene load_steps=11 format=3 uid="uid://ck0pxanqt2h2w"]
 
 [ext_resource type="Script" path="res://Scripts/MainMenu.cs" id="1_hw0n0"]
+[ext_resource type="FontFile" uid="uid://c6igqoxhlomcq" path="res://Cinzel-Bold.ttf" id="2_nfw1y"]
 [ext_resource type="PackedScene" uid="uid://cpp7mjy22t6nb" path="res://Scenes/OptionsMenu.tscn" id="2_nmh2x"]
+[ext_resource type="FontFile" uid="uid://brunaorjdl7de" path="res://Cinzel-Regular.ttf" id="3_0gumg"]
 [ext_resource type="PackedScene" uid="uid://dm2m5skgydmf8" path="res://Scenes/CameraPivot.tscn" id="3_8ogjr"]
 [ext_resource type="AudioStream" uid="uid://c1682rxy45cdg" path="res://Assets/Audio/560454__migfus20__epic-trailer-background-music.mp3" id="3_gusjt"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8hlsg"]
 bg_color = Color(0.721569, 0.494118, 0.156863, 1)
 
-[sub_resource type="SystemFont" id="SystemFont_6ywh3"]
-font_names = PackedStringArray("Cinzel")
-font_weight = 700
-subpixel_positioning = 0
-
 [sub_resource type="LabelSettings" id="LabelSettings_lhx7c"]
-font = SubResource("SystemFont_6ywh3")
+font = ExtResource("2_nfw1y")
 font_size = 64
-
-[sub_resource type="SystemFont" id="SystemFont_nlfho"]
-font_names = PackedStringArray("Cinzel")
-subpixel_positioning = 0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_plm06"]
 bg_color = Color(0.66, 0.47982, 0.1452, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aauju"]
 bg_color = Color(0.52, 0.37804, 0.1144, 1)
-
-[sub_resource type="SystemFont" id="SystemFont_6ugtf"]
-font_names = PackedStringArray("Cinzel")
-subpixel_positioning = 0
 
 [node name="MainMenu" type="Control" node_paths=PackedStringArray("playButton", "optionsButton", "quitButton", "titleMenu", "optionsMenu")]
 layout_mode = 3
@@ -82,7 +71,7 @@ grow_vertical = 2
 [node name="PlayButton" type="Button" parent="TitleMenu/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 6
-theme_override_fonts/font = SubResource("SystemFont_nlfho")
+theme_override_fonts/font = ExtResource("3_0gumg")
 theme_override_font_sizes/font_size = 58
 theme_override_styles/hover = SubResource("StyleBoxFlat_plm06")
 theme_override_styles/normal = SubResource("StyleBoxFlat_aauju")
@@ -91,7 +80,7 @@ text = "Play"
 [node name="OptionsButton" type="Button" parent="TitleMenu/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 6
-theme_override_fonts/font = SubResource("SystemFont_6ugtf")
+theme_override_fonts/font = ExtResource("3_0gumg")
 theme_override_font_sizes/font_size = 58
 theme_override_styles/hover = SubResource("StyleBoxFlat_plm06")
 theme_override_styles/normal = SubResource("StyleBoxFlat_aauju")
@@ -100,7 +89,7 @@ text = "Options"
 [node name="QuitButton" type="Button" parent="TitleMenu/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 6
-theme_override_fonts/font = SubResource("SystemFont_6ugtf")
+theme_override_fonts/font = ExtResource("3_0gumg")
 theme_override_font_sizes/font_size = 58
 theme_override_styles/hover = SubResource("StyleBoxFlat_plm06")
 theme_override_styles/normal = SubResource("StyleBoxFlat_aauju")

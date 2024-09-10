@@ -1,22 +1,16 @@
 [gd_scene load_steps=13 format=3 uid="uid://dsex310m8geqg"]
 
 [ext_resource type="Script" path="res://Scripts/PauseMenu.cs" id="1_mma8v"]
+[ext_resource type="FontFile" uid="uid://c6igqoxhlomcq" path="res://Cinzel-Bold.ttf" id="2_rjpq0"]
 [ext_resource type="PackedScene" uid="uid://cpp7mjy22t6nb" path="res://Scenes/OptionsMenu.tscn" id="2_ts22b"]
-
-[sub_resource type="SystemFont" id="SystemFont_fm3gh"]
-font_names = PackedStringArray("Cinzel")
-font_weight = 700
-subpixel_positioning = 0
+[ext_resource type="FontFile" uid="uid://brunaorjdl7de" path="res://Cinzel-Regular.ttf" id="3_xm4bw"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t6kb2"]
 bg_color = Color(0.72, 0.49536, 0.1584, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_8y5t0"]
+font = ExtResource("2_rjpq0")
 font_size = 64
-
-[sub_resource type="SystemFont" id="SystemFont_e4geh"]
-font_names = PackedStringArray("Cinzel")
-subpixel_positioning = 0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_umn37"]
 bg_color = Color(0.66, 0.47982, 0.1452, 1)
@@ -68,7 +62,6 @@ offset_top = 150.0
 offset_right = 1285.0
 offset_bottom = 238.0
 grow_horizontal = 2
-theme_override_fonts/font = SubResource("SystemFont_fm3gh")
 theme_override_styles/normal = SubResource("StyleBoxFlat_t6kb2")
 text = "PAUSED"
 label_settings = SubResource("LabelSettings_8y5t0")
@@ -92,7 +85,7 @@ grow_vertical = 2
 [node name="ResumeButton" type="Button" parent="Menu/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 6
-theme_override_fonts/font = SubResource("SystemFont_e4geh")
+theme_override_fonts/font = ExtResource("3_xm4bw")
 theme_override_font_sizes/font_size = 58
 theme_override_styles/hover = SubResource("StyleBoxFlat_umn37")
 theme_override_styles/normal = SubResource("StyleBoxFlat_2q5im")
@@ -101,7 +94,7 @@ text = "Resume"
 [node name="OptionsButton" type="Button" parent="Menu/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 6
-theme_override_fonts/font = SubResource("SystemFont_e4geh")
+theme_override_fonts/font = ExtResource("3_xm4bw")
 theme_override_font_sizes/font_size = 58
 theme_override_styles/hover = SubResource("StyleBoxFlat_ddoy4")
 theme_override_styles/normal = SubResource("StyleBoxFlat_tw2rh")
@@ -110,7 +103,7 @@ text = "Options"
 [node name="QuitButton" type="Button" parent="Menu/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 6
-theme_override_fonts/font = SubResource("SystemFont_e4geh")
+theme_override_fonts/font = ExtResource("3_xm4bw")
 theme_override_font_sizes/font_size = 58
 theme_override_styles/hover = SubResource("StyleBoxFlat_domcx")
 theme_override_styles/normal = SubResource("StyleBoxFlat_qnvkb")

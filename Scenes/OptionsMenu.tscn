@@ -1,10 +1,8 @@
-[gd_scene load_steps=13 format=3 uid="uid://cpp7mjy22t6nb"]
+[gd_scene load_steps=12 format=3 uid="uid://cpp7mjy22t6nb"]
 
 [ext_resource type="Script" path="res://Scripts/OptionsMenu.cs" id="1_wcmsc"]
-
-[sub_resource type="SystemFont" id="SystemFont_13s1o"]
-font_names = PackedStringArray("Cinzel")
-subpixel_positioning = 0
+[ext_resource type="FontFile" uid="uid://c6igqoxhlomcq" path="res://Cinzel-Bold.ttf" id="2_cw2xa"]
+[ext_resource type="FontFile" uid="uid://brunaorjdl7de" path="res://Cinzel-Regular.ttf" id="3_00kl8"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_plm06"]
 bg_color = Color(0.66, 0.47982, 0.1452, 1)
@@ -12,22 +10,15 @@ bg_color = Color(0.66, 0.47982, 0.1452, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aauju"]
 bg_color = Color(0.52, 0.37804, 0.1144, 1)
 
-[sub_resource type="SystemFont" id="SystemFont_jrotx"]
-font_names = PackedStringArray("Cinzel")
-font_weight = 700
-subpixel_positioning = 0
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8hlsg"]
 bg_color = Color(0.72, 0.49536, 0.1584, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_lhx7c"]
+font = ExtResource("2_cw2xa")
 font_size = 64
 
-[sub_resource type="SystemFont" id="SystemFont_ipw40"]
-font_names = PackedStringArray("Cinzel")
-subpixel_positioning = 0
-
 [sub_resource type="LabelSettings" id="LabelSettings_wy71s"]
+font = ExtResource("3_00kl8")
 font_size = 48
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ddrrb"]
@@ -65,7 +56,7 @@ offset_right = 165.5
 offset_bottom = 339.5
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_fonts/font = SubResource("SystemFont_13s1o")
+theme_override_fonts/font = ExtResource("3_00kl8")
 theme_override_font_sizes/font_size = 58
 theme_override_styles/hover = SubResource("StyleBoxFlat_plm06")
 theme_override_styles/normal = SubResource("StyleBoxFlat_aauju")
@@ -82,7 +73,6 @@ offset_top = 150.0
 offset_right = 345.0
 offset_bottom = 238.0
 grow_horizontal = 2
-theme_override_fonts/font = SubResource("SystemFont_jrotx")
 theme_override_styles/normal = SubResource("StyleBoxFlat_8hlsg")
 text = "Options"
 label_settings = SubResource("LabelSettings_lhx7c")
@@ -102,7 +92,6 @@ offset_right = 98.0
 offset_bottom = -167.5
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_fonts/font = SubResource("SystemFont_ipw40")
 text = "Volume"
 label_settings = SubResource("LabelSettings_wy71s")
 horizontal_alignment = 1
@@ -141,7 +130,6 @@ offset_right = 98.0
 offset_bottom = 32.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_fonts/font = SubResource("SystemFont_ipw40")
 text = "Mouse Sensitivity"
 label_settings = SubResource("LabelSettings_wy71s")
 horizontal_alignment = 1

@@ -1,29 +1,19 @@
-[gd_scene load_steps=10 format=3 uid="uid://chqygif6g1a21"]
+[gd_scene load_steps=9 format=3 uid="uid://chqygif6g1a21"]
 
 [ext_resource type="Script" path="res://Scripts/DeathMenu.cs" id="1_vv4fq"]
-
-[sub_resource type="SystemFont" id="SystemFont_066lm"]
-font_names = PackedStringArray("Cinzel")
-font_weight = 700
-subpixel_positioning = 0
+[ext_resource type="FontFile" uid="uid://c6igqoxhlomcq" path="res://Cinzel-Bold.ttf" id="2_at806"]
+[ext_resource type="FontFile" uid="uid://brunaorjdl7de" path="res://Cinzel-Regular.ttf" id="3_llji1"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gxob3"]
 bg_color = Color(0.72, 0.49536, 0.1584, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_lrd8d"]
+font = ExtResource("2_at806")
 font_size = 64
 
-[sub_resource type="SystemFont" id="SystemFont_5po65"]
-font_names = PackedStringArray("Cinzel")
-subpixel_positioning = 0
-
 [sub_resource type="LabelSettings" id="LabelSettings_71xii"]
-font = SubResource("SystemFont_5po65")
+font = ExtResource("3_llji1")
 font_size = 48
-
-[sub_resource type="SystemFont" id="SystemFont_jmwom"]
-font_names = PackedStringArray("Cinzel")
-subpixel_positioning = 0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_podeg"]
 bg_color = Color(0.66, 0.47982, 0.1452, 1)
@@ -53,7 +43,6 @@ offset_top = 150.0
 offset_right = 345.0
 offset_bottom = 238.0
 grow_horizontal = 2
-theme_override_fonts/font = SubResource("SystemFont_066lm")
 theme_override_styles/normal = SubResource("StyleBoxFlat_gxob3")
 text = "You died!"
 label_settings = SubResource("LabelSettings_lrd8d")
@@ -93,7 +82,7 @@ offset_right = 165.5
 offset_bottom = 214.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_fonts/font = SubResource("SystemFont_jmwom")
+theme_override_fonts/font = ExtResource("3_llji1")
 theme_override_font_sizes/font_size = 58
 theme_override_styles/hover = SubResource("StyleBoxFlat_podeg")
 theme_override_styles/normal = SubResource("StyleBoxFlat_n5s5p")
@@ -112,7 +101,7 @@ offset_right = 165.5
 offset_bottom = 364.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_fonts/font = SubResource("SystemFont_jmwom")
+theme_override_fonts/font = ExtResource("3_llji1")
 theme_override_font_sizes/font_size = 58
 theme_override_styles/hover = SubResource("StyleBoxFlat_podeg")
 theme_override_styles/normal = SubResource("StyleBoxFlat_n5s5p")
