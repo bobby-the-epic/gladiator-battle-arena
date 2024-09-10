@@ -1,9 +1,9 @@
 [gd_scene load_steps=11 format=3 uid="uid://ck0pxanqt2h2w"]
 
 [ext_resource type="Script" path="res://Scripts/MainMenu.cs" id="1_hw0n0"]
-[ext_resource type="FontFile" uid="uid://c6igqoxhlomcq" path="res://Cinzel-Bold.ttf" id="2_nfw1y"]
+[ext_resource type="FontFile" uid="uid://c6igqoxhlomcq" path="res://Assets/Fonts/Cinzel-Bold.ttf" id="2_nfw1y"]
 [ext_resource type="PackedScene" uid="uid://cpp7mjy22t6nb" path="res://Scenes/OptionsMenu.tscn" id="2_nmh2x"]
-[ext_resource type="FontFile" uid="uid://brunaorjdl7de" path="res://Cinzel-Regular.ttf" id="3_0gumg"]
+[ext_resource type="FontFile" uid="uid://brunaorjdl7de" path="res://Assets/Fonts/Cinzel-Regular.ttf" id="3_0gumg"]
 [ext_resource type="PackedScene" uid="uid://dm2m5skgydmf8" path="res://Scenes/CameraPivot.tscn" id="3_8ogjr"]
 [ext_resource type="AudioStream" uid="uid://c1682rxy45cdg" path="res://Assets/Audio/560454__migfus20__epic-trailer-background-music.mp3" id="3_gusjt"]
 

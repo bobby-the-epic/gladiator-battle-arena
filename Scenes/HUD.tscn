@@ -1,7 +1,7 @@
 [gd_scene load_steps=19 format=3 uid="uid://b8sjlspgwncpn"]
 
 [ext_resource type="Script" path="res://Scripts/HUD.cs" id="1_cs451"]
-[ext_resource type="FontFile" uid="uid://brunaorjdl7de" path="res://Cinzel-Regular.ttf" id="2_plem1"]
+[ext_resource type="FontFile" uid="uid://brunaorjdl7de" path="res://Assets/Fonts/Cinzel-Regular.ttf" id="2_plem1"]
 [ext_resource type="Texture2D" uid="uid://sb7jfe3ccpdp" path="res://Assets/Textures/damageDirection.png" id="2_plkex"]
 [ext_resource type="Texture2D" uid="uid://bvayxq5fq2b6i" path="res://Assets/Textures/damageAlert.png" id="3_oc8c2"]
 

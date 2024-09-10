@@ -1,9 +1,9 @@
 [gd_scene load_steps=13 format=3 uid="uid://dsex310m8geqg"]
 
 [ext_resource type="Script" path="res://Scripts/PauseMenu.cs" id="1_mma8v"]
-[ext_resource type="FontFile" uid="uid://c6igqoxhlomcq" path="res://Cinzel-Bold.ttf" id="2_rjpq0"]
+[ext_resource type="FontFile" uid="uid://c6igqoxhlomcq" path="res://Assets/Fonts/Cinzel-Bold.ttf" id="2_rjpq0"]
 [ext_resource type="PackedScene" uid="uid://cpp7mjy22t6nb" path="res://Scenes/OptionsMenu.tscn" id="2_ts22b"]
-[ext_resource type="FontFile" uid="uid://brunaorjdl7de" path="res://Cinzel-Regular.ttf" id="3_xm4bw"]
+[ext_resource type="FontFile" uid="uid://brunaorjdl7de" path="res://Assets/Fonts/Cinzel-Regular.ttf" id="3_xm4bw"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t6kb2"]
 bg_color = Color(0.72, 0.49536, 0.1584, 1)
